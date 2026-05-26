@@ -1,0 +1,53 @@
+<app-page-header title="Products" backgroundImage="./img/headers/header-7.jpg"></app-page-header>
+
+<section id="product-list">
+  <div class="container">
+    <div class="row">
+      @if (isLoading) {
+        <div class="col text-center">
+          <p class="text-700 mb-0">Loading products...</p>
+        </div>
+      } @else if (hasError) {
+        <div class="col text-center">
+          <p class="text-700 mb-0">Products could not be loaded right now.</p>
+        </div>
+      } @else {
+      @for(product of products; track product.id) {
+        <div class="col-md-6 col-lg-4 h-100 mb-4">
+          <a class="product-image-link" [href]="product.image || '#'" target="_blank" rel="noopener noreferrer">
+            @if (product.image) {
+              <img class="img-fluid rounded-top product-image" [src]="product.image" [alt]="product.name">
+            }
+          </a>
+          <div class="p-3 border rounded-bottom border-top-0 product-card-body">
+            <h5 class="font-base text-transform-none fw-medium lh-1">
+              <span class="text-black">{{ product.name }}</span></h5>
+            <p>{{ product.description }}</p>
+            @if (product.price) {
+              <p class="text-dark fw-semi-bold mb-0">SZL {{ product.price }}</p>
+            }
+          </div>
+        </div>
+      } @empty {
+        <div class="col text-center">
+          <p class="text-700 mb-0">No products have been added yet.</p>
+        </div>
+      }
+      }
+    </div>
+    @if (isLoadingMore) {
+      <div class="product-loader" aria-live="polite">
+        <span class="product-loader-spinner"></span>
+        <span>Loading more products...</span>
+      </div>
+    }
+
+    @if (hasMoreProducts && !isLoadingMore) {
+      <div class="text-center">
+        <button class="btn btn-sm btn-outline-dark hvr-sweep-top mt-5" type="button" (click)="loadMoreProducts()">
+          Load More
+        </button>
+      </div>
+    }
+  </div><!-- end of .container-->
+</section>

@@ -1,0 +1,70 @@
+import { Component, HostListener, OnInit } from '@angular/core';
+import { ProductService } from '../product';
+import { Product } from '../../../shared/models/product.model';
+import { PageHeader } from '../../../shared/components/page-header/page-header';
+
+@Component({
+  selector: 'app-product-list',
+  imports: [PageHeader],
+  templateUrl: './product-list.html',
+  styleUrl: './product-list.css',
+})
+export class ProductList implements OnInit {
+  private readonly pageSize = 9;
+  private currentPage = 1;
+
+  products: Product[] = [];
+  isLoading = true;
+  isLoadingMore = false;
+  hasError = false;
+  hasMoreProducts = false;
+
+  constructor(private productService: ProductService) {}
+
+  ngOnInit(): void {
+    this.loadProducts(1);
+  }
+
+  @HostListener('window:scroll')
+  onWindowScroll(): void {
+    if (!this.hasMoreProducts || this.isLoadingMore) {
+      return;
+    }
+
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const loadThreshold = document.documentElement.scrollHeight - 350;
+
+    if (scrollPosition >= loadThreshold) {
+      this.loadMoreProducts();
+    }
+  }
+
+  loadMoreProducts(): void {
+    if (!this.hasMoreProducts || this.isLoadingMore) {
+      return;
+    }
+
+    this.loadProducts(this.currentPage + 1, true);
+  }
+
+  private loadProducts(page: number, append = false): void {
+    this.hasError = false;
+    this.isLoading = !append;
+    this.isLoadingMore = append;
+
+    this.productService.getProducts(page, this.pageSize).subscribe({
+      next: (data) => {
+        this.products = append ? [...this.products, ...data.results] : data.results;
+        this.currentPage = page;
+        this.hasMoreProducts = Boolean(data.next);
+        this.isLoading = false;
+        this.isLoadingMore = false;
+      },
+      error: () => {
+        this.hasError = true;
+        this.isLoading = false;
+        this.isLoadingMore = false;
+      },
+    });
+  }
+}

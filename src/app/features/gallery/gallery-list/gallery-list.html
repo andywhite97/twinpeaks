@@ -1,0 +1,54 @@
+<app-page-header title="Gallery" backgroundImage="./img/headers/header-7.jpg"></app-page-header>
+
+<section>
+  <div class="container">
+    <div class="row g-2 position-relative thumbnail-grid-container" id="selector">
+      @if (isLoading) {
+      <div class="col text-center">
+        <p class="text-700 mb-0">Loading gallery...</p>
+      </div>
+      } @else if (hasError) {
+      <div class="col text-center">
+        <p class="text-700 mb-0">Gallery could not be loaded right now.</p>
+      </div>
+      } @else {
+      @for (item of galleryItems; track item.id) {.
+      <div class="col-12 col-sm-6 col-lg-4 thumbnail-grid-item">
+        <img class="thumbnail-gridder" [src]="item.image" [alt]="item.title" data-bs-toggle="collapse"
+          [attr.data-bs-target]="'#' + getCollapseId(item)" aria-expanded="false"
+          [attr.aria-controls]="getCollapseId(item)">
+        <div class="position-absolute start-0">
+          <div class="collapse thumbnail-grid-content" data-bs-parent="#selector" [id]="getCollapseId(item)">
+            <div class="card card-body border-0 bg-100 m-1 px-4">
+              <div class="row align-items-center">
+                <div class="col-7">
+                  <div class="d-none d-lg-block p-0"><img class="w-100 img-fluid rounded" [src]="item.image" [alt]="item.title"></div>
+                </div>
+                <div class="col-lg-5">
+                  <h5 class="ls-1">{{ item.title }}</h5>
+                  @if (item.description) {
+                  <p class="mb-0">{{ item.description }}</p>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    } @empty {
+      <div class="col text-center">
+        <p class="text-700 mb-0">No gallery items have been added yet.</p>
+      </div>
+      }
+      }
+    </div>
+    @if (hasMoreItems) {
+    <div class="text-center">
+      <button class="btn btn-sm btn-outline-dark hvr-sweep-top mt-5" type="button" (click)="loadMoreGalleryItems()"
+        [disabled]="isLoadingMore">
+        {{ isLoadingMore ? 'Loading...' : 'Load More' }}
+      </button>
+    </div>
+    }
+  </div><!-- end of .container-->
+</section>

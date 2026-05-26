@@ -1,0 +1,10 @@
+.service-item {
+  min-height: 100%;
+}
+
+.service-icon {
+  height: 58px;
+  margin-bottom: 1rem;
+  object-fit: contain;
+  width: 58px;
+}

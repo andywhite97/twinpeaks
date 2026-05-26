@@ -1,0 +1,137 @@
+<app-page-header title="Services" backgroundImage="./img/headers/header-4.jpg"></app-page-header>
+
+<section class="text-center">
+  <div class="container">
+    <div class="row">
+      @if (isLoading) {
+        <div class="col text-center">
+          <p class="text-700 mb-0">Loading services...</p>
+        </div>
+      } @else if (hasError) {
+        <div class="col text-center">
+          <p class="text-700 mb-0">Services could not be loaded right now.</p>
+        </div>
+      } @else {
+      @for (service of services; track service.id; let index = $index) {.
+        <div class="col-sm-6 col-lg-4 mb-3" data-zanim-timeline="{}">
+          <div class="overflow-hidden">
+            <div class="service-item p-3 p-md-4 h-100">
+              <div class="overflow-hidden">
+                <div class="px-4" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:&quot;0&quot;}"
+                  style="transform: translate(0px, 0px); opacity: 1;"><img class="service-icon"
+                    [src]="getServiceIcon(service, index)" [alt]="service.title"></div>
+              </div>
+              <div class="overflow-hidden">
+                <h5 class="fw-normal ls-3 mb-2" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:&quot;0.1&quot;}"
+                  style="transform: translate(0px, 0px); opacity: 1;">{{ service.title }}</h5>
+              </div>
+              <div class="overflow-hidden">
+                <p class="fw-normal" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:&quot;0.2&quot;}"
+                  style="transform: translate(0px, 0px); opacity: 1;">{{ service.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <div class="col text-center">
+          <p class="text-700 mb-0">No services have been added yet.</p>
+        </div>
+      }
+      }
+    </div>
+  </div><!-- end of .container-->
+</section>
+
+<section class="py-6 text-center bg-1100" data-zanim-timeline="{}">
+  <div class="bg-holder overlay overlay-0"
+    style="background-image:url(./img/backgrounds/fun-fact.jpg);background-position: bottom;"></div>
+  <!--/.bg-holder-->
+  <div class="container">
+    <div class="overflow-hidden">
+      <h3 class="font-base text-white" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0}"
+        style="transform: translate(0px, 0px); opacity: 1;">Excited To Start <br class="d-block d-sm-none">Your Next
+        Project?</h3>
+    </div>
+    <div
+      data-zanim-xs="{&quot;from&quot;:{&quot;opacity&quot;:0,&quot;y&quot;:30},&quot;to&quot;:{&quot;opacity&quot;:1,&quot;y&quot;:0},&quot;duration&quot;:1.5,&quot;delay&quot;:0.1}"
+      style="transform: translate(0px, 0px); opacity: 1;"><a class="btn btn-sm btn-outline-light hvr-sweep-top mt-3"
+        routerLink="/contact">Let's get started </a></div>
+  </div><!-- end of .container-->
+</section>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col mb-4 text-center" data-zanim-timeline="{}">
+        <div class="overflow-hidden">
+          <h2 class="fs-md-5" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0}"
+            style="transform: translate(0px, 0px); opacity: 1;">Our Secret For Success</h2>
+        </div>
+        <div class="overflow-hidden">
+          <p class="fs--1 text-uppercase text-black ls-1 mb-0"
+            data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0.1}"
+            style="transform: translate(0px, 0px); opacity: 1;">working together to achieve great results</p>
+        </div>
+        <div class="overflow-hidden">
+          <hr class="hr-short bg-black" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0.2}"
+            style="transform: translate(0px, 0px); opacity: 1;">
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-9 px-5">
+        <div class="d-flex process-item border-dashed-start border-600 pb-5" data-zanim-timeline="{}">
+          <div class="process-icon-circle"><img class="process-icon" src="./img/line-icons/medical-result.svg"
+              alt=""></div>
+          <div class="flex-1 ms-4 ms-sm-5">
+            <h5 class="ls-2"><span class="bg-white pe-3">analysis &amp; planning</span></h5>
+            <p class="mb-0 pe-lg-5"
+              data-zanim-xs="{&quot;from&quot;:{&quot;opacity&quot;:0},&quot;to&quot;:{&quot;opacity&quot;:1},&quot;duration&quot;:1,&quot;delay&quot;:0.2}"
+              style="opacity: 1;">At first, we will analyze the product and planning then convert to a full
+              specification document that explains exactly what we will deliver to you. This process will include the
+              technical &amp; functional requirements captured along with your branding and styling guidelines.</p>
+          </div>
+        </div>
+        <div class="d-flex process-item border-dashed-start border-600 border-md-start-0 border-md-dashed-end pb-5"
+          data-zanim-timeline="{}">
+          <div class="flex-1 position-relative ms-4 ms-sm-5 ms-md-0 me-md-5">
+            <h5 class="text-md-end"><span class="bg-white ps-md-3">Design &amp; Development</span><span
+                class="process-devider border-end-0 start-0"></span></h5>
+            <p class="mb-0 text-md-end ps-lg-6"
+              data-zanim-xs="{&quot;from&quot;:{&quot;opacity&quot;:0},&quot;to&quot;:{&quot;opacity&quot;:1},&quot;duration&quot;:1,&quot;delay&quot;:0.3}"
+              style="opacity: 1;"> This is the main production phase where we build the functionalities of your product.
+              Once created, your product must pass through our quality assurance phase before you are finally presented
+              with the finished deliverable.</p>
+          </div>
+          <div class="process-icon-circle"><img class="process-icon" src="./img/line-icons/web-programming.svg"
+              alt=""></div>
+        </div>
+        <div class="d-flex process-item border-dashed-start border-600 pb-5" data-zanim-timeline="{}">
+          <div class="process-icon-circle"><img class="process-icon"
+              src="./img/line-icons/technical-support.svg" alt=""></div>
+          <div class="flex-1 position-relative ms-4 ms-sm-5"><span class="process-devider border-start-0 end-0"></span>
+            <h5 class="ls-2"><span class="bg-white pe-3">Testing &amp; Fixing</span></h5>
+            <p class="mb-0 pe-lg-5"
+              data-zanim-xs="{&quot;from&quot;:{&quot;opacity&quot;:0},&quot;to&quot;:{&quot;opacity&quot;:1},&quot;duration&quot;:1,&quot;delay&quot;:0.2}"
+              style="opacity: 1;">After building your product, we will review your product with our talented testing
+              team. In these steps, we will test your product with different data set and conditions. Also, this phase
+              is essential for fixing design and development issues. </p>
+          </div>
+        </div>
+        <div class="d-flex process-item" data-zanim-timeline="{}">
+          <div class="flex-1 position-relative ms-4 ms-sm-5 ms-md-0 me-md-5">
+            <h5 class="text-md-end"><span class="bg-white ps-md-3">LAUNCH &amp; GROW</span><span
+                class="process-devider border-end-0 start-0"></span></h5>
+            <p class="mb-0 text-md-end ps-lg-5"
+              data-zanim-xs="{&quot;from&quot;:{&quot;opacity&quot;:0},&quot;to&quot;:{&quot;opacity&quot;:1},&quot;duration&quot;:1,&quot;delay&quot;:0.3}"
+              style="opacity: 1;"> The final step is where we launch your product to the production server. Here we
+              consider components such as cloud architecture, performance, and cybersecurity if that is within that
+              scope of your project. At this point, you are officially live!</p>
+          </div>
+          <div class="process-icon-circle"><img class="process-icon" src="./img/line-icons/server.svg" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- end of .container-->
+</section>

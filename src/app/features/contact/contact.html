@@ -1,0 +1,76 @@
+<app-page-header title="Contact Us" breadcrumb="Contact" backgroundImage="./img/headers/header-8.jpg"></app-page-header>
+
+<section id="contact">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 mb-5 mb-lg-0 d-flex flex-column justify-content-between">
+        <div class="row">
+          <div class="col-12">
+            <h5 class="mb-3">Connect With Us</h5>
+          </div>
+          <div class="col-auto">
+            <div class="row mb-2 mb-sm-1">
+              <div class="col-1">
+                <span class="fas fa-map-marker-alt text-700"></span>
+              </div>
+              <div class="col px-2">
+                <p class="mb-1 text-700"><strong>Visit or call us</strong></p>
+                <p class="mb-0 text-600">Based in Eswatini. Share your project details and we will get back to you.</p>
+              </div>
+            </div>
+            <div class="row mb-2 mb-sm-1">
+              <div class="col-1">
+                <span class="fas fa-phone me-2 text-700"> </span></div>
+              <div class="col px-2">
+                <a class="text-600" href="tel:26879700129">+268 797 001 29</a><br>
+                <a class="text-600" href="tel:26879044770">+268 790 447 70</a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-1">
+                <span class="fas fa-envelope me-2 text-700"></span></div>
+              <div class="col px-2"><a class="text-600" href="mailto:contact@twinpeaksinvestments.com">Write to Us</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <h5 class="mb-3">Feel free to drop us a line!</h5>
+        <form class="zform text-left" [formGroup]="contactForm" (ngSubmit)="submitContactForm()" novalidate>
+          <div class="form-group mb-3">
+            <input class="fs-0 form-control" type="text" placeholder="Your Name" formControlName="name">
+            @if (contactForm.controls.name.touched && contactForm.controls.name.invalid) {
+              <p class="form-error">Please enter your name.</p>
+            }
+          </div>
+          <div class="form-group mb-3">
+            <input class="fs-0 form-control" type="email" placeholder="Email Address" formControlName="email">
+            @if (contactForm.controls.email.touched && contactForm.controls.email.invalid) {
+              <p class="form-error">Please enter a valid email address.</p>
+            }
+          </div>
+          <div class="form-group mb-3">
+            <textarea class="fs-0 form-control contact-message" rows="8" placeholder="Type your message here"
+              formControlName="message"></textarea>
+            @if (contactForm.controls.message.touched && contactForm.controls.message.invalid) {
+              <p class="form-error">Please enter your message.</p>
+            }
+          </div>
+          <div class="zform-feedback d-grid">
+            <button class="btn btn-dark hvr-sweep-top" type="submit" [disabled]="isSubmitting()">
+              {{ isSubmitting() ? 'Sending...' : 'Give us a shot' }}
+            </button>
+          </div>
+
+          @if (submitStatus() === 'success') {
+            <p class="form-success">Thank you. Your message has been sent.</p>
+          }
+
+          @if (submitStatus() === 'error') {
+            <p class="form-error form-error-summary">Something went wrong. Please try again.</p>
+          }
+        </form>
+      </div>
+    </div>
+  </div><!-- end of .container-->
+</section>

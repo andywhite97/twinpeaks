@@ -15,6 +15,7 @@
           "options": {
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
+            "outputPath": "dist",
             "assets": [
               {
                 "glob": "**/*",
@@ -81,5 +82,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "0b2fddb6-b19f-4593-9035-390d43e49ae3"
   }
 }

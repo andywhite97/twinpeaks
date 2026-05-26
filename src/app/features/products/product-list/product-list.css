@@ -1,0 +1,38 @@
+.product-image-link {
+  display: block;
+}
+
+.product-image {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  width: 100%;
+}
+
+.product-card-body {
+  min-height: 178px;
+}
+
+.product-loader {
+  align-items: center;
+  color: #555;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.product-loader-spinner {
+  animation: product-loader-spin 700ms linear infinite;
+  border: 2px solid rgba(0, 0, 0, 0.16);
+  border-radius: 50%;
+  border-top-color: #111;
+  display: inline-block;
+  height: 22px;
+  width: 22px;
+}
+
+@keyframes product-loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

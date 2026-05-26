@@ -1,0 +1,96 @@
+<app-page-header title="About Us" backgroundImage="./img/headers/header-9.jpg"></app-page-header>
+
+<section class="pt-3 pt-lg-5 pb-6 pb-lg-8 text-center" style="scroll-margin-top:-25px">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-4 text-md-end">
+        <h5 class="ls-2 mb-3">our vision</h5>
+        <p class="mb-0">{{ companyProfile?.vision || 'We build with clear direction, practical creativity, and long-term value in mind.' }}</p>
+      </div>
+      <div class="col-md-4 px-lg-4 my-4 my-md-0"><img class="rounded w-100 w-sm-75 w-md-100"
+          src="./img/about-us-5.jpg" alt=""></div>
+      <div class="col-md-4 text-md-start">
+        <h5 class="ls-2 mb-3">our mission</h5>
+        <p class="mb-0">{{ companyProfile?.mission || 'We help clients move from idea to delivery with thoughtful service and dependable execution.' }}</p>
+      </div>
+    </div>
+  </div><!-- end of .container-->
+</section>
+
+<section class="text-center" id="team">
+  <div class="container">
+    <div class="row">
+      <div class="col mb-4" data-zanim-timeline="{}">
+        <div class="overflow-hidden">
+          <h2 class="fs-md-5" data-zanim-xs="{&quot;delay&quot;:0}" style="transform: translate(0px, 0px); opacity: 1;">
+            meet the team</h2>
+        </div>
+        <div class="overflow-hidden">
+          <p class="fs--1 text-uppercase text-black ls-1 mb-0" data-zanim-xs="{&quot;delay&quot;:0.1}"
+            style="transform: translate(0px, 0px); opacity: 1;">meet the twinpeaks team</p>
+        </div>
+        <div class="overflow-hidden">
+          <hr class="hr-short bg-black" data-zanim-xs="{&quot;delay&quot;:0.2}"
+            style="transform: translate(0px, 0px); opacity: 1;">
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="row">
+          @if (isLoading) {
+            <div class="col text-center">
+              <p class="text-700 mb-0">Loading team members...</p>
+            </div>
+          } @else if (hasError) {
+            <div class="col text-center">
+              <p class="text-700 mb-0">Team members could not be loaded right now.</p>
+            </div>
+          } @else {
+          @for (leader of leaders; track leader.id) {.
+            <div class="col-6 col-md-3 col-lg-3 px-2 team-item mb-4">
+              <div class="hoverbox w-75 rounded-circle overflow-hidden mx-auto">
+                @if (leader.photo) {
+                    <img class="img-fluid" [src]="leader.photo" [alt]="leader.name">
+                }
+                <div class="hoverbox-content">
+                  <div class="d-flex align-items-end justify-content-center h-100">
+                    <ul class="list-inline team-item-social-icons">
+                      @if (leader.facebook) {<li class="list-inline-item"><a class="text-white" [href]="leader.facebook" target="_blank" rel="noopener noreferrer" [attr.aria-label]="leader.name + ' on Facebook'"><span class="fab fa-facebook-f"
+                            data-fa-transform="grow-3"></span></a></li>}
+                      @if (leader.linkedin) {<li class="list-inline-item"><a class="text-white" [href]="leader.linkedin" target="_blank" rel="noopener noreferrer" [attr.aria-label]="leader.name + ' on LinkedIn'"><span class="fab fa-linkedin-in" data-fa-transform="grow-3"></span></a></li>}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <h6 class="fw-bold mt-2 mb-1">{{ leader.name }}</h6>
+              <h6 class="ls-1">{{ leader.role }}</h6>
+            </div>
+          } @empty {
+            <div class="col text-center">
+              <p class="text-700 mb-0">No team members have been added yet.</p>
+            </div>
+          }
+          }
+        </div>
+      </div>
+    </div>
+  </div><!-- end of .container-->
+</section>
+
+<section class="text-center pt-0" data-zanim-timeline="{}">
+  <div class="container">
+    <div class="overflow-hidden">
+      <h4 class="fw-medium mb-1" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0}"
+        style="transform: translate(0px, 0px); opacity: 1;">Make a project With Us</h4>
+    </div>
+    <div class="overflow-hidden">
+      <p data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0.1}"
+        style="transform: translate(0px, 0px); opacity: 1;">Our Team is always ready to help you</p>
+    </div>
+    <div
+      data-zanim-xs="{&quot;from&quot;:{&quot;opacity&quot;:0,&quot;y&quot;:30},&quot;to&quot;:{&quot;opacity&quot;:1,&quot;y&quot;:0},&quot;duration&quot;:1.5,&quot;delay&quot;:0.3}"
+      style="transform: translate(0px, 0px); opacity: 1;"><a class="btn btn-dark btn-sm hvr-sweep-top mt-2"
+        routerLink="/contact">Start Now</a></div>
+  </div><!-- end of .container-->
+</section>
