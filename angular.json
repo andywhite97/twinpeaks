@@ -16,6 +16,7 @@
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "outputPath": "dist",
+            "baseHref": "/twinpeaks/",
             "assets": [
               {
                 "glob": "**/*",
