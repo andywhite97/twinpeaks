@@ -1,13 +1,16 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ProductService } from '../product';
 import { Product } from '../../../shared/models/product.model';
 import { PageHeader } from '../../../shared/components/page-header/page-header';
+import { Loader } from '../../../shared/components/loader/loader';
+import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
 
 @Component({
   selector: 'app-product-list',
-  imports: [PageHeader],
+  imports: [PageHeader, Loader, TruncatePipe],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductList implements OnInit {
   private readonly pageSize = 9;
@@ -19,7 +22,10 @@ export class ProductList implements OnInit {
   hasError = false;
   hasMoreProducts = false;
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.loadProducts(1);
@@ -59,11 +65,13 @@ export class ProductList implements OnInit {
         this.hasMoreProducts = Boolean(data.next);
         this.isLoading = false;
         this.isLoadingMore = false;
+        this.cdr.markForCheck();
       },
       error: () => {
         this.hasError = true;
         this.isLoading = false;
         this.isLoadingMore = false;
+        this.cdr.markForCheck();
       },
     });
   }

@@ -1,11 +1,11 @@
-<app-page-header title="Gallery" backgroundImage="./img/headers/header-7.jpg"></app-page-header>
+<app-page-header title="Gallery" backgroundImage="./img/headers/gallery.jpg"></app-page-header>
 
 <section>
   <div class="container">
     <div class="row g-2 position-relative thumbnail-grid-container" id="selector">
       @if (isLoading) {
-      <div class="col text-center">
-        <p class="text-700 mb-0">Loading gallery...</p>
+      <div class="col">
+        <app-loader message="Loading gallery..."></app-loader>
       </div>
       } @else if (hasError) {
       <div class="col text-center">

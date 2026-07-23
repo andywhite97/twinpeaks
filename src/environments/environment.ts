@@ -1,4 +1,5 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://127.0.0.1:8000/api'
+  production: true,
+  apiUrl: 'https://twinpeaks-back.onrender.com/api',
+  gaId: 'G-ZSRC2TBKZX' // Replace with your Google Analytics Measurement ID
 } as const;

@@ -2,7 +2,7 @@
   data-navbar-on-scroll="data-navbar-on-scroll"
   style="background-color: rgba(0, 0, 0, 0); border-color: rgba(255, 255, 255, 0.15);">
   <div class="container">
-    <a class="navbar-brand fw-normal ls-2" routerLink="/">Twinpeaks</a>
+    <a class="navbar-brand fw-normal ls-2" routerLink="/" (click)="closeMenu()">Twinpeaks</a>
     <button class="navbar-toggler p-0" type="button" data-bs-toggle="collapse"
       data-bs-target="#primaryNavbarCollapse" aria-controls="primaryNavbarCollapse" aria-expanded="false"
       aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -10,26 +10,26 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
           <a class="nav-link" id="hometab" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-            (click)="closeMenu()"><span class="nav-link-text">Home</span></a>
+            (click)="closeMenuAndNavigate()"><span class="nav-link-text">Home</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="productstab" routerLink="/products" routerLinkActive="active" (click)="closeMenu()"><span
+          <a class="nav-link" id="productstab" routerLink="/products" routerLinkActive="active" (click)="closeMenuAndNavigate()"><span
               class="nav-link-text">Products</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="servicetab" routerLink="/services" routerLinkActive="active" (click)="closeMenu()"><span
+          <a class="nav-link" id="servicetab" routerLink="/services" routerLinkActive="active" (click)="closeMenuAndNavigate()"><span
               class="nav-link-text">Services</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="gallerytab" routerLink="/gallery" routerLinkActive="active" (click)="closeMenu()"><span
+          <a class="nav-link" id="gallerytab" routerLink="/gallery" routerLinkActive="active" (click)="closeMenuAndNavigate()"><span
               class="nav-link-text">Gallery</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="abouttab" routerLink="/about" routerLinkActive="active" (click)="closeMenu()"><span
+          <a class="nav-link" id="abouttab" routerLink="/about" routerLinkActive="active" (click)="closeMenuAndNavigate()"><span
               class="nav-link-text">About</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="contacttab" routerLink="/contact" routerLinkActive="active" (click)="closeMenu()"><span
+          <a class="nav-link" id="contacttab" routerLink="/contact" routerLinkActive="active" (click)="closeMenuAndNavigate()"><span
               class="nav-link-text">Contact</span></a>
         </li>
       </ul>

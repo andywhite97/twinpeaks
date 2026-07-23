@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Leader } from '../../../shared/models/leader.model';
 import { LeadershipService } from '../leadership-service';
 import { RouterLink } from '@angular/router';
@@ -11,6 +11,7 @@ import { PageHeader } from '../../../shared/components/page-header/page-header';
   imports: [RouterLink, PageHeader],
   templateUrl: './leadership-list.html',
   styleUrl: './leadership-list.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LeadershipList implements OnInit {
 
@@ -22,6 +23,7 @@ export class LeadershipList implements OnInit {
   constructor(
     private leadershipService: LeadershipService,
     private companyProfileService: CompanyProfileService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -35,10 +37,12 @@ export class LeadershipList implements OnInit {
       next: (data) => {
         this.leaders = data;
         this.isLoading = false;
+        this.cdr.markForCheck();
       },
       error: () => {
         this.hasError = true;
         this.isLoading = false;
+        this.cdr.markForCheck();
       },
     });
   }

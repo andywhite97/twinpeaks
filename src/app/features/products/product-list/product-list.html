@@ -1,11 +1,11 @@
-<app-page-header title="Products" backgroundImage="./img/headers/header-7.jpg"></app-page-header>
+<app-page-header title="Products" backgroundImage="./img/headers/products.jpg"></app-page-header>
 
 <section id="product-list">
   <div class="container">
     <div class="row">
       @if (isLoading) {
-        <div class="col text-center">
-          <p class="text-700 mb-0">Loading products...</p>
+        <div class="col">
+          <app-loader message="Loading products..."></app-loader>
         </div>
       } @else if (hasError) {
         <div class="col text-center">
@@ -22,7 +22,7 @@
           <div class="p-3 border rounded-bottom border-top-0 product-card-body">
             <h5 class="font-base text-transform-none fw-medium lh-1">
               <span class="text-black">{{ product.name }}</span></h5>
-            <p>{{ product.description }}</p>
+            <p>{{ product.description | truncate }}</p>
             @if (product.price) {
               <p class="text-dark fw-semi-bold mb-0">SZL {{ product.price }}</p>
             }

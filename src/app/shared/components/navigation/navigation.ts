@@ -17,4 +17,13 @@ export class Navigation {
   closeMenu(): void {
     this.isMenuOpen = false;
   }
+
+  closeMenuAndNavigate(): void {
+    this.closeMenu();
+    // Collapse Bootstrap navbar as well
+    const navbarCollapse = document.getElementById('primaryNavbarCollapse');
+    if (navbarCollapse?.classList.contains('show')) {
+      navbarCollapse.classList.remove('show');
+    }
+  }
 }

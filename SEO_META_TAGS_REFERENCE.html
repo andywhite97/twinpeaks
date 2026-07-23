@@ -1,0 +1,249 @@
+<!-- 
+  SEO Meta Tags Reference
+  This file shows all the SEO meta tags currently implemented
+  on the Twinpeaks Investment website.
+-->
+
+<!-- ============================================
+     ESSENTIAL META TAGS
+     ============================================ -->
+
+<!-- Character encoding -->
+<meta charset="utf-8">
+
+<!-- Viewport for responsive design -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Page title (60-70 characters recommended) -->
+<title>Twinpeaks Investment | Financial Advisory & Wealth Management</title>
+
+<!-- Meta description (150-160 characters recommended) -->
+<meta name="description" content="Twinpeaks Investment provides expert financial advisory, wealth management, and investment solutions for individuals and businesses.">
+
+<!-- Keywords (important but not as critical as before) -->
+<meta name="keywords" content="investment, financial advisory, wealth management, financial planning">
+
+<!-- Author -->
+<meta name="author" content="Twinpeaks Investment">
+
+<!-- Robots directive -->
+<meta name="robots" content="index, follow">
+
+<!-- ============================================
+     OPEN GRAPH META TAGS (Social Sharing)
+     ============================================ -->
+
+<!-- Protocol type -->
+<meta property="og:type" content="website">
+
+<!-- Social title -->
+<meta property="og:title" content="Twinpeaks Investment | Financial Advisory & Wealth Management">
+
+<!-- Social description -->
+<meta property="og:description" content="Expert financial advisory, wealth management, and investment solutions.">
+
+<!-- Social URL -->
+<meta property="og:url" content="https://twinpeaksinvestment.com">
+
+<!-- Social image (1200x630px recommended) -->
+<meta property="og:image" content="https://twinpeaksinvestment.com/img/og-image.png">
+
+<!-- ============================================
+     TWITTER CARD META TAGS
+     ============================================ -->
+
+<!-- Card type: summary_large_image, summary, app, player -->
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Twitter title -->
+<meta name="twitter:title" content="Twinpeaks Investment | Financial Advisory & Wealth Management">
+
+<!-- Twitter description -->
+<meta name="twitter:description" content="Expert financial advisory, wealth management, and investment solutions.">
+
+<!-- Twitter image -->
+<meta name="twitter:image" content="https://twinpeaksinvestment.com/img/og-image.png">
+
+<!-- Optional: Twitter handle -->
+<!-- <meta name="twitter:creator" content="@twinpeaks"> -->
+
+<!-- ============================================
+     CANONICAL URL (Prevent Duplicate Content)
+     ============================================ -->
+
+<link rel="canonical" href="https://twinpeaksinvestment.com">
+
+<!-- ============================================
+     PERFORMANCE & PRELOADING
+     ============================================ -->
+
+<!-- Preconnect for external resources -->
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+
+<!-- DNS prefetch for third-party domains -->
+<!-- <link rel="dns-prefetch" href="//analytics.google.com"> -->
+
+<!-- Prefetch for resources you think user might need -->
+<!-- <link rel="prefetch" href="/images/next-page-image.jpg"> -->
+
+<!-- ============================================
+     FAVICON & BRANDING
+     ============================================ -->
+
+<!-- Apple touch icon for iOS -->
+<link rel="apple-touch-icon" sizes="180x180" href="./favicon.ico">
+
+<!-- Standard favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+
+<!-- Shortcut icon -->
+<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico">
+
+<!-- Windows tile image -->
+<meta name="msapplication-TileImage" content="./mstile-150x150.png">
+
+<!-- Theme color for browser UI -->
+<meta name="theme-color" content="#ffffff">
+
+<!-- ============================================
+     STRUCTURED DATA (Handled via JS)
+     See: structured-data.service.ts
+     ============================================ -->
+
+<!--
+  The following structured data is injected via JavaScript:
+  
+  1. Organization Schema - Company information, contact, social
+  2. LocalBusiness Schema - Business details for local SEO
+  3. Breadcrumb Schema - Navigation hierarchy
+  
+  Implementation in TypeScript:
+  ```
+  this.structuredDataService.injectOrganizationSchema();
+  ```
+-->
+
+<!-- ============================================
+     DYNAMIC META TAGS (Updated per route)
+     See: seo.service.ts
+     ============================================ -->
+
+<!--
+  The following tags are updated dynamically based on the current page:
+  
+  - Page title
+  - Meta description
+  - Meta keywords
+  - og:title
+  - og:description
+  - og:image
+  - og:url
+  - twitter:title
+  - twitter:description
+  - twitter:image
+  - canonical URL
+  
+  Route data example:
+  ```
+  {
+    path: 'services',
+    data: {
+      title: 'Services | Twinpeaks Investment',
+      description: 'Our professional services...',
+      keywords: 'financial planning, wealth management'
+    }
+  }
+  ```
+-->
+
+<!-- ============================================
+     ANALYTICS (Implemented via AnalyticsService)
+     ============================================ -->
+
+<!--
+  Add Google Analytics to index.html:
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOUR_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-YOUR_ID');
+  </script>
+  
+  Then use in components:
+  ```
+  this.analyticsService.trackPageView(path, title);
+  this.analyticsService.trackEvent('event_name', data);
+  ```
+-->
+
+<!-- ============================================
+     OPTIONAL ADVANCED META TAGS
+     ============================================ -->
+
+<!-- Geo targeting (if applicable) -->
+<!-- <meta name="geo.position" content="40.7128,-74.0060"> -->
+<!-- <meta name="ICBM" content="40.7128, -74.0060"> -->
+
+<!-- Language -->
+<!-- <meta http-equiv="Content-Language" content="en-us"> -->
+
+<!-- Format detection (mobile) -->
+<!-- <meta name="format-detection" content="telephone=no"> -->
+
+<!-- Apple specific -->
+<!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
+<!-- <meta name="apple-mobile-web-app-status-bar-style" content="black"> -->
+<!-- <meta name="apple-mobile-web-app-title" content="Twinpeaks"> -->
+
+<!-- Microsoft specific -->
+<!-- <meta name="msapplication-config" content="/browserconfig.xml"> -->
+
+<!-- Pinterest verification -->
+<!-- <meta name="pinterest-site-verification" content="xxxxxxxxxxxxxxxxxxxx" /> -->
+
+<!-- ============================================
+     RESOURCES & FILES
+     ============================================ -->
+
+<!-- robots.txt (in public folder) -->
+<!-- GET /robots.txt -->
+<!-- Tells search engines what to crawl -->
+
+<!-- sitemap.xml (in public folder) -->
+<!-- GET /sitemap.xml -->
+<!-- Lists all pages for search engines -->
+
+<!-- CNAME (in public folder) -->
+<!-- Contains custom domain for GitHub Pages -->
+
+<!-- ============================================
+     SEO CHECKLIST
+     ============================================ -->
+
+<!--
+✅ Meta tags implemented
+✅ Dynamic descriptions per page
+✅ Open Graph tags
+✅ Twitter Card tags
+✅ Canonical URLs
+✅ robots.txt created
+✅ sitemap.xml created
+✅ Structured data ready
+✅ Analytics ready
+✅ Custom domain configured
+
+TODO:
+- [ ] Update business contact information
+- [ ] Create OG image (1200x630px)
+- [ ] Add Google Analytics ID
+- [ ] Submit to Search Console
+- [ ] Optimize content (H1, alt text, keywords)
+- [ ] Test on Google PageSpeed Insights
+- [ ] Set up rank tracking tool
+- [ ] Monitor Search Console monthly
+-->
+

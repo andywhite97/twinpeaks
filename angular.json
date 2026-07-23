@@ -16,11 +16,16 @@
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "outputPath": "dist",
-            "baseHref": "/twinpeaks/",
+            "baseHref": "/",
             "assets": [
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "CNAME",
+                "input": "public",
+                "output": "/"
               }
             ],
             "styles": [
@@ -74,6 +79,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "CNAME",
+                "input": "public",
+                "output": "/"
               }
             ],
             "styles": [

@@ -1,0 +1,38 @@
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1rem;
+    text-align: center;
+    min-height: 300px;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.1rem;
+}
+
+.loader-text {
+    color: #666;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .loader-container {
+        min-height: 200px;
+        padding: 2rem 1rem;
+    }
+
+    .spinner-border {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .loader-text {
+        font-size: 0.9rem;
+    }
+}

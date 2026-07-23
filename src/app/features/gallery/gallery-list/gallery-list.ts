@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { GalleryItem } from '../../../shared/models/gallery.model';
 import { GalleryService } from '../gallery';
 import { PageHeader } from '../../../shared/components/page-header/page-header';
+import { Loader } from '../../../shared/components/loader/loader';
 
 @Component({
   selector: 'app-gallery-list',
-  imports: [PageHeader],
+  imports: [PageHeader, Loader],
   templateUrl: './gallery-list.html',
   styleUrl: './gallery-list.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GalleryList implements OnInit {
   private readonly pageSize = 12;
@@ -19,7 +21,10 @@ export class GalleryList implements OnInit {
   hasError = false;
   hasMoreItems = false;
 
-  constructor(private galleryService: GalleryService) {}
+  constructor(
+    private galleryService: GalleryService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.loadGalleryItems(1);
@@ -49,11 +54,13 @@ export class GalleryList implements OnInit {
         this.hasMoreItems = Boolean(data.next);
         this.isLoading = false;
         this.isLoadingMore = false;
+        this.cdr.markForCheck();
       },
       error: () => {
         this.hasError = true;
         this.isLoading = false;
         this.isLoadingMore = false;
+        this.cdr.markForCheck();
       },
     });
   }
