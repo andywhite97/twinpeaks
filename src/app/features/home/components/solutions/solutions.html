@@ -1,0 +1,27 @@
+<section class="py-5 py-lg-6 bg-white">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-lg-8">
+        <p class="text-uppercase small fw-semibold mb-2 text-primary">Our solutions</p>
+        <h2 class="display-6 fw-semibold mb-3">Focused offerings for ambitious teams</h2>
+        <p class="text-muted mb-0">Every engagement is structured to deliver measurable impact, clarity, and smooth execution.</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      @for (solution of solutions; track solution.id) {
+        <div class="col-md-6 col-lg-4">
+          <article class="card h-100 border-0 shadow-sm solution-card rounded-4">
+            <div class="card-body p-4 p-lg-5">
+              <div class="icon-circle mb-3">{{ solution.icon || '✦' }}</div>
+              <h3 class="h5 mb-3">{{ solution.title }}</h3>
+              <p class="text-muted mb-4">{{ solution.description }}</p>
+              @if (solution.button_text) {
+                <a class="btn btn-outline-dark btn-sm" [routerLink]="solution.button_url || '/contact'">{{ solution.button_text }}</a>
+              }
+            </div>
+          </article>
+        </div>
+      }
+    </div>
+  </div>
+</section>

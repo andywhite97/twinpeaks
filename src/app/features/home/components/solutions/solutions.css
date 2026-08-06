@@ -1,0 +1,18 @@
+.solution-card {
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.solution-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.08) !important;
+}
+
+.icon-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #f3f5f9;
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+}

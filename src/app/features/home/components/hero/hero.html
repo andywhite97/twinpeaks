@@ -1,0 +1,23 @@
+<section class="position-relative overflow-hidden text-white d-flex align-items-center hero-section" [style.backgroundImage]="hero && hero.hero_background_image ? 'url(' + hero.hero_background_image + ')' : null">
+  <div class="overlay"></div>
+  <div class="container py-5 position-relative">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-8">
+        <p class="text-uppercase small fw-semibold mb-3" style="letter-spacing: 0.35rem; opacity: 0.85;">Twinpeaks</p>
+        <h1 class="display-3 fw-semibold mb-4">{{ hero?.hero_heading || 'Premium technology solutions for modern businesses' }}</h1>
+        <p class="lead text-light mb-4" style="max-width: 700px;">{{ hero?.hero_subheading || 'We build modern digital experiences and reliable systems that help brands grow with confidence.' }}</p>
+        <div class="d-flex flex-wrap gap-3 mb-4">
+          <a class="btn btn-light btn-lg px-4 py-2" [routerLink]="hero?.hero_primary_cta_url || '/contact'">{{ hero?.hero_primary_cta_text || 'Request a consultation' }}</a>
+          <a class="btn btn-outline-light btn-lg px-4 py-2" [routerLink]="hero?.hero_secondary_cta_url || '/services'">{{ hero?.hero_secondary_cta_text || 'Explore services' }}</a>
+        </div>
+        @if (hero && hero.trust_badges && hero.trust_badges.length) {
+          <div class="d-flex flex-wrap gap-2">
+            @for (badge of hero.trust_badges; track badge) {
+              <span class="badge rounded-pill bg-white text-dark px-3 py-2 fw-semibold">{{ badge }}</span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

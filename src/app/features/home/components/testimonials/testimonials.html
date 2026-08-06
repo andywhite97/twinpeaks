@@ -1,0 +1,24 @@
+<section class="py-5 py-lg-6 bg-light">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-lg-8">
+        <p class="text-uppercase small fw-semibold mb-2 text-primary">Testimonials</p>
+        <h2 class="display-6 fw-semibold mb-3">Trusted by teams that value precision</h2>
+      </div>
+    </div>
+    <div class="row g-4">
+      @for (testimonial of testimonials; track testimonial.id) {
+        <div class="col-lg-4">
+          <article class="card h-100 border-0 shadow-sm p-4 p-lg-5 rounded-4 testimonial-card">
+            <div class="mb-3 text-warning fs-5">{{ '★'.repeat(testimonial.rating) }}</div>
+            <p class="text-muted mb-4">“{{ testimonial.review }}”</p>
+            <div class="mt-auto">
+              <h3 class="h6 mb-1">{{ testimonial.customer_name }}</h3>
+              <p class="small text-muted mb-0">{{ testimonial.business }}</p>
+            </div>
+          </article>
+        </div>
+      }
+    </div>
+  </div>
+</section>

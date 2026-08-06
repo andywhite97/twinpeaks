@@ -1,0 +1,21 @@
+@if (brands.length) {
+  <section class="py-5 py-lg-6 bg-light">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-lg-8">
+          <p class="text-uppercase small fw-semibold mb-2 text-primary">Brands we work with</p>
+          <h2 class="display-6 fw-semibold mb-3">Trusted partners across the ecosystem</h2>
+        </div>
+      </div>
+      <div class="row g-4 align-items-center">
+        @for (brand of brands; track brand.id) {
+          <div class="col-6 col-md-3 col-lg-2">
+            <a [href]="brand.website || '#'" target="_blank" rel="noopener noreferrer" class="brand-card d-flex align-items-center justify-content-center p-3 rounded-4 border border-1 bg-white shadow-sm">
+              <img [src]="brand.logo || 'https://placehold.co/180x90?text=' + brand.name" [alt]="brand.name" class="img-fluid grayscale">
+            </a>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+}

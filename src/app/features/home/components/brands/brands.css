@@ -1,0 +1,18 @@
+.brand-card {
+  min-height: 96px;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.brand-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.08);
+}
+
+.grayscale {
+  filter: grayscale(100%);
+  transition: filter 180ms ease;
+}
+
+.brand-card:hover .grayscale {
+  filter: grayscale(0%);
+}

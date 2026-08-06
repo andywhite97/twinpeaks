@@ -1,0 +1,16 @@
+<section class="py-5 py-lg-6">
+  <div class="container">
+    <div class="cta-box p-5 p-lg-6 rounded-4 text-white shadow-lg">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <h2 class="display-6 fw-semibold mb-3">Ready to move faster?</h2>
+          <p class="mb-0 text-white-50">Let’s shape a premium experience that helps your business stand out and scale with confidence.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a class="btn btn-light btn-lg me-2 mb-2 mb-lg-0" [routerLink]="settings?.hero_primary_cta_url || '/contact'">{{ settings?.hero_primary_cta_text || 'Request a consultation' }}</a>
+          <a class="btn btn-outline-light btn-lg" [routerLink]="settings?.hero_secondary_cta_url || '/services'">{{ settings?.hero_secondary_cta_text || 'Explore services' }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

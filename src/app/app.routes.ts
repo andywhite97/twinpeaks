@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { ProductList } from './features/products/product-list/product-list';
+import { ProductDetail } from './features/products/product-detail/product-detail';
 import { Home } from './features/home/home';
 import { LeadershipList } from './features/leadership/leadership-list/leadership-list';
 import { ServiceList } from './features/services/service-list/service-list';
@@ -24,6 +25,15 @@ export const routes: Routes = [
       title: 'Products & Solutions | Twinpeaks',
       description: 'Explore our range of creative and technology products: branding kits, design templates, custom software, and digital platform solutions.',
       keywords: 'design products, software solutions, digital tools, technology products'
+    }
+  },
+  {
+    path: 'products/:slug',
+    component: ProductDetail,
+    data: {
+      title: 'Product Details | Twinpeaks',
+      description: 'View details for a Twinpeaks product, including description, pricing, and related information.',
+      keywords: 'product details, Twinpeaks product'
     }
   },
   {
