@@ -5,7 +5,7 @@ import { HomepageProject } from '../../../../shared/models/homepage.model';
 @Component({
   standalone: true,
   selector: 'app-projects-section',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './projects.html',
   styleUrl: './projects.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

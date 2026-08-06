@@ -1,28 +1,42 @@
-<section class="py-5 py-lg-6 bg-white">
-  <div class="container">
-    <div class="row mb-5">
-      <div class="col-lg-8">
-        <p class="text-uppercase small fw-semibold mb-2 text-primary">Recent projects</p>
-        <h2 class="display-6 fw-semibold mb-3">A portfolio of meaningful work</h2>
+
+
+<section class="text-center pb-3" id="portfolio">
+  <div class="container-fluid">
+    <div class="row justify-content-center" data-zanim-timeline="{}">
+      <div class="col-12 mb-4">
+        <div class="overflow-hidden">
+          <h2 class="fs-md-5 mb-2" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0}"
+            style="transform: translate(0px, 0px); opacity: 1;">recent projects</h2>
+        </div>
+        <div class="overflow-hidden">
+          <p class="fs--1 text-uppercase text-black ls-1 mb-0"
+            data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0.1}"
+            style="transform: translate(0px, 0px); opacity: 1;">A portfolio of meaningful work</p>
+        </div>
+        <div class="overflow-hidden">
+          <hr class="hr-short bg-black opacity-100" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0.2}"
+            style="transform: translate(0px, 0px); opacity: 1;">
+        </div>
       </div>
     </div>
-    <div class="row g-4">
+    <div class="row g-3 mt-3" data-rp-isotope="{&quot;layoutMode&quot;:&quot;packery&quot;}"
+      style="position: relative; height: 1305.62px;">
       @for (project of projects; track project.id) {
-        <div class="col-md-6 col-lg-4">
-          <article class="card h-100 border-0 shadow-sm project-card rounded-4 overflow-hidden">
-            <img [src]="project.image || 'https://placehold.co/600x400?text=Project'" [alt]="project.title" class="card-img-top" style="height: 220px; object-fit: cover;">
-            <div class="card-body p-4 p-lg-5">
-              <p class="text-muted small mb-2">{{ project.category || 'Project' }}</p>
-              <h3 class="h5 mb-2">{{ project.title }}</h3>
-              <p class="text-muted small mb-3">{{ project.short_description }}</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="small text-muted">{{ project.location }}</span>
-                <a class="btn btn-outline-dark btn-sm" [routerLink]="project.link_url || '/gallery'">View project</a>
+      <div class="col-sm-6 col-lg-4 px-2 isotope-item design" data-zanim-xs="{&quot;delay&quot;:0}"
+        style="visibility: visible; position: absolute; left: 0px; top: 0px;">
+        <div class="hoverdir-item my-0"
+          data-zanim-xs="{&quot;duration&quot;:1.5,&quot;animation&quot;:&quot;zoom-in&quot;,&quot;delay&quot;:0}">
+          <div class="hoverdir-item-content" data-hoverdir="[object Object]">
+            <a class="d-block" href="../pages/work-single.html">
+              <img class="img-fluid rounded" [src]="project.image || 'https://placehold.co/600x400?text=Project'" [alt]="project.title">
+              <div class="hoverdir-text" style="transform: translateY(0px) translateX(100%); transition: 300ms;">
+                <h3 class="text-white lh-1 fs-2">{{ project.title }}</h3>
+                <p class="ls-1 mb-0 text-700">{{ project.short_description }}</p>
               </div>
-            </div>
-          </article>
+            </a></div>
         </div>
-      }
+      </div>
+    }
     </div>
-  </div>
+  </div><!-- end of .container-->
 </section>
