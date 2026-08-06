@@ -1,14 +1,43 @@
-<section class="py-5 py-lg-6 bg-dark text-white">
+
+<section class="py-7 text-center" data-zanim-timeline="{}">
+  <div class="bg-holder overlay" style="background-image:url(../assets/img/backgrounds/fun-fact.jpg);"></div>
+  <!--/.bg-holder-->
   <div class="container">
-    <div class="row g-4">
-      @for (stat of statistics; track stat.id) {
-        <div class="col-md-6 col-lg-3">
-          <div class="text-center p-4 p-lg-5 rounded-4 border border-white-10 shadow-sm">
-            <h3 class="display-6 fw-semibold mb-2">{{ stat.prefix || '' }}{{ stat.value }}{{ stat.suffix || '' }}</h3>
-            <p class="text-white-50 mb-0">{{ stat.label }}</p>
-          </div>
+    <div class="row mb-4">
+      <div class="col">
+        <div class="overflow-hidden">
+          <h2 class="fs-sm-5 text-white mb-1 mb-lg-2" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0}"
+            style="transform: translate(0px, 0px); opacity: 1;">do you know</h2>
         </div>
-      }
+        <div class="overflow-hidden">
+          <p class="fs--1 text-uppercase text-white ls-1 mb-0"
+            data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0.1}"
+            style="transform: translate(0px, 0px); opacity: 1;">some cool facts about our company</p>
+        </div>
+        <div class="overflow-hidden">
+          <hr class="hr-short bg-white" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0.2}"
+            style="transform: translate(0px, 0px); opacity: 1;">
+        </div>
+      </div>
     </div>
-  </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="row">
+          @for (stat of statistics; track stat.id) {
+          <div class="col-md-4 mb-4 mb-lg-0">
+            <div class="overflow-hidden"><img class="fun-fact-icon mb-2"
+                src="../assets/img/line-icons/icons/download.svg" alt=""></div>
+            <div class="overflow-hidden">
+              <h3 class="text-white font-base fw-normal mb-1" data-countup="{&quot;endValue&quot;:stat.value}">{{ stat.prefix || '' }}{{ stat.value }}{{ stat.suffix || '' }}
+              </h3>
+            </div>
+            <div class="overflow-hidden">
+              <p class="text-uppercase text-white fw-semi-bold ls-2 mb-0">{{ stat.label }}</p>
+            </div>
+          </div>
+        }
+        </div>
+      </div>
+    </div>
+  </div><!-- end of .container-->
 </section>

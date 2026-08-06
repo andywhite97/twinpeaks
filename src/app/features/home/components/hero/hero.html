@@ -20,7 +20,7 @@
                   <a class="btn btn-md btn-outline-light hvr-sweep-top mx-3 px-4" [routerLink]="hero?.hero_secondary_cta_url || '/services'">{{ hero?.hero_secondary_cta_text || 'Explore services' }}</a>
               </div>
               @if (hero && hero.trust_badges && hero.trust_badges.length) {
-              <div class="d-flex flex-wrap gap-2">
+              <div class="d-flex flex-wrap gap-2 my-2">
                 @for (badge of hero.trust_badges; track badge) {
                 <span class="badge rounded-pill bg-white text-dark px-3 py-2 fw-semibold">{{ badge }}</span>
                 }

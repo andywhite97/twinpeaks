@@ -1,31 +1,3 @@
-<section class="py-5 py-lg-6 bg-light">
-  <div class="container">
-    <div class="row mb-5 align-items-end">
-      <div class="col-lg-8">
-        <p class="text-uppercase small fw-semibold mb-2 text-primary">Featured products</p>
-        <h2 class="display-6 fw-semibold mb-3">Curated offerings ready to deploy</h2>
-      </div>
-    </div>
-    <div class="row g-4">
-      @for (product of products; track product.id) {
-        <div class="col-md-6 col-lg-4">
-          <article class="card h-100 border-0 shadow-sm product-card rounded-4 overflow-hidden">
-            <img [src]="product.image || 'https://placehold.co/600x400?text=Twinpeaks'" [alt]="product.name" class="card-img-top" style="height: 220px; object-fit: cover;">
-            <div class="card-body p-4">
-              <h3 class="h5 mb-2">{{ product.name }}</h3>
-              <p class="text-muted small mb-3">{{ product.description }}</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="fw-semibold">{{ product.price | currency }}</span>
-                <a class="btn btn-dark btn-sm" [routerLink]="['/products', product.slug]">View details</a>
-              </div>
-            </div>
-          </article>
-        </div>
-      }
-    </div>
-  </div>
-</section>
-
 <section id="blog">
   <div class="container">
     <div class="row">
@@ -61,6 +33,6 @@
       </div>
     }
     </div>
-    <div class="text-center"><a class="btn btn-sm btn-outline-dark hvr-sweep-top mt-5" href="#!">Load More</a></div>
+    <div class="text-center"><a class="btn btn-sm btn-outline-dark hvr-sweep-top mt-5" [routerLink]="['/products']">Load More</a></div>
   </div><!-- end of .container-->
 </section>
