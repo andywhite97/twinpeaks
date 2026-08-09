@@ -1,0 +1,1 @@
+import{G as t}from"./chunk-K64JU27L.js";var n=class r{transform(e,i){return!e||!e.includes("res.cloudinary.com")||!e.includes("/upload/")?e??"":e.replace("/upload/",`/upload/f_auto,q_auto,c_limit,w_${i}/`)}static \u0275fac=function(i){return new(i||r)};static \u0275pipe=t({name:"optimizedImage",type:r,pure:!0})};export{n as a};
