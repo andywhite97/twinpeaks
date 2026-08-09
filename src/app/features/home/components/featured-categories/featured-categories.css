@@ -1,0 +1,3 @@
+.category-card { background: #fff; box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.08); transition: box-shadow 180ms ease, transform 180ms ease; }
+.category-card:hover, .category-card:focus-visible { box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.14); transform: translateY(-4px); }
+.category-card__image { aspect-ratio: 3 / 2; display: block; object-fit: cover; }

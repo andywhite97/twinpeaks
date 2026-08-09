@@ -1,18 +1,44 @@
 .brand-card {
   min-height: 96px;
-  transition: transform 180ms ease, box-shadow 180ms ease;
+  background: rgba(255, 255, 255, 0.05);
+  transition: background-color 180ms ease, transform 180ms ease;
 }
 
-.brand-card:hover {
+.brand-carousel__button {
+  background: transparent;
+  border: 0;
+  color: #fff;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.brand-carousel__button--previous { left: -2.5rem; }
+.brand-carousel__button--next { right: -2.5rem; }
+
+@media (max-width: 767.98px) { .brand-carousel__button { display: none; } }
+
+a.brand-card:hover,
+a.brand-card:focus-visible {
+  background: rgba(255, 255, 255, 0.12);
   transform: translateY(-2px);
-  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.08);
 }
 
-.grayscale {
+.brand-logo {
+  display: block;
+  max-width: 100%;
+  max-height: 58px;
+  object-fit: contain;
   filter: grayscale(100%);
-  transition: filter 180ms ease;
+  opacity: 0.72;
+  transition: filter 180ms ease, opacity 180ms ease;
 }
 
-.brand-card:hover .grayscale {
+a.brand-card:hover .brand-logo,
+a.brand-card:focus-visible .brand-logo {
   filter: grayscale(0%);
+  opacity: 1;
 }

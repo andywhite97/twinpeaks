@@ -9,4 +9,10 @@ export interface CompanyProfile {
   twitter?: string | null;
   instagram?: string | null;
   linkedin?: string | null;
+  email?: string;
+  phone?: string;
+  whatsapp?: string;
+  address?: string;
+  business_hours?: string;
+  copyright_text?: string;
 }

@@ -1,16 +1,8 @@
-<section class="py-6 text-center bg-1100" data-zanim-timeline="{}">
-  <div class="bg-holder overlay overlay-0"
-    style="background-image:url(../assets/img/backgrounds/fun-fact.jpg);background-position: bottom;"></div>
-  <!--/.bg-holder-->
-  <div class="container">
-    <div class="overflow-hidden">
-      <h3 class="font-base text-white" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0}"
-        style="transform: translate(0px, 0px); opacity: 1;">Excited To Start <br class="d-block d-sm-none">Your Next
-        Project?</h3>
-    </div>
-    <div
-      data-zanim-xs="{&quot;from&quot;:{&quot;opacity&quot;:0,&quot;y&quot;:30},&quot;to&quot;:{&quot;opacity&quot;:1,&quot;y&quot;:0},&quot;duration&quot;:1.5,&quot;delay&quot;:0.1}"
-      style="transform: translate(0px, 0px); opacity: 1;"><a class="btn btn-sm btn-outline-light hvr-sweep-top mt-3"
-        [routerLink]="settings?.hero_secondary_cta_url || '/services'">{{ settings?.hero_secondary_cta_text || 'Explore services' }}</a></div>
-  </div><!-- end of .container-->
+<section class="py-6 text-center bg-1100 position-relative">
+  <div class="bg-holder overlay overlay-0" [style.background-image]="settings?.cta_background_image ? 'url(' + settings?.cta_background_image + ')' : null"></div>
+  <div class="container position-relative">
+    <h2 class="font-base text-white mb-3">{{ settings?.cta_heading || 'Excited to start your next project?' }}</h2>
+    @if (settings?.cta_subheading) { <p class="text-300 mb-4">{{ settings?.cta_subheading }}</p> }
+    <div class="d-flex flex-wrap justify-content-center gap-3"><a class="btn btn-sm btn-light hvr-sweep-top" [routerLink]="settings?.cta_primary_button_url || '/contact'">{{ settings?.cta_primary_button_text || 'Request a quote' }}</a>@if (settings?.cta_secondary_button_text) { <a class="btn btn-sm btn-outline-light hvr-sweep-top" [routerLink]="settings?.cta_secondary_button_url || '/services'">{{ settings?.cta_secondary_button_text }}</a> }</div>
+  </div>
 </section>

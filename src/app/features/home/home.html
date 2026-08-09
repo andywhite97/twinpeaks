@@ -10,7 +10,8 @@
 } @else {
   <app-hero-section [hero]="homepageData()?.hero || null"></app-hero-section>
   <app-solutions-section [solutions]="homepageData()?.solutions || []"></app-solutions-section>
-  <app-featured-products-section [products]="featuredProducts()"></app-featured-products-section>
+  <app-featured-categories-section [categories]="homepageData()?.featured_categories || []"></app-featured-categories-section>
+  <app-featured-products-section [products]="homepageData()?.featured_products || []"></app-featured-products-section>
   <app-statistics-section [statistics]="homepageData()?.statistics || []"></app-statistics-section>
   <app-projects-section [projects]="homepageData()?.projects || []"></app-projects-section>
   <app-brands-section [brands]="homepageData()?.brands || []"></app-brands-section>

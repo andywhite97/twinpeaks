@@ -7,8 +7,9 @@ import { PaginatedResponse } from '../../shared/models/paginated-response.model'
 export class ProductService {
   constructor(private api: ApiService) {}
 
-  getProducts(page = 1, pageSize = 9) {
-    return this.api.get<PaginatedResponse<Product>>(`products/?page=${page}&page_size=${pageSize}`);
+  getProducts(page = 1, pageSize = 9, category?: string) {
+    const categoryQuery = category ? `&category=${encodeURIComponent(category)}` : '';
+    return this.api.get<PaginatedResponse<Product>>(`products/?page=${page}&page_size=${pageSize}${categoryQuery}`);
   }
 
   getProduct(slug: string) {

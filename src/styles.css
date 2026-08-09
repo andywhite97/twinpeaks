@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global accessibility and motion defaults layered on top of the Reign theme. */
+
+:focus-visible {
+  outline: 3px solid #bf8f45;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

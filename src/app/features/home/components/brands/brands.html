@@ -1,24 +1,30 @@
 @if (brands.length) {
-<section class="bg-black py-6 clients">
-  <div class="container">
-    <div class="swiper-container swiper-clients">
-      <div class="swiper swiper-initialized swiper-horizontal swiper-pointer-events"
-        data-swiper="{&quot;navigation&quot;:{&quot;nextEl&quot;:&quot;.swiper-container .swiper-button-next&quot;,&quot;prevEl&quot;:&quot;.swiper-container .swiper-button-prev&quot;},&quot;autoplay&quot;:true,&quot;loop&quot;:true,&quot;slidesPerView&quot;:2,&quot;grabCursor&quot;:true,&quot;breakpoints&quot;:{&quot;576&quot;:{&quot;slidesPerView&quot;:3},&quot;768&quot;:{&quot;slidesPerView&quot;:3},&quot;992&quot;:{&quot;slidesPerView&quot;:4},&quot;1200&quot;:{&quot;slidesPerView&quot;:6}}}">
-        <div class="swiper-wrapper" id="swiper-wrapper-9f1663448d78d5ed" aria-live="off"
-          style="cursor: grab; transform: translate3d(-1512px, 0px, 0px); transition-duration: 0ms;">
-          @for (brand of brands; track brand.id) {
-          <div class="swiper-slide d-flex justify-content-center" style="width: 216px;" role="group" aria-label="1 / 7"
-            data-swiper-slide-index="0">
-            <a [href]="brand.website || '#'" target="_blank" rel="noopener noreferrer">
-              <img class="opacity-50" [src]="brand.logo || 'https://placehold.co/180x90?text=' + brand.name"
-                [alt]="brand.name" width="130">
-            </a>
+  <section class="bg-black py-6 clients" aria-label="Our clients and partners">
+    <div class="container">
+      <div class="brand-carousel position-relative">
+        <div #swiperRoot class="swiper brand-swiper">
+          <div class="swiper-wrapper">
+            @for (brand of brands; track brand.id) {
+              <div class="swiper-slide">
+                @if (brand.website) {
+                  <a class="brand-card d-flex align-items-center justify-content-center rounded p-3" [href]="brand.website" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'Visit ' + brand.name">
+                    <img class="brand-logo" [src]="brand.logo || fallbackLogo(brand.name)" [alt]="brand.name" loading="lazy" (error)="useFallbackLogo($event, brand.name)" />
+                  </a>
+                } @else {
+                  <div class="brand-card d-flex align-items-center justify-content-center rounded p-3">
+                    <img class="brand-logo" [src]="brand.logo || fallbackLogo(brand.name)" [alt]="brand.name" loading="lazy" (error)="useFallbackLogo($event, brand.name)" />
+                  </div>
+                }
+              </div>
+            }
           </div>
-          }
+          @if (brands.length > 1) { <div #pagination class="swiper-pagination position-relative mt-4"></div> }
         </div>
+        @if (brands.length > 1) {
+          <button #previousButton class="brand-carousel__button brand-carousel__button--previous" type="button" aria-label="Previous brands">&#8592;</button>
+          <button #nextButton class="brand-carousel__button brand-carousel__button--next" type="button" aria-label="Next brands">&#8594;</button>
+        }
       </div>
     </div>
-  </div><!-- end of .container-->
-</section>
+  </section>
 }
-

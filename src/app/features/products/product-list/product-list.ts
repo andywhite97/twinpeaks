@@ -1,13 +1,14 @@
 import { Component, HostListener, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../product';
 import { Product } from '../../../shared/models/product.model';
 import { PageHeader } from '../../../shared/components/page-header/page-header';
 import { Loader } from '../../../shared/components/loader/loader';
-import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
+import { ProductCard } from '../../../shared/components/product-card/product-card';
 
 @Component({
   selector: 'app-product-list',
-  imports: [PageHeader, Loader, TruncatePipe],
+  imports: [PageHeader, Loader, ProductCard],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,14 +22,20 @@ export class ProductList implements OnInit {
   isLoadingMore = false;
   hasError = false;
   hasMoreProducts = false;
+  private category?: string;
 
   constructor(
     private productService: ProductService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
-    this.loadProducts(1);
+    this.route.queryParamMap.subscribe((params) => {
+      this.category = params.get('category') ?? undefined;
+      this.currentPage = 1;
+      this.loadProducts(1);
+    });
   }
 
   @HostListener('window:scroll')
@@ -58,7 +65,7 @@ export class ProductList implements OnInit {
     this.isLoading = !append;
     this.isLoadingMore = append;
 
-    this.productService.getProducts(page, this.pageSize).subscribe({
+    this.productService.getProducts(page, this.pageSize, this.category).subscribe({
       next: (data) => {
         this.products = append ? [...this.products, ...data.results] : data.results;
         this.currentPage = page;

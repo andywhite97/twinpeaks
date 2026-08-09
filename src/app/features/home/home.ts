@@ -9,25 +9,22 @@ import { ProjectsComponent } from './components/projects/projects';
 import { BrandsComponent } from './components/brands/brands';
 import { TestimonialsComponent } from './components/testimonials/testimonials';
 import { CtaComponent } from './components/cta/cta';
-import { ProductService } from '../products/product';
-import { Product } from '../../shared/models/product.model';
+import { FeaturedCategoriesComponent } from './components/featured-categories/featured-categories';
 
 @Component({
   standalone: true,
   selector: 'app-home',
-  imports: [HeroComponent, SolutionsComponent, FeaturedProductsComponent, StatisticsComponent, ProjectsComponent, BrandsComponent, TestimonialsComponent, CtaComponent],
+  imports: [HeroComponent, SolutionsComponent, FeaturedCategoriesComponent, FeaturedProductsComponent, StatisticsComponent, ProjectsComponent, BrandsComponent, TestimonialsComponent, CtaComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Home implements OnInit {
   readonly homepageData = signal<HomepageSectionData | null>(null);
-  readonly featuredProducts = signal<Product[]>([]);
   isLoading = signal(true);
 
   constructor(
     private homepageService: HomepageService,
-    private productService: ProductService,
   ) {}
 
   ngOnInit(): void {
@@ -38,12 +35,6 @@ export class Home implements OnInit {
       },
       error: () => {
         this.isLoading.set(false);
-      }
-    });
-
-    this.productService.getProducts(1, 6).subscribe({
-      next: (response) => {
-        this.featuredProducts.set(response.results || []);
       }
     });
   }

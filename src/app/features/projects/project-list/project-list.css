@@ -1,0 +1,3 @@
+.project-card { background: #fff; box-shadow: 0 0.25rem 1rem rgba(0,0,0,.08); transition: transform 180ms ease, box-shadow 180ms ease; }
+.project-card:hover, .project-card:focus-visible { box-shadow: 0 1rem 2rem rgba(0,0,0,.14); transform: translateY(-4px); }
+.project-card__image { aspect-ratio: 3 / 2; object-fit: cover; }

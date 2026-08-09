@@ -1,38 +1,7 @@
-<section id="blog">
-  <div class="container">
-    <div class="row">
-      <div class="col text-center mb-4" data-zanim-timeline="{}">
-        <div class="overflow-hidden">
-          <h2 class="fs-md-5" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0}"
-            style="transform: translate(0px, 0px); opacity: 1;">Featured products</h2>
-        </div>
-        <div class="overflow-hidden">
-          <p class="fs--1 text-uppercase text-black ls-1 mb-0"
-            data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0.1}"
-            style="transform: translate(0px, 0px); opacity: 1;">Curated offerings ready to deploy</p>
-        </div>
-        <div class="overflow-hidden">
-          <hr class="hr-short bg-black" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0.2}"
-            style="transform: translate(0px, 0px); opacity: 1;">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      @for (product of products; track product.id) {
-      <div class="col-md-6 col-lg-4 h-100 mb-4"><a [routerLink]="['/products', product.slug]"> 
-        <img class="img-fluid rounded-top" [src]="product.image || 'https://placehold.co/600x400?text=Twinpeaks'" [alt]="product.name"></a>
-        <div class="p-3 border rounded-bottom border-top-0">
-          <h5 class="font-base text-transform-none fw-medium lh-1"><a class="text-black"
-              [routerLink]="['/products', product.slug]">{{product.name}}</a></h5>
-          <p>{{ product.description }}</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <span class="text-dark fw-semibold">{{ product.price | currency }}</span>
-              <a class="btn btn-dark btn-sm" [routerLink]="['/products', product.slug]">View details</a>
-            </div>
-        </div>
-      </div>
-    }
-    </div>
-    <div class="text-center"><a class="btn btn-sm btn-outline-dark hvr-sweep-top mt-5" [routerLink]="['/products']">Load More</a></div>
-  </div><!-- end of .container-->
-</section>
+@if (products.length) {
+  <section id="featured-products" class="py-5"><div class="container">
+    <div class="row"><div class="col text-center mb-4"><h2 class="fs-md-5 mb-2">Featured products</h2><p class="fs--1 text-uppercase text-black ls-1 mb-0">Curated offerings ready to deploy</p><hr class="hr-short bg-black" /></div></div>
+    <div class="row g-4">@for (product of products; track product.id) { <div class="col-md-6 col-lg-4"><app-product-card [product]="product" /></div> }</div>
+    <div class="text-center"><a class="btn btn-sm btn-outline-dark hvr-sweep-top mt-5" routerLink="/products">View all products</a></div>
+  </div></section>
+}

@@ -13,22 +13,23 @@ export class HomepageService {
 
   constructor(http: HttpClient) {
     this.http = http;
-    this.homepageData$ = this.http.get<HomepageSectionData>(this.homepageUrl).pipe(shareReplay(1));
-  }
-
-  getHomepageData(): Observable<HomepageSectionData> {
-    return this.http.get<any>(this.homepageUrl).pipe(
+    this.homepageData$ = this.http.get<any>(this.homepageUrl).pipe(
       map((data) => ({
         hero: data?.hero ?? {},
         statistics: data?.statistics ?? [],
         featured_products: data?.featured_products ?? [],
+        featured_categories: data?.featured_categories ?? [],
         solutions: data?.solutions ?? [],
         projects: data?.projects ?? [],
         brands: data?.brands ?? [],
         testimonials: data?.testimonials ?? [],
         settings: data?.settings ?? data?.hero ?? {},
       })),
-      shareReplay(1),
+      shareReplay({ bufferSize: 1, refCount: false }),
     );
+  }
+
+  getHomepageData(): Observable<HomepageSectionData> {
+    return this.homepageData$;
   }
 }

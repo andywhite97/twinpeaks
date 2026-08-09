@@ -9,6 +9,7 @@ interface SocialLink {
   iconClass: string;
   spacingClass: string;
 }
+interface ContactDetail { label: string; value: string; }
 
 @Component({
   selector: 'app-footer',
@@ -20,6 +21,8 @@ export class Footer implements OnInit {
   currentYear = new Date().getFullYear();
   mission = signal('Our mission is to deliver optimal solutions with quality and services at reasonable prices.');
   socialLinks = signal<SocialLink[]>([]);
+  contactDetails = signal<ContactDetail[]>([]);
+  copyright = signal('');
 
   constructor(private companyProfileService: CompanyProfileService) {}
 
@@ -31,6 +34,8 @@ export class Footer implements OnInit {
         }
 
         this.socialLinks.set(this.buildSocialLinks(profile));
+        this.contactDetails.set(this.buildContactDetails(profile));
+        this.copyright.set(profile.copyright_text || '');
       },
       error: () => {
         this.mission.set(this.mission());
@@ -72,5 +77,15 @@ export class Footer implements OnInit {
         ...link,
         url: link.url as string,
       }));
+  }
+
+  private buildContactDetails(profile: CompanyProfile): ContactDetail[] {
+    return [
+      { label: 'Email', value: profile.email || '' },
+      { label: 'Phone', value: profile.phone || '' },
+      { label: 'WhatsApp', value: profile.whatsapp || '' },
+      { label: 'Address', value: profile.address || '' },
+      { label: 'Hours', value: profile.business_hours || '' },
+    ].filter((detail) => Boolean(detail.value));
   }
 }

@@ -1,0 +1,6 @@
+.product-card { box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.08); transition: box-shadow 180ms ease, transform 180ms ease; }
+.product-card:hover, .product-card:focus-within { box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.14); transform: translateY(-4px); }
+.product-card__image { aspect-ratio: 4 / 3; display: block; object-fit: cover; }
+.product-card__badge { bottom: 0.75rem; left: 0.75rem; position: absolute; }
+.product-card__rating { color: #d39e00; font-size: 0.8rem; }
+.product-card__image-link:focus-visible, .product-card a:focus-visible { outline: 3px solid currentColor; outline-offset: -3px; }

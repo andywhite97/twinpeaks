@@ -28,7 +28,7 @@
             <div class="overflow-hidden"><img class="fun-fact-icon mb-2"
                 src="../assets/img/line-icons/icons/download.svg" alt=""></div>
             <div class="overflow-hidden">
-              <h3 class="text-white font-base fw-normal mb-1" data-countup="{&quot;endValue&quot;:stat.value}">{{ stat.prefix || '' }}{{ stat.value }}{{ stat.suffix || '' }}
+              <h3 class="text-white font-base fw-normal mb-1">{{ stat.prefix || '' }}{{ displayValue(stat) }}{{ stat.suffix || '' }}
               </h3>
             </div>
             <div class="overflow-hidden">

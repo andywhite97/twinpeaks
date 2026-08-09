@@ -1,42 +1,39 @@
-
-
-<section class="text-center pb-3" id="portfolio">
-  <div class="container-fluid">
-    <div class="row justify-content-center" data-zanim-timeline="{}">
-      <div class="col-12 mb-4">
-        <div class="overflow-hidden">
-          <h2 class="fs-md-5 mb-2" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0}"
-            style="transform: translate(0px, 0px); opacity: 1;">recent projects</h2>
-        </div>
-        <div class="overflow-hidden">
-          <p class="fs--1 text-uppercase text-black ls-1 mb-0"
-            data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0.1}"
-            style="transform: translate(0px, 0px); opacity: 1;">A portfolio of meaningful work</p>
-        </div>
-        <div class="overflow-hidden">
-          <hr class="hr-short bg-black opacity-100" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0.2}"
-            style="transform: translate(0px, 0px); opacity: 1;">
+@if (projects.length) {
+  <section class="text-center py-5" id="portfolio">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 mb-4">
+          <h2 class="fs-md-5 mb-2">Recent projects</h2>
+          <p class="fs--1 text-uppercase text-black ls-1 mb-0">A portfolio of meaningful work</p>
+          <hr class="hr-short bg-black opacity-100" />
         </div>
       </div>
-    </div>
-    <div class="row g-3 mt-3" data-rp-isotope="{&quot;layoutMode&quot;:&quot;packery&quot;}"
-      style="position: relative; height: 1305.62px;">
-      @for (project of projects; track project.id) {
-      <div class="col-sm-6 col-lg-4 px-2 isotope-item design" data-zanim-xs="{&quot;delay&quot;:0}"
-        style="visibility: visible; position: absolute; left: 0px; top: 0px;">
-        <div class="hoverdir-item my-0"
-          data-zanim-xs="{&quot;duration&quot;:1.5,&quot;animation&quot;:&quot;zoom-in&quot;,&quot;delay&quot;:0}">
-          <div class="hoverdir-item-content" data-hoverdir="[object Object]">
-            <a class="d-block" href="../pages/work-single.html">
-              <img class="img-fluid rounded" [src]="project.image || 'https://placehold.co/600x400?text=Project'" [alt]="project.title">
-              <div class="hoverdir-text" style="transform: translateY(0px) translateX(100%); transition: 300ms;">
-                <h3 class="text-white lh-1 fs-2">{{ project.title }}</h3>
-                <p class="ls-1 mb-0 text-700">{{ project.short_description }}</p>
+
+      <div class="row g-4 mt-1 text-start">
+        @for (project of projects; track project.id) {
+          <div class="col-sm-6 col-lg-4">
+            <a
+              class="project-card d-block h-100 rounded overflow-hidden text-decoration-none"
+              [routerLink]="['/projects', project.slug]">
+              <img
+                class="project-image img-fluid w-100"
+                [src]="(project.image || 'https://placehold.co/600x400?text=Project') | optimizedImage: 800"
+                [attr.srcset]="project.image ? ((project.image | optimizedImage: 480) + ' 480w, ' + (project.image | optimizedImage: 800) + ' 800w') : null"
+                sizes="(min-width: 992px) 360px, (min-width: 576px) 50vw, 100vw"
+                width="800" height="533" loading="lazy" decoding="async"
+                [alt]="project.title"
+                (error)="useFallbackImage($event)" />
+              <div class="project-card__content p-4">
+                @if (project.category) {
+                  <p class="small text-uppercase ls-1 text-600 mb-2">{{ project.category }}</p>
+                }
+                <h3 class="h4 text-dark mb-2">{{ project.title }}</h3>
+                <p class="mb-0 text-700">{{ project.short_description }}</p>
               </div>
-            </a></div>
-        </div>
+            </a>
+          </div>
+        }
       </div>
-    }
     </div>
-  </div><!-- end of .container-->
-</section>
+  </section>
+}

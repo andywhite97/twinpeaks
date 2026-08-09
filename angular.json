@@ -29,7 +29,10 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "public/vendors/glightbox/glightbox.min.css",
+              "public/vendors/swiper/swiper-bundle.min.css",
+              "public/css/theme.min.css"
             ],
             "fileReplacements": [
               {
@@ -93,7 +96,10 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "public/vendors/glightbox/glightbox.min.css",
+              "public/vendors/swiper/swiper-bundle.min.css",
+              "public/css/theme.min.css"
             ]
           }
         }
