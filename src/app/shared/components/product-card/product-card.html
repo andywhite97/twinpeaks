@@ -6,7 +6,7 @@
   <div class="card-body d-flex flex-column p-4">
     @if (product.category) { <p class="small text-uppercase text-600 ls-1 mb-2">{{ product.category.name }}</p> }
     <h3 class="h5 font-base text-transform-none fw-medium lh-1 mb-2"><a class="text-black text-decoration-none" [routerLink]="['/products', product.slug]">{{ product.name }}</a></h3>
-    <p class="product-card__rating mb-3" [attr.aria-label]="product.rating + ' out of 5 stars'">{{ stars(product.rating) }} <span class="text-600">{{ product.rating | number: '1.1-1' }}</span></p>
+    <p class="product-card__rating mb-3" [attr.aria-label]="product.rating + ' out of 5 stars'">{{ stars(product.rating) }} <span class="text-600 d-none">{{ product.rating | number: '1.1-1' }}</span></p>
     <p class="text-700 mb-4">{{ summary || 'Explore this Twinpeaks product.' }}</p>
     <div class="d-flex align-items-end justify-content-between gap-3 mt-auto mb-3">
       <div>@if (hasSalePrice) { <span class="text-600 text-decoration-line-through d-block">SZL {{ product.price | number: '1.2-2' }}</span><span class="text-dark fw-bold">SZL {{ product.sale_price | number: '1.2-2' }}</span> } @else if (hasPrice) { <span class="text-dark fw-bold">SZL {{ product.price | number: '1.2-2' }}</span> } @else { <span class="text-600 small">Pricing on request</span> }</div>

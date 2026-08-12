@@ -1,6 +1,6 @@
 <section class="text-center" id="solutions">
   <div class="container">
-    <div class="row mb-4" data-zanim-timeline="{}">
+    <div class="row" data-zanim-timeline="{}">
       <div class="col">
         <div class="overflow-hidden">
           <h2 class="fs-md-5" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:0}"
@@ -20,17 +20,17 @@
     </div>
     <div class="row">
       @for (solution of solutions; track solution.id) {
-      <div class="col-sm-6 col-lg-4 mb-3" data-zanim-timeline="{}">
+      <div class="col-sm-6 col-lg-4" data-zanim-timeline="{}">
         <div class="overflow-hidden">
           <div class="service-item p-3 p-md-4 h-100">
             <div class="overflow-hidden">
-              <div class="px-4 icon-circle" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:&quot;0&quot;}"
+              <div class="icon-circle" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:&quot;0&quot;}"
                 style="transform: translate(0px, 0px); opacity: 1;">
-                <span class="{{ solution.icon || 'fas fa-lightbulb' }}"></span>
+                <i class="{{ solution.icon || 'fas fa-lightbulb' }}"></i>
               </div>
             </div>
             <div class="overflow-hidden">
-              <h5 class="fw-normal ls-3 mb-2"
+              <h5 class="fw-normal ls-3"
                 data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:&quot;0.1&quot;}"
                 style="transform: translate(0px, 0px); opacity: 1;">{{ solution.title }}</h5>
             </div>

@@ -1,6 +1,5 @@
 .brand-card {
   min-height: 96px;
-  background: rgba(255, 255, 255, 0.05);
   transition: background-color 180ms ease, transform 180ms ease;
 }
 
@@ -23,7 +22,6 @@
 
 .brand-card:hover,
 .brand-card:focus-visible {
-  background: rgba(255, 255, 255, 0.12);
   transform: translateY(-2px);
 }
 

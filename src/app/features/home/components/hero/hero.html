@@ -14,10 +14,10 @@
                 confidence.' }}</p>
               </div>
               <div data-zanim-xs="{&quot;from&quot;:{&quot;opacity&quot;:0,&quot;y&quot;:30},&quot;to&quot;:{&quot;opacity&quot;:1,&quot;y&quot;:0},&quot;duration&quot;:1.5,&quot;delay&quot;:0.5}" style="transform: translate(0px, 0px); opacity: 1;">
-                <a class="btn btn-md btn-light hvr-sweep-top px-4"
+                <a class="btn btn-md btn-light hvr-sweep-top px-4 mb-md-0 mb-2"
                   [routerLink]="hero?.hero_primary_cta_url || '/contact'">{{ hero?.hero_primary_cta_text || 'Request a consultation'
                   }}</a>
-                  <a class="btn btn-md btn-outline-light hvr-sweep-top mx-3 px-4" [routerLink]="hero?.hero_secondary_cta_url || '/services'">{{ hero?.hero_secondary_cta_text || 'Explore services' }}</a>
+                  <a class="btn btn-md btn-outline-light hvr-sweep-top px-4 ms-md-2" [routerLink]="hero?.hero_secondary_cta_url || '/services'">{{ hero?.hero_secondary_cta_text || 'Explore services' }}</a>
               </div>
               @if (hero && hero.trust_badges && hero.trust_badges.length) {
               <div class="d-flex flex-wrap gap-2 my-2">
