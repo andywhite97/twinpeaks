@@ -15,13 +15,23 @@
   z-index: 1;
 }
 
-.brand-carousel__button--previous { left: -2.5rem; }
-.brand-carousel__button--next { right: -2.5rem; }
+.brand-carousel__button--previous {
+  left: -2.5rem;
+}
 
-@media (max-width: 767.98px) { .brand-carousel__button { display: none; } }
+.brand-carousel__button--next {
+  right: -2.5rem;
+}
+
+@media (max-width: 767.98px) {
+  .brand-carousel__button {
+    display: none;
+  }
+}
 
 .brand-card:hover,
 .brand-card:focus-visible {
+  background: rgba(255, 255, 255, 1);
   transform: translateY(-2px);
 }
 
