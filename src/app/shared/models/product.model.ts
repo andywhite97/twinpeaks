@@ -15,6 +15,13 @@ export interface ProductBrand {
   logo?: string;
 }
 
+export interface ProductImage {
+  id: number;
+  image: string;
+  alt_text?: string;
+  display_order: number;
+}
+
 export interface Product {
   id: number;
   name: string;
@@ -23,6 +30,7 @@ export interface Product {
   price?: number;
   sale_price?: number;
   image?: string;
+  images?: ProductImage[];
   category?: ProductCategory | null;
   brand?: ProductBrand | null;
   stock_quantity: number;

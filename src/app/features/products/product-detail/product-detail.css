@@ -1,3 +1,50 @@
 .card img {
   display: block;
 }
+
+.product-gallery-thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.product-gallery-thumbnail {
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 0;
+}
+
+.product-gallery-thumbnail.is-selected {
+  border-color: var(--bs-dark);
+}
+
+.product-gallery-thumbnail img {
+  display: block;
+  height: 72px;
+  object-fit: cover;
+  width: 88px;
+}
+
+.product-description :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--bs-dark);
+  font-weight: 600;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.product-description :is(p, ul, ol) {
+  margin-bottom: 1rem;
+}
+
+.product-description :is(ul, ol) {
+  padding-left: 1.4rem;
+}
+
+.product-description code {
+  color: var(--bs-dark);
+  background: var(--bs-light);
+  border-radius: 0.25rem;
+  padding: 0.1rem 0.3rem;
+}

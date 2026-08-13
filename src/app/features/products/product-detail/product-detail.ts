@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProductService } from '../product';
-import { Product } from '../../../shared/models/product.model';
+import { Product, ProductImage } from '../../../shared/models/product.model';
 import { PageHeader } from '../../../shared/components/page-header/page-header';
 import { Loader } from '../../../shared/components/loader/loader';
+import { MarkdownPipe } from '../../../shared/pipes/markdown.pipe';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [PageHeader, Loader, RouterLink],
+  imports: [PageHeader, Loader, RouterLink, MarkdownPipe],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -16,6 +17,7 @@ export class ProductDetail implements OnInit {
   product: Product | null = null;
   isLoading = true;
   hasError = false;
+  selectedImage?: ProductImage;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +40,7 @@ export class ProductDetail implements OnInit {
       this.productService.getProduct(slug).subscribe({
         next: (data) => {
           this.product = data;
+          this.selectedImage = data.images?.[0];
           this.isLoading = false;
           this.cdr.markForCheck();
         },
@@ -48,5 +51,21 @@ export class ProductDetail implements OnInit {
         },
       });
     });
+  }
+
+  get galleryImages(): ProductImage[] {
+    if (!this.product) return [];
+    const primaryImage = this.product.image
+      ? [{ id: 0, image: this.product.image, alt_text: this.product.name, display_order: -1 }]
+      : [];
+    return [...primaryImage, ...(this.product.images ?? [])];
+  }
+
+  selectImage(image: ProductImage): void {
+    this.selectedImage = image;
+  }
+
+  get displayedImage(): ProductImage | undefined {
+    return this.selectedImage ?? this.galleryImages[0];
   }
 }

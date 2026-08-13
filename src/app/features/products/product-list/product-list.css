@@ -1,3 +1,19 @@
+.product-filter-bar {
+  background: #f6f7f8;
+  border: 1px solid #e3e5e8;
+}
+
+.product-filter-bar .form-label {
+  font-size: 0.875rem;
+  margin-bottom: 0.4rem;
+}
+
+.product-filter-reset {
+  font-size: 1.1rem;
+  line-height: 1;
+  min-height: 38px;
+}
+
 .product-loader {
   align-items: center;
   color: #555;

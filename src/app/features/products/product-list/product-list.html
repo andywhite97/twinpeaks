@@ -2,6 +2,38 @@
 
 <section id="product-list" class="py-5">
   <div class="container">
+    <div class="product-filter-bar rounded-3 mb-5 p-3 p-md-4">
+      <div class="row align-items-end g-3">
+        <div class="col-md-4">
+          <label class="form-label fw-semibold" for="category-filter">Category</label>
+          <select id="category-filter" class="form-select" [value]="selectedCategory" (change)="selectedCategory = $any($event.target).value; updateFilters()">
+            <option value="">All categories</option>
+            @for (category of categories; track category.id) { <option [value]="category.slug">{{ category.name }}</option> }
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-semibold" for="brand-filter">Brand</label>
+          <select id="brand-filter" class="form-select" [value]="selectedBrand" (change)="selectedBrand = $any($event.target).value; updateFilters()">
+            <option value="">All brands</option>
+            @for (brand of brands; track brand.id) { <option [value]="brand.slug">{{ brand.name }}</option> }
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label fw-semibold" for="sort-products">Sort by</label>
+          <select id="sort-products" class="form-select" [value]="selectedSort" (change)="selectedSort = $any($event.target).value; updateFilters()">
+            <option value="">Newest</option>
+            <option value="name">Name: A–Z</option>
+            <option value="price_asc">Price: low to high</option>
+            <option value="price_desc">Price: high to low</option>
+          </select>
+        </div>
+        @if (hasActiveFilters) {
+          <div class="col-md-1 d-grid">
+            <button class="btn btn-outline-dark product-filter-reset" type="button" (click)="clearFilters()" aria-label="Clear filters" title="Clear filters">&#10005;</button>
+          </div>
+        }
+      </div>
+    </div>
     <div class="row">
       @if (isLoading) {
         <div class="col"><app-loader message="Loading products..."></app-loader></div>
@@ -11,7 +43,7 @@
         @for (product of products; track product.id) {
           <div class="col-md-6 col-lg-4 mb-4"><app-product-card [product]="product" /></div>
         } @empty {
-          <div class="col text-center"><p class="text-700 mb-0">No products have been added yet.</p></div>
+          <div class="col text-center"><p class="text-700 mb-0">No products match these filters.</p></div>
         }
       }
     </div>

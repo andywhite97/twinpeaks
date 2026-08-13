@@ -19,21 +19,30 @@
       <div class="row g-5 align-items-start">
         <div class="col-lg-6">
           <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-            @if (product.image) {
-              <img [src]="product.image" [alt]="product.name" class="img-fluid w-100" style="height: 460px; object-fit: cover;">
+            @if (displayedImage) {
+              <img [src]="displayedImage.image" [alt]="displayedImage.alt_text || product.name" class="img-fluid w-100" style="height: 460px; object-fit: cover;">
             } @else {
               <div class="bg-light d-flex align-items-center justify-content-center" style="height: 460px;">
                 <span class="text-muted">No image available</span>
               </div>
             }
           </div>
+          @if (galleryImages.length > 1) {
+            <div class="product-gallery-thumbnails mt-3" aria-label="Product images">
+              @for (image of galleryImages; track image.id) {
+                <button class="product-gallery-thumbnail" type="button" [class.is-selected]="displayedImage?.id === image.id" (click)="selectImage(image)" [attr.aria-label]="'View image ' + ($index + 1)">
+                  <img [src]="image.image" [alt]="image.alt_text || product.name">
+                </button>
+              }
+            </div>
+          }
         </div>
         <div class="col-lg-6">
           <div class="d-flex flex-column gap-3">
             <div>
               <p class="text-uppercase small fw-semibold mb-2 text-primary">Product detail</p>
               <h2 class="display-6 fw-semibold mb-3">{{ product.name }}</h2>
-              <p class="text-muted lead mb-0">{{ product.description }}</p>
+              <div class="product-description text-muted lead mb-0" [innerHTML]="product.description | markdown"></div>
             </div>
             @if (product.price) {
               <div class="rounded-4 bg-light p-4">
