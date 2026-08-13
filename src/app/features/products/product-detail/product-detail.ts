@@ -5,10 +5,11 @@ import { Product, ProductImage } from '../../../shared/models/product.model';
 import { PageHeader } from '../../../shared/components/page-header/page-header';
 import { Loader } from '../../../shared/components/loader/loader';
 import { MarkdownPipe } from '../../../shared/pipes/markdown.pipe';
+import { ProductCard } from '../../../shared/components/product-card/product-card';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [PageHeader, Loader, RouterLink, MarkdownPipe],
+  imports: [PageHeader, Loader, RouterLink, MarkdownPipe, ProductCard],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,6 +19,7 @@ export class ProductDetail implements OnInit {
   isLoading = true;
   hasError = false;
   selectedImage?: ProductImage;
+  relatedProducts: Product[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -37,12 +39,19 @@ export class ProductDetail implements OnInit {
 
       this.isLoading = true;
       this.hasError = false;
+      this.relatedProducts = [];
       this.productService.getProduct(slug).subscribe({
         next: (data) => {
           this.product = data;
-          this.selectedImage = data.images?.[0];
+          this.selectedImage = undefined;
           this.isLoading = false;
           this.cdr.markForCheck();
+          this.productService.getRelatedProducts(data.slug).subscribe({
+            next: (products) => {
+              this.relatedProducts = products;
+              this.cdr.markForCheck();
+            },
+          });
         },
         error: () => {
           this.hasError = true;

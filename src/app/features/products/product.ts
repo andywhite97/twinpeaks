@@ -20,4 +20,8 @@ export class ProductService {
   getProduct(slug: string) {
     return this.api.get<Product>(`products/${slug}/`);
   }
+
+  getRelatedProducts(slug: string) {
+    return this.api.get<Product[]>(`products/${slug}/related/`);
+  }
 }

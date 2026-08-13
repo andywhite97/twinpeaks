@@ -20,9 +20,9 @@
         <div class="col-lg-6">
           <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
             @if (displayedImage) {
-              <img [src]="displayedImage.image" [alt]="displayedImage.alt_text || product.name" class="img-fluid w-100" style="height: 460px; object-fit: cover;">
+              <img [src]="displayedImage.image" [alt]="displayedImage.alt_text || product.name" class="product-main-image img-fluid w-100">
             } @else {
-              <div class="bg-light d-flex align-items-center justify-content-center" style="height: 460px;">
+              <div class="product-main-image bg-light d-flex align-items-center justify-content-center">
                 <span class="text-muted">No image available</span>
               </div>
             }
@@ -57,6 +57,22 @@
           </div>
         </div>
       </div>
+      @if (relatedProducts.length) {
+        <section class="related-products mt-6 pt-5 border-top">
+          <div class="d-flex align-items-end justify-content-between gap-3 mb-4">
+            <div>
+              <p class="text-uppercase small fw-semibold mb-1 text-primary">You may also like</p>
+              <h2 class="h3 mb-0">Related products</h2>
+            </div>
+            <a class="btn btn-outline-dark btn-sm" routerLink="/products">View all</a>
+          </div>
+          <div class="related-products__slider" aria-label="Related products">
+            @for (relatedProduct of relatedProducts; track relatedProduct.id) {
+              <div class="related-products__slide"><app-product-card [product]="relatedProduct" /></div>
+            }
+          </div>
+        </section>
+      }
     }
   </div>
 </section>

@@ -2,6 +2,11 @@
   display: block;
 }
 
+.product-main-image {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
 .product-gallery-thumbnails {
   display: flex;
   flex-wrap: wrap;
@@ -26,6 +31,21 @@
   height: 72px;
   object-fit: cover;
   width: 88px;
+}
+
+.related-products__slider {
+  display: grid;
+  gap: 1.5rem;
+  grid-auto-columns: minmax(260px, 320px);
+  grid-auto-flow: column;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  padding-bottom: 0.75rem;
+  scroll-snap-type: inline mandatory;
+}
+
+.related-products__slide {
+  scroll-snap-align: start;
 }
 
 .product-description :is(h1, h2, h3, h4, h5, h6) {
