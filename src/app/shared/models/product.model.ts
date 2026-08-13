@@ -8,6 +8,13 @@ export interface ProductCategory {
   display_order: number;
 }
 
+export interface ProductBrand {
+  id: number;
+  name: string;
+  slug: string;
+  logo?: string;
+}
+
 export interface Product {
   id: number;
   name: string;
@@ -17,6 +24,7 @@ export interface Product {
   sale_price?: number;
   image?: string;
   category?: ProductCategory | null;
+  brand?: ProductBrand | null;
   stock_quantity: number;
   stock_status: 'in_stock' | 'out_of_stock';
   rating: number;

@@ -15,15 +15,9 @@
           <div class="swiper-wrapper">
             @for (brand of brands; track brand.id) {
               <div class="swiper-slide">
-                @if (brand.website) {
-                  <a class="brand-card d-flex align-items-center justify-content-center rounded p-3" [href]="brand.website" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'Visit ' + brand.name">
-                    <img class="brand-logo" [src]="brand.logo || fallbackLogo(brand.name)" [alt]="brand.name" loading="lazy" (error)="useFallbackLogo($event, brand.name)" />
-                  </a>
-                } @else {
-                  <div class="brand-card d-flex align-items-center justify-content-center rounded p-3">
-                    <img class="brand-logo" [src]="brand.logo || fallbackLogo(brand.name)" [alt]="brand.name" loading="lazy" (error)="useFallbackLogo($event, brand.name)" />
-                  </div>
-                }
+                <a class="brand-card d-flex align-items-center justify-content-center rounded p-3" [routerLink]="'/products'" [queryParams]="{ brand: brand.slug }" [attr.aria-label]="'View ' + brand.name + ' products'">
+                  <img class="brand-logo" [src]="brand.logo || fallbackLogo(brand.name)" [alt]="brand.name" loading="lazy" (error)="useFallbackLogo($event, brand.name)" />
+                </a>
               </div>
             }
           </div>

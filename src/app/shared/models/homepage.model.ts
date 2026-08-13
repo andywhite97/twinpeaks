@@ -71,8 +71,8 @@ export interface HomepageProjectImage {
 export interface HomepageBrand {
   id: number;
   name: string;
+  slug: string;
   logo?: string;
-  website?: string;
 }
 
 export interface HomepageTestimonial {

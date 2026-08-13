@@ -23,6 +23,7 @@ export class ProductList implements OnInit {
   hasError = false;
   hasMoreProducts = false;
   private category?: string;
+  private brand?: string;
 
   constructor(
     private productService: ProductService,
@@ -33,6 +34,7 @@ export class ProductList implements OnInit {
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
       this.category = params.get('category') ?? undefined;
+      this.brand = params.get('brand') ?? undefined;
       this.currentPage = 1;
       this.loadProducts(1);
     });
@@ -65,7 +67,7 @@ export class ProductList implements OnInit {
     this.isLoading = !append;
     this.isLoadingMore = append;
 
-    this.productService.getProducts(page, this.pageSize, this.category).subscribe({
+    this.productService.getProducts(page, this.pageSize, this.category, this.brand).subscribe({
       next: (data) => {
         this.products = append ? [...this.products, ...data.results] : data.results;
         this.currentPage = page;

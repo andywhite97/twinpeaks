@@ -1,11 +1,12 @@
 import { AfterViewChecked, ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { HomepageBrand } from '../../../../shared/models/homepage.model';
 
 interface SwiperInstance { destroy(deleteInstance?: boolean, cleanStyles?: boolean): void; }
 interface SwiperConstructor { new (element: HTMLElement, options: Record<string, unknown>): SwiperInstance; }
 declare global { interface Window { Swiper?: SwiperConstructor; } }
 
-@Component({ standalone: true, selector: 'app-brands-section', imports: [], templateUrl: './brands.html', styleUrls: ['./brands.css'], changeDetection: ChangeDetectionStrategy.OnPush })
+@Component({ standalone: true, selector: 'app-brands-section', imports: [RouterLink], templateUrl: './brands.html', styleUrls: ['./brands.css'], changeDetection: ChangeDetectionStrategy.OnPush })
 export class BrandsComponent implements AfterViewChecked, OnDestroy {
   private brandItems: HomepageBrand[] = [];
   private swiper?: SwiperInstance;
