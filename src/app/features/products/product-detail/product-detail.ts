@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProductService } from '../product';
 import { Product, ProductImage } from '../../../shared/models/product.model';
@@ -9,6 +10,10 @@ import { ProductCard } from '../../../shared/components/product-card/product-car
 import { SeoService } from '../../../core/services/seo.service';
 import { OptimizedImagePipe } from '../../../shared/pipes/optimized-image.pipe';
 
+interface SwiperInstance { destroy(deleteInstance?: boolean, cleanStyles?: boolean): void; }
+interface SwiperConstructor { new (element: HTMLElement, options: Record<string, unknown>): SwiperInstance; }
+declare global { interface Window { Swiper?: SwiperConstructor; } }
+
 @Component({
   selector: 'app-product-detail',
   imports: [PageHeader, Loader, RouterLink, MarkdownPipe, ProductCard, OptimizedImagePipe],
@@ -16,19 +21,29 @@ import { OptimizedImagePipe } from '../../../shared/pipes/optimized-image.pipe';
   styleUrl: './product-detail.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductDetail implements OnInit {
+export class ProductDetail implements OnInit, AfterViewChecked, OnDestroy {
   product: Product | null = null;
   isLoading = true;
   hasError = false;
   selectedImage?: ProductImage;
   relatedProducts: Product[] = [];
+  private relatedSwiper?: SwiperInstance;
+  private relatedSwiperTimer?: number;
+  @ViewChild('relatedSwiperRoot') private relatedSwiperRoot?: ElementRef<HTMLElement>;
+  @ViewChild('relatedPreviousButton') private relatedPreviousButton?: ElementRef<HTMLElement>;
+  @ViewChild('relatedNextButton') private relatedNextButton?: ElementRef<HTMLElement>;
+  @ViewChild('relatedPagination') private relatedPagination?: ElementRef<HTMLElement>;
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private seoService: SeoService,
     private cdr: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: object,
   ) {}
+
+  ngAfterViewChecked(): void { this.queueRelatedSwiper(); }
+  ngOnDestroy(): void { if (isPlatformBrowser(this.platformId)) this.destroyRelatedSwiper(); }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -80,6 +95,28 @@ export class ProductDetail implements OnInit {
 
   get displayedImage(): ProductImage | undefined {
     return this.selectedImage ?? this.galleryImages[0];
+  }
+
+  private queueRelatedSwiper(): void {
+    if (!isPlatformBrowser(this.platformId) || this.relatedSwiperTimer || this.relatedSwiper || !this.relatedSwiperRoot || this.relatedProducts.length < 2) return;
+    this.relatedSwiperTimer = window.setTimeout(() => {
+      this.relatedSwiperTimer = undefined;
+      if (!this.relatedSwiperRoot || !window.Swiper) return;
+      this.relatedSwiper = new window.Swiper(this.relatedSwiperRoot.nativeElement, {
+        slidesPerView: 2,
+        spaceBetween: 12,
+        navigation: { prevEl: this.relatedPreviousButton?.nativeElement, nextEl: this.relatedNextButton?.nativeElement },
+        pagination: { el: this.relatedPagination?.nativeElement, clickable: true },
+        breakpoints: { 576: { slidesPerView: 2, spaceBetween: 16 }, 768: { slidesPerView: 3, spaceBetween: 20 }, 1200: { slidesPerView: 4, spaceBetween: 24 } },
+      });
+    });
+  }
+
+  private destroyRelatedSwiper(): void {
+    if (this.relatedSwiperTimer) window.clearTimeout(this.relatedSwiperTimer);
+    this.relatedSwiperTimer = undefined;
+    this.relatedSwiper?.destroy(true, true);
+    this.relatedSwiper = undefined;
   }
 
   private updateProductSeo(product: Product): void {

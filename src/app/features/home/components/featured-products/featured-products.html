@@ -1,7 +1,7 @@
 @if (products.length) {
   <section id="featured-products" class="py-5"><div class="container">
     <div class="row"><div class="col text-center mb-4"><h2 class="fs-md-5 mb-2">Featured products</h2><p class="fs--1 text-uppercase text-black ls-1 mb-0">Curated offerings ready to deploy</p><hr class="hr-short bg-black" /></div></div>
-    <div class="row g-4">@for (product of products; track product.id) { <div class="col-md-6 col-lg-4"><app-product-card [product]="product" /></div> }</div>
+    <div class="row g-4 featured-products__grid">@for (product of products; track product.id) { <div class="col-6 col-md-6 col-lg-4"><app-product-card [product]="product" /></div> }</div>
     <div class="text-center"><a class="btn btn-sm btn-outline-dark hvr-sweep-top mt-5" routerLink="/products">View all products</a></div>
   </div></section>
 }

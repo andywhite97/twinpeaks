@@ -9,8 +9,8 @@
     <h3 class="product-card__title">{{ product.name }}</h3>
     <div class="product-card__purchase-row mt-auto">
       <div class="product-card__price">
-        @if (hasSalePrice) { <span class="product-card__original-price">SZL {{ product.price | number: '1.2-2' }}</span><span>SZL {{ product.sale_price | number: '1.2-2' }}</span> }
-        @else if (hasPrice) { <span>SZL {{ product.price | number: '1.2-2' }}</span> }
+        @if (hasSalePrice) { <span class="product-card__original-price">E {{ product.price | number: '1.2-2' }}</span><span>E {{ product.sale_price | number: '1.2-2' }}</span> }
+        @else if (hasPrice) { <span>E {{ product.price | number: '1.2-2' }}</span> }
         @else { <span class="product-card__quote-price">Pricing on request</span> }
       </div>
       <button class="product-card__cart-button" type="button" [disabled]="product.stock_status === 'out_of_stock'" (click)="addToCart($event)" [attr.aria-label]="addedToCart ? product.name + ' added to cart' : 'Add ' + product.name + ' to cart'">
