@@ -5,6 +5,31 @@
   outline-offset: 3px;
 }
 
+html, body { overflow-x: clip; }
+
+img { height: auto; max-width: 100%; }
+
+/* Lightweight fallbacks for the small set of legacy Font Awesome class names
+   used by API content; avoids shipping the 1.1 MB Font Awesome runtime. */
+.fab.fa-facebook-f::before { content: 'f'; }
+.fab.fa-twitter::before { content: '𝕏'; }
+.fab.fa-instagram::before { content: '◎'; }
+.fab.fa-linkedin-in::before { content: 'in'; }
+.fas.fa-map-marker-alt::before { content: '⌖'; }
+.fas.fa-phone::before { content: '☎'; }
+.fas.fa-envelope::before { content: '✉'; }
+.fas.fa-lightbulb::before { content: '◉'; }
+.fab::before, .fas::before { display: inline-grid; font-family: Arial, sans-serif; font-style: normal; font-weight: 700; min-width: 1em; place-items: center; }
+
+@media (max-width: 767.98px) {
+  .py-5, .py-6, .py-7 { padding-bottom: 3rem !important; padding-top: 3rem !important; }
+  .container { padding-left: 1rem; padding-right: 1rem; }
+  h1, .h1 { font-size: clamp(1.9rem, 8vw, 2.55rem); }
+  .display-3 { font-size: clamp(2.25rem, 10vw, 3.45rem); }
+  .display-6 { font-size: clamp(1.65rem, 7vw, 2.25rem); }
+  .form-control, .btn { min-height: 44px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

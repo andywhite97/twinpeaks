@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { RouterOutlet } from '@angular/router';
 import { Footer } from './shared/components/footer/footer';
@@ -19,7 +20,8 @@ export class App implements OnInit {
     private router: Router,
     private seoService: SeoService,
     private analyticsService: AnalyticsService,
-    private structuredDataService: StructuredDataService
+    private structuredDataService: StructuredDataService,
+    @Inject(PLATFORM_ID) private platformId: object,
   ) {}
 
   ngOnInit() {
@@ -31,7 +33,9 @@ export class App implements OnInit {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         // Scroll to top on navigation
-        window.scrollTo(0, 0);
+        if (isPlatformBrowser(this.platformId)) {
+          window.scrollTo(0, 0);
+        }
 
         // Update SEO tags from route data
         const routeData = this.router.routerState.root.firstChild?.snapshot.data;
@@ -47,7 +51,9 @@ export class App implements OnInit {
           this.seoService.updateCanonicalUrl(currentUrl);
 
           // Track page view with Analytics
-          this.analyticsService.trackPageView(this.router.url, routeData['title'] || 'Twinpeaks');
+          if (isPlatformBrowser(this.platformId)) {
+            this.analyticsService.trackPageView(this.router.url, routeData['title'] || 'Twinpeaks');
+          }
         }
       });
   }

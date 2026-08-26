@@ -1,4 +1,5 @@
-import { AfterViewChecked, ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { AfterViewChecked, ChangeDetectionStrategy, Component, ElementRef, Inject, Input, OnDestroy, PLATFORM_ID, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HomepageBrand } from '../../../../shared/models/homepage.model';
 
@@ -16,16 +17,19 @@ export class BrandsComponent implements AfterViewChecked, OnDestroy {
   @ViewChild('nextButton') private nextButton?: ElementRef<HTMLElement>;
   @ViewChild('pagination') private pagination?: ElementRef<HTMLElement>;
 
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
+
   @Input() set brands(value: HomepageBrand[] | null | undefined) { this.brandItems = value ?? []; this.queueInitialisation(); }
   get brands(): HomepageBrand[] { return this.brandItems; }
 
   ngAfterViewChecked(): void { this.queueInitialisation(); }
-  ngOnDestroy(): void { this.destroySwiper(); }
+  ngOnDestroy(): void { if (isPlatformBrowser(this.platformId)) this.destroySwiper(); }
 
   fallbackLogo(name: string): string { return `https://placehold.co/180x90?text=${encodeURIComponent(name)}`; }
   useFallbackLogo(event: Event, name: string): void { const image = event.target as HTMLImageElement; image.onerror = null; image.src = this.fallbackLogo(name); }
 
   private queueInitialisation(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
     if (this.initialiseTimer || !this.swiperRoot || this.brands.length < 2) return;
     this.initialiseTimer = window.setTimeout(() => {
       this.initialiseTimer = undefined;

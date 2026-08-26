@@ -6,10 +6,12 @@ import { PageHeader } from '../../../shared/components/page-header/page-header';
 import { Loader } from '../../../shared/components/loader/loader';
 import { MarkdownPipe } from '../../../shared/pipes/markdown.pipe';
 import { ProductCard } from '../../../shared/components/product-card/product-card';
+import { SeoService } from '../../../core/services/seo.service';
+import { OptimizedImagePipe } from '../../../shared/pipes/optimized-image.pipe';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [PageHeader, Loader, RouterLink, MarkdownPipe, ProductCard],
+  imports: [PageHeader, Loader, RouterLink, MarkdownPipe, ProductCard, OptimizedImagePipe],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,6 +26,7 @@ export class ProductDetail implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
+    private seoService: SeoService,
     private cdr: ChangeDetectorRef,
   ) {}
 
@@ -45,6 +48,7 @@ export class ProductDetail implements OnInit {
           this.product = data;
           this.selectedImage = undefined;
           this.isLoading = false;
+          this.updateProductSeo(data);
           this.cdr.markForCheck();
           this.productService.getRelatedProducts(data.slug).subscribe({
             next: (products) => {
@@ -76,5 +80,37 @@ export class ProductDetail implements OnInit {
 
   get displayedImage(): ProductImage | undefined {
     return this.selectedImage ?? this.galleryImages[0];
+  }
+
+  private updateProductSeo(product: Product): void {
+    const productUrl = `https://twinpeaksinvestment.com/products/${encodeURIComponent(product.slug)}`;
+    const description = this.toPlainText(product.description) || `Explore ${product.name} from Twinpeaks.`;
+    const keywords = [product.name, product.brand?.name, product.category?.name, 'Twinpeaks products']
+      .filter((value): value is string => Boolean(value))
+      .join(', ');
+
+    this.seoService.updateSeoTags({
+      title: `${product.name} | Twinpeaks`,
+      description,
+      ogImage: this.toAbsoluteUrl(product.image),
+      ogUrl: productUrl,
+      ogType: 'product',
+      keywords,
+    });
+    this.seoService.updateCanonicalUrl(productUrl);
+  }
+
+  private toPlainText(value: string): string {
+    return value
+      .replace(/<[^>]*>/g, ' ')
+      .replace(/[*_#`]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, 160);
+  }
+
+  private toAbsoluteUrl(url?: string): string | undefined {
+    if (!url) return undefined;
+    return new URL(url, 'https://twinpeaksinvestment.com').toString();
   }
 }

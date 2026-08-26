@@ -1,12 +1,11 @@
-<nav class="navbar navbar-expand-lg navbar-dark navbar-theme fixed-top p-0"
-  data-navbar-on-scroll="data-navbar-on-scroll"
-  style="background-color: rgba(0, 0, 0, 0); border-color: rgba(255, 255, 255, 0.15);">
+<nav class="navbar navbar-expand-lg navbar-dark navbar-theme site-navigation fixed-top p-0"
+  aria-label="Primary navigation">
   <div class="container">
     <a class="navbar-brand fw-normal ls-2" routerLink="/" (click)="closeMenu()">Twinpeaks</a>
-    <button class="navbar-toggler p-0" type="button" data-bs-toggle="collapse"
-      data-bs-target="#primaryNavbarCollapse" aria-controls="primaryNavbarCollapse" aria-expanded="false"
+    <button class="navbar-toggler p-0" type="button" (click)="toggleMenu()"
+      aria-controls="primaryNavbarCollapse" [attr.aria-expanded]="isMenuOpen"
       aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse" id="primaryNavbarCollapse">
+    <div class="navbar-collapse" id="primaryNavbarCollapse" [class.is-open]="isMenuOpen">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
           <a class="nav-link" id="hometab" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
@@ -19,6 +18,9 @@
         <li class="nav-item">
           <a class="nav-link" id="servicetab" routerLink="/services" routerLinkActive="active" (click)="closeMenuAndNavigate()"><span
               class="nav-link-text">Services</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" fragment="solutions" (click)="closeMenuAndNavigate()"><span class="nav-link-text">Solutions</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" id="projectstab" routerLink="/projects" routerLinkActive="active" (click)="closeMenuAndNavigate()"><span

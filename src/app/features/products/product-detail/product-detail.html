@@ -20,7 +20,7 @@
         <div class="col-lg-6">
           <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
             @if (displayedImage) {
-              <img [src]="displayedImage.image" [alt]="displayedImage.alt_text || product.name" class="product-main-image img-fluid w-100">
+              <img [src]="displayedImage.image | optimizedImage: 1200" [attr.srcset]="(displayedImage.image | optimizedImage: 640) + ' 640w, ' + (displayedImage.image | optimizedImage: 1200) + ' 1200w'" sizes="(min-width: 992px) 50vw, 100vw" [alt]="displayedImage.alt_text || product.name" class="product-main-image img-fluid w-100" width="1200" height="1200" fetchpriority="high" decoding="async">
             } @else {
               <div class="product-main-image bg-light d-flex align-items-center justify-content-center">
                 <span class="text-muted">No image available</span>
@@ -31,7 +31,7 @@
             <div class="product-gallery-thumbnails mt-3" aria-label="Product images">
               @for (image of galleryImages; track image.id) {
                 <button class="product-gallery-thumbnail" type="button" [class.is-selected]="displayedImage?.id === image.id" (click)="selectImage(image)" [attr.aria-label]="'View image ' + ($index + 1)">
-                  <img [src]="image.image" [alt]="image.alt_text || product.name">
+                  <img [src]="image.image | optimizedImage: 160" [alt]="image.alt_text || product.name" width="160" height="120" loading="lazy" decoding="async">
                 </button>
               }
             </div>
@@ -76,3 +76,9 @@
     }
   </div>
 </section>
+@if (product && !isLoading && !hasError) {
+  <div class="product-mobile-cta d-lg-none" aria-label="Product actions">
+    @if (product.price) { <span class="product-mobile-cta__price">SZL {{ product.price }}</span> }
+    <a class="btn btn-dark" routerLink="/contact">Request a quote</a>
+  </div>
+}

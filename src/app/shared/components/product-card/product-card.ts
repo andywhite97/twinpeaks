@@ -14,6 +14,6 @@ export class ProductCard {
   get hasSalePrice(): boolean { return this.product.sale_price !== undefined && this.product.sale_price !== null; }
   get summary(): string { const description = this.product.description?.trim() ?? ''; return description.length > 130 ? `${description.slice(0, 127).trimEnd()}…` : description; }
   useFallbackImage(event: Event): void { const image = event.target as HTMLImageElement; image.onerror = null; image.src = 'https://placehold.co/600x400?text=Twinpeaks'; }
-  addToCart(): void { if (this.product.stock_status === 'out_of_stock') return; this.cartService.add(this.product); this.addedToCart = true; window.setTimeout(() => this.addedToCart = false, 1800); }
+  addToCart(event: Event): void { event.stopPropagation(); if (this.product.stock_status === 'out_of_stock') return; this.cartService.add(this.product); this.addedToCart = true; window.setTimeout(() => this.addedToCart = false, 1800); }
   stars(rating: number): string { return '★'.repeat(Math.max(0, Math.min(5, Math.round(rating)))); }
 }

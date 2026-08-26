@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 
 export interface SeoData {
@@ -8,6 +9,7 @@ export interface SeoData {
   ogDescription?: string;
   ogImage?: string;
   ogUrl?: string;
+  ogType?: string;
   keywords?: string;
 }
 
@@ -20,7 +22,8 @@ export class SeoService {
 
   constructor(
     private titleService: Title,
-    private metaService: Meta
+    private metaService: Meta,
+    @Inject(DOCUMENT) private document: Document,
   ) {}
 
   updateSeoTags(seoData: SeoData): void {
@@ -62,6 +65,11 @@ export class SeoService {
       content: seoData.ogUrl || this.baseUrl
     });
 
+    this.metaService.updateTag({
+      property: 'og:type',
+      content: seoData.ogType || 'website'
+    });
+
     // Update Twitter Card tags
     this.metaService.updateTag({
       name: 'twitter:title',
@@ -80,11 +88,11 @@ export class SeoService {
   }
 
   updateCanonicalUrl(url: string): void {
-    let link = document.querySelector("link[rel='canonical']") as HTMLLinkElement;
+    let link = this.document.querySelector("link[rel='canonical']") as HTMLLinkElement;
     if (!link) {
-      link = document.createElement('link');
+      link = this.document.createElement('link');
       link.rel = 'canonical';
-      document.head.appendChild(link);
+      this.document.head.appendChild(link);
     }
     link.href = url;
   }

@@ -10,6 +10,14 @@
   background: linear-gradient(90deg, rgba(7, 16, 31, 0.9) 0%, rgba(7, 16, 31, 0.6) 100%);
 }
 
+@media (max-width: 767.98px) {
+  .hero-section { min-height: 38rem; }
+  .hero-section .vh-100 { min-height: 38rem !important; height: auto !important; }
+  .hero-section .header-text { padding: 6.5rem 0 4rem; }
+  .hero-section .btn { display: inline-flex; justify-content: center; margin: .25rem 0 !important; width: 100%; }
+  .hero-section .text-uppercase { font-size: .75rem; letter-spacing: .13rem; line-height: 1.55; }
+}
+
 .letter-spacing-3 {
   letter-spacing: 0.35rem;
 }

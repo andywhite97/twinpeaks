@@ -1,11 +1,13 @@
 @if (brands.length) {
   <section class="bg-black text-center py-6 clients" aria-label="Our clients and partners">
 
-    <div class="row justify-content-center">
-      <div class="col-12 mb-4">
-        <h2 class="fs-md-5 mb-2 text-white">Brands We Work With</h2>
-        <p class="fs--1 text-uppercase text-white ls-1 mb-0">Trusted technology from industry-leading manufacturers</p>
-        <hr class="hr-short bg-black opacity-100" />
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 mb-4">
+          <h2 class="fs-md-5 mb-2 text-white">Brands We Work With</h2>
+          <p class="fs--1 text-uppercase text-white ls-1 mb-0">Trusted technology from industry-leading manufacturers</p>
+          <hr class="hr-short bg-black opacity-100" />
+        </div>
       </div>
     </div>
 
@@ -16,7 +18,7 @@
             @for (brand of brands; track brand.id) {
               <div class="swiper-slide">
                 <a class="brand-card d-flex align-items-center justify-content-center rounded p-3" [routerLink]="'/products'" [queryParams]="{ brand: brand.slug }" [attr.aria-label]="'View ' + brand.name + ' products'">
-                  <img class="brand-logo" [src]="brand.logo || fallbackLogo(brand.name)" [alt]="brand.name" loading="lazy" (error)="useFallbackLogo($event, brand.name)" />
+                  <img class="brand-logo" [src]="brand.logo || fallbackLogo(brand.name)" [alt]="brand.name" width="180" height="90" loading="lazy" decoding="async" (error)="useFallbackLogo($event, brand.name)" />
                 </a>
               </div>
             }

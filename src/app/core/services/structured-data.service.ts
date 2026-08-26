@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StructuredDataService {
+  constructor(@Inject(DOCUMENT) private document: Document) {}
 
   injectOrganizationSchema(): void {
     const schema = {
@@ -113,9 +115,9 @@ export class StructuredDataService {
   }
 
   private injectSchema(schema: any): void {
-    const script = document.createElement('script');
+    const script = this.document.createElement('script');
     script.type = 'application/ld+json';
     script.textContent = JSON.stringify(schema);
-    document.head.appendChild(script);
+    this.document.head.appendChild(script);
   }
 }

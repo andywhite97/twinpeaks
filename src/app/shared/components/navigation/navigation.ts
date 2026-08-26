@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -20,10 +20,8 @@ export class Navigation {
 
   closeMenuAndNavigate(): void {
     this.closeMenu();
-    // Collapse Bootstrap navbar as well
-    const navbarCollapse = document.getElementById('primaryNavbarCollapse');
-    if (navbarCollapse?.classList.contains('show')) {
-      navbarCollapse.classList.remove('show');
-    }
   }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void { this.closeMenu(); }
 }

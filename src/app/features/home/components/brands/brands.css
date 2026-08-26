@@ -16,11 +16,12 @@
 }
 
 .brand-carousel__button--previous {
-  left: -2.5rem;
+  left: 0;
 }
 
+
 .brand-carousel__button--next {
-  right: -2.5rem;
+  right: 0;
 }
 
 @media (max-width: 767.98px) {

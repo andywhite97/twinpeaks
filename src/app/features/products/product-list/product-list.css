@@ -34,3 +34,8 @@
 }
 
 @keyframes product-loader-spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 575.98px) {
+  .product-grid { --bs-gutter-x: .75rem; }
+  .product-filter-bar { margin-bottom: 1.5rem !important; }
+}

@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { HomepageStatistic } from '../../../../shared/models/homepage.model';
 
 @Component({
@@ -14,18 +15,22 @@ export class StatisticsComponent implements OnDestroy {
   private displayedValues = new Map<number, string>();
   private animationTimer?: number;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef, @Inject(PLATFORM_ID) private platformId: object) {}
 
   @Input() set statistics(value: HomepageStatistic[] | null | undefined) {
     this.statisticItems = value ?? [];
     this.animateCounters();
   }
   get statistics(): HomepageStatistic[] { return this.statisticItems; }
-  ngOnDestroy(): void { if (this.animationTimer) window.clearInterval(this.animationTimer); }
+  ngOnDestroy(): void { if (this.animationTimer && isPlatformBrowser(this.platformId)) window.clearInterval(this.animationTimer); }
 
   displayValue(statistic: HomepageStatistic): string { return this.displayedValues.get(statistic.id) ?? statistic.value; }
 
   private animateCounters(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      this.displayedValues = new Map(this.statistics.map((statistic) => [statistic.id, statistic.value]));
+      return;
+    }
     if (this.animationTimer) window.clearInterval(this.animationTimer);
     const targets = this.statistics.map((statistic) => ({ statistic, value: Number(statistic.value) })).filter((item) => Number.isFinite(item.value));
     this.displayedValues = new Map(this.statistics.map((statistic) => [statistic.id, statistic.value]));
