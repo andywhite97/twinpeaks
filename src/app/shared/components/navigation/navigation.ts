@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { CartService } from '../../../core/services/cart';
 
 @Component({
   selector: 'app-navigation',
@@ -9,6 +10,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class Navigation {
   isMenuOpen = false;
+
+  constructor(public readonly cartService: CartService) {}
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;

@@ -1,0 +1,4 @@
+.checkout-status { max-width: 42rem; }
+.cart-image { object-fit: cover; border-radius: .4rem; }
+.cart-quantity { max-width: 5rem; }
+.form-label { display: block; margin-bottom: 1rem; }

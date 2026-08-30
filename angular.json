@@ -33,17 +33,17 @@
               "public/vendors/swiper/swiper-bundle.min.css",
               "public/css/theme.min.css"
             ],
-            "fileReplacements": [
-              {
-                "replace": "src/environments/environment.development.ts",
-                "with": "src/environments/environment.ts"
-              }
-            ],
             "server": "src/main.server.ts",
             "outputMode": "static"
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.development.ts",
+                  "with": "src/environments/environment.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",

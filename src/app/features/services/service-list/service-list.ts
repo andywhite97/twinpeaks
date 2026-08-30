@@ -40,10 +40,8 @@ export class ServiceList implements OnInit {
           this.services = data;
           this.isLoading = false;
           this.cdr.markForCheck();
-          console.log('Services loaded:', data);
         },
-        error: (err) => {
-          console.error('Error loading services:', err);
+        error: () => {
           this.hasError = true;
           this.isLoading = false;
           this.cdr.markForCheck();

@@ -9,6 +9,7 @@ import { MarkdownPipe } from '../../../shared/pipes/markdown.pipe';
 import { ProductCard } from '../../../shared/components/product-card/product-card';
 import { SeoService } from '../../../core/services/seo.service';
 import { OptimizedImagePipe } from '../../../shared/pipes/optimized-image.pipe';
+import { CartService } from '../../../core/services/cart';
 
 interface SwiperInstance { destroy(deleteInstance?: boolean, cleanStyles?: boolean): void; }
 interface SwiperConstructor { new (element: HTMLElement, options: Record<string, unknown>): SwiperInstance; }
@@ -39,6 +40,7 @@ export class ProductDetail implements OnInit, AfterViewChecked, OnDestroy {
     private productService: ProductService,
     private seoService: SeoService,
     private cdr: ChangeDetectorRef,
+    private cartService: CartService,
     @Inject(PLATFORM_ID) private platformId: object,
   ) {}
 
@@ -91,6 +93,10 @@ export class ProductDetail implements OnInit, AfterViewChecked, OnDestroy {
 
   selectImage(image: ProductImage): void {
     this.selectedImage = image;
+  }
+
+  addToCart(): void {
+    if (this.product?.stock_status === 'in_stock') this.cartService.add(this.product);
   }
 
   get displayedImage(): ProductImage | undefined {

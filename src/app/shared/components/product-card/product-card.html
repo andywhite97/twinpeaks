@@ -3,20 +3,20 @@
   <div class="product-card__image-wrap position-relative">
     <img class="product-card__image" [src]="(product.image || 'https://placehold.co/600x400?text=Twinpeaks') | optimizedImage: 800" [attr.srcset]="product.image ? ((product.image | optimizedImage: 360) + ' 360w, ' + (product.image | optimizedImage: 480) + ' 480w, ' + (product.image | optimizedImage: 800) + ' 800w') : null" sizes="(min-width: 1200px) 270px, (min-width: 992px) 30vw, (min-width: 768px) 45vw, 50vw" width="800" height="600" [alt]="product.name" loading="lazy" decoding="async" (error)="useFallbackImage($event)" />
     <span class="product-card__badge" [class.product-card__badge--out-of-stock]="product.stock_status === 'out_of_stock'">{{ product.stock_status === 'in_stock' ? 'In stock' : 'Out of stock' }}</span>
+    <button class="product-card__cart-button" [class.product-card__cart-button--in-cart]="isInCart" type="button" [disabled]="product.stock_status === 'out_of_stock'" (click)="toggleCart($event)" [attr.aria-label]="isInCart ? 'Remove ' + product.name + ' from cart' : 'Add ' + product.name + ' to cart'">
+      @if (isInCart) { <span aria-hidden="true">×</span><span class="visually-hidden">Remove from cart</span> }
+      @else { <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false"><path d="M3 3h2l2.1 11.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.5L20 7H6.3M9.5 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm7 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" /></svg> }
+    </button>
   </div>
   <div class="card-body product-card__body d-flex flex-column">
     @if (product.category) { <p class="product-card__category">{{ product.category.name }}</p> }
     <h3 class="product-card__title">{{ product.name }}</h3>
-    <div class="product-card__purchase-row mt-auto">
+    <div class="product-card__purchase-row">
       <div class="product-card__price">
         @if (hasSalePrice) { <span class="product-card__original-price">E {{ product.price | number: '1.2-2' }}</span><span>E {{ product.sale_price | number: '1.2-2' }}</span> }
         @else if (hasPrice) { <span>E {{ product.price | number: '1.2-2' }}</span> }
         @else { <span class="product-card__quote-price">Pricing on request</span> }
       </div>
-      <button class="product-card__cart-button" type="button" [disabled]="product.stock_status === 'out_of_stock'" (click)="addToCart($event)" [attr.aria-label]="addedToCart ? product.name + ' added to cart' : 'Add ' + product.name + ' to cart'">
-        @if (addedToCart) { <span aria-hidden="true">✓</span><span class="visually-hidden">Added to cart</span> }
-        @else { <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false"><path d="M3 3h2l2.1 11.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.5L20 7H6.3M9.5 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm7 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" /></svg> }
-      </button>
     </div>
   </div>
 </article>

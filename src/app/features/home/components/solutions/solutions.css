@@ -17,3 +17,5 @@
   place-items: center;
   font-size: 1.2rem;
 }
+
+.solution-icon { display: block; height: 32px; object-fit: contain; width: 32px; }

@@ -14,16 +14,7 @@ export class StructuredDataService {
       name: 'Twinpeaks',
       url: 'https://twinpeaksinvestment.com',
       logo: 'https://twinpeaksinvestment.com/img/logo.png',
-      telephone: '+268-XXXX-XXXX', // Update with actual phone
       email: 'info@twinpeaksinvestment.com',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: 'Manzini', // Update with actual street address
-        addressLocality: 'Manzini',
-        addressRegion: 'Manzini',
-        postalCode: 'M200',
-        addressCountry: 'SZ' // Eswatini
-      },
       description: 'Twinpeaks is a creative and technology-driven company specializing in branding, digital solutions, web development, graphic design, and custom software for businesses across Africa.',
       foundingDate: '2015',
       areaServed: [
@@ -50,12 +41,7 @@ export class StructuredDataService {
         'Digital Solutions',
         'Printing & Promotional Media'
       ],
-      sameAs: [
-        'https://www.facebook.com/twinpeaks',
-        'https://www.linkedin.com/company/twinpeaks',
-        'https://twitter.com/twinpeaks',
-        'https://www.instagram.com/twinpeaks'
-      ]
+      sameAs: []
     };
 
     this.injectSchema(schema);
@@ -69,15 +55,6 @@ export class StructuredDataService {
       image: 'https://twinpeaksinvestment.com/img/logo.png',
       description: 'Creative and technology-driven company specializing in branding, digital solutions, web development, graphic design, and custom software across Africa.',
       url: 'https://twinpeaksinvestment.com',
-      telephone: '+268-XXXX-XXXX',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: 'Manzini',
-        addressLocality: 'Manzini',
-        addressRegion: 'Manzini',
-        postalCode: 'M200',
-        addressCountry: 'SZ'
-      },
       areaServed: [
         {
           '@type': 'Country',

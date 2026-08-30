@@ -1,17 +1,29 @@
 @if (categories.length) {
-  <section class="py-6 bg-200" aria-labelledby="featured-categories-heading">
+  <section class="category-directory py-6 bg-200" aria-labelledby="featured-categories-heading">
     <div class="container">
-      <div class="text-center mb-5"><h2 id="featured-categories-heading" class="fs-md-5 mb-2">Shop By Category</h2><p class="fs--1 text-uppercase text-black ls-1 mb-0">Find the right product category for your business</p><hr class="hr-short bg-black" /></div>
-      <div class="row g-4">
-        @for (category of categories; track category.id) {
-          <div class="col-sm-6 col-lg-4">
-            <a class="category-card d-block h-100 rounded overflow-hidden text-decoration-none" [routerLink]="['/products']" [queryParams]="{ category: category.slug }">
-              <img class="category-card__image img-fluid w-100" [src]="category.image || fallbackImage(category.name)" [alt]="category.name" width="800" height="533" loading="lazy" decoding="async" (error)="useFallbackImage($event, category.name)" />
-              <div class="p-4"><h3 class="h4 text-dark mb-2">{{ category.name }}</h3><p class="text-700 mb-0">{{ category.description || 'Explore products in this category.' }}</p></div>
-            </a>
-          </div>
-        }
+      <div class="category-directory__heading text-center">
+        <h2 id="featured-categories-heading" class="fs-md-5 mb-2">Shop by category</h2>
+        <p class="fs--1 text-uppercase text-black ls-1 mb-0">Explore technology and solutions for your needs</p>
+        <hr class="hr-short bg-black" />
       </div>
+      <div #categorySwiperRoot class="swiper category-directory__slider" aria-label="Product categories">
+        <div class="swiper-wrapper">
+          @for (category of categories; track category.id) {
+            <div class="swiper-slide category-directory__slide">
+              <a class="category-card d-flex flex-column h-100 rounded-4 overflow-hidden text-decoration-none" [routerLink]="['/products']" [queryParams]="{ category: category.slug }">
+                <img class="category-card__image" [src]="category.image || fallbackImage(category.name)" [alt]="category.name" width="800" height="533" loading="lazy" decoding="async" (error)="useFallbackImage($event, category.name)" />
+                <div class="category-card__content d-flex flex-column">
+                  <h3 class="category-card__title">{{ category.name }}</h3>
+                  @if (category.description) { <p class="category-card__description">{{ category.description }}</p> }
+                  <span class="category-card__explore mt-auto">Explore <span aria-hidden="true">→</span></span>
+                </div>
+              </a>
+            </div>
+          }
+        </div>
+        @if (categories.length > 1) { <div #categoryPagination class="swiper-pagination category-directory__pagination position-relative mt-4"></div> }
+      </div>
+      <div class="text-center"><a class="btn btn-outline-dark category-directory__all-products" routerLink="/products">View all products <span aria-hidden="true">→</span></a></div>
     </div>
   </section>
 }

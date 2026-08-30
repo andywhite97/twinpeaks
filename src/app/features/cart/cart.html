@@ -1,0 +1,25 @@
+<app-page-header title="Cart & checkout" breadcrumb="Cart" backgroundImage="./img/headers/products.jpg" />
+<main class="py-5"><div class="container">
+  @if (payment(); as result) {
+    <section class="checkout-status card border-0 shadow-sm p-4 mx-auto">
+      @if (result.order_status === 'paid') { <h1 class="h3 text-success">Payment received</h1><p>Your order has been confirmed. Thank you.</p> }
+      @else if (result.order_status === 'payment_failed') { <h1 class="h3 text-danger">Payment was not completed</h1><p>Please start a new payment request and approve it on your phone.</p> }
+      @else { <h1 class="h3">Approve payment on your phone</h1><p>An MTN MoMo prompt was sent. This page checks for confirmation automatically.</p> }
+      <p class="text-muted mb-0">Order {{ result.order_id }} · {{ result.amount }} {{ result.currency }}</p>
+    </section>
+  } @else if (!cart.items().length) {
+    <section class="text-center py-5"><h1 class="h3">Your cart is empty</h1><a class="btn btn-dark mt-3" routerLink="/products">Browse products</a></section>
+  } @else {
+    <div class="row g-4"><section class="col-lg-7"><h1 class="h3 mb-3">Your cart</h1>
+      @for (item of cart.items(); track item.product.id) { <article class="card border-0 shadow-sm mb-3 p-3"><div class="d-flex gap-3 align-items-center">
+        <img [src]="item.product.image || 'https://placehold.co/160x120?text=Twinpeaks'" [alt]="item.product.name" width="96" height="72" class="cart-image"><div class="flex-grow-1"><h2 class="h6 mb-1">{{ item.product.name }}</h2><p class="mb-0 text-muted">E {{ (item.product.sale_price ?? item.product.price ?? 0) | number:'1.2-2' }}</p></div>
+        <input class="form-control cart-quantity" type="number" min="1" [max]="item.product.stock_quantity" [value]="item.quantity" (change)="setQuantity(item.product.id, $any($event.target).value)" [attr.aria-label]="'Quantity for ' + item.product.name"><button class="btn btn-outline-danger btn-sm" type="button" (click)="remove(item.product)">Remove</button>
+      </div></article> }
+      <div class="d-flex justify-content-between fw-bold"><span>Total</span><span>E {{ cart.subtotal | number:'1.2-2' }}</span></div>
+    </section>
+    <section class="col-lg-5"><form class="card border-0 shadow-sm p-4" [formGroup]="checkoutForm" (ngSubmit)="checkoutWithMomo()"><h2 class="h4">Pay with MTN MoMo</h2><p class="small text-muted">You will approve the payment request on your mobile phone.</p>
+      <label class="form-label">Full name<input class="form-control" formControlName="customer_name"></label><label class="form-label">Email<input class="form-control" type="email" formControlName="email"></label><label class="form-label">MTN mobile number<input class="form-control" inputmode="numeric" placeholder="268XXXXXXXX" formControlName="phone_number"></label><label class="form-label">Order notes (optional)<textarea class="form-control" rows="3" formControlName="notes"></textarea></label>
+      @if (error()) { <p class="text-danger small">{{ error() }}</p> }<button class="btn btn-dark w-100" [disabled]="isSubmitting()" type="submit">{{ isSubmitting() ? 'Starting payment…' : 'Request MTN MoMo payment' }}</button>
+    </form></section></div>
+  }
+</div></main>

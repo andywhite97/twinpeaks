@@ -1,3 +1,9 @@
 :host {
   display: block;
 }
+
+@media (max-width: 767.98px) {
+  .page-header__content { padding-bottom: 3.5rem !important; padding-top: 7.25rem !important; }
+  .page-header__title { font-size: clamp(2rem, 10vw, 2.9rem) !important; letter-spacing: .08rem !important; line-height: 1.08; }
+  .breadcrumb { font-size: .68rem; letter-spacing: .08rem !important; }
+}

@@ -26,7 +26,11 @@
             <div class="overflow-hidden">
               <div class="icon-circle" data-zanim-xs="{&quot;duration&quot;:1.5,&quot;delay&quot;:&quot;0&quot;}"
                 style="transform: translate(0px, 0px); opacity: 1;">
-                <i class="{{ solution.icon || 'fas fa-lightbulb' }}"></i>
+                @if (isImageIcon(solution.icon)) {
+                  <img class="solution-icon" [src]="solution.icon" [alt]="solution.title + ' icon'" width="32" height="32" loading="lazy" decoding="async" />
+                } @else {
+                  <i [class]="solution.icon || 'fas fa-lightbulb'" aria-hidden="true"></i>
+                }
               </div>
             </div>
             <div class="overflow-hidden">

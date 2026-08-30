@@ -8,15 +8,20 @@
 }
 
 .site-navigation {
-  background: rgba(17, 21, 29, 0.96) !important;
+  background: color-mix(in srgb, var(--reign-dark) 96%, transparent) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(12px);
 }
 
 .site-navigation .navbar-brand,
-.site-navigation .nav-link { color: #fff; }
+.site-navigation .nav-link { color: var(--reign-white); }
 
 .site-navigation .nav-link { min-height: 44px; padding: 0.85rem 0.8rem; }
+
+.navbar-actions { align-items: center; display: flex; gap: .55rem; margin-left: .8rem; }
+.navbar-cart { align-items: center; background: transparent; border: 0; border-radius: 50%; color: var(--reign-white); display: inline-flex; height: 42px; justify-content: center; position: relative; width: 42px; }
+.navbar-cart svg { fill: none; height: 21px; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; width: 21px; }
+.navbar-cart__count { align-items: center; background: var(--reign-primary); border: 2px solid var(--reign-dark); border-radius: 999px; color: var(--reign-white); display: flex; font-size: .65rem; font-weight: 800; height: 20px; justify-content: center; min-width: 20px; padding: 0 .2rem; position: absolute; right: -.45rem; top: -.45rem; }
 
 .site-nav {
   align-items: center;
@@ -107,6 +112,9 @@
   .site-navigation .navbar-brand { font-size: 1rem; }
 
   .site-navigation .navbar-toggler { border: 1px solid rgba(255,255,255,.55); min-height: 44px; min-width: 44px; }
+
+  .navbar-actions { margin-left: auto; }
+  .navbar-cart { height: 44px; width: 44px; }
 
   .site-navigation .navbar-collapse {
     background: #11151d;
