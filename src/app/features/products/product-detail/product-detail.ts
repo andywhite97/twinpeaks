@@ -28,6 +28,7 @@ export class ProductDetail implements OnInit, AfterViewChecked, OnDestroy {
   isLoading = true;
   hasError = false;
   selectedImage?: ProductImage;
+  addedToCart = false;
   relatedProducts: Product[] = [];
   private relatedSwiper?: SwiperInstance;
   private relatedSwiperTimer?: number;
@@ -98,8 +99,22 @@ export class ProductDetail implements OnInit, AfterViewChecked, OnDestroy {
     this.selectedImage = image;
   }
 
-  addToCart(): void {
-    if (this.product?.stock_status === 'in_stock' && this.cartService.add(this.product)) this.metaTracking.trackAddToCart(this.product, 1);
+  get isInCart(): boolean {
+    return this.product ? this.cartService.contains(this.product.id) : false;
+  }
+
+  toggleCart(): void {
+    if (!this.product || this.product.stock_status === 'out_of_stock') return;
+    if (this.isInCart) {
+      this.cartService.remove(this.product);
+      this.addedToCart = false;
+      return;
+    }
+    if (this.cartService.add(this.product)) {
+      this.metaTracking.trackAddToCart(this.product, 1);
+      this.addedToCart = true;
+      window.setTimeout(() => this.addedToCart = false, 1800);
+    }
   }
 
   get displayedImage(): ProductImage | undefined {
