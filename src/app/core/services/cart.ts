@@ -19,13 +19,15 @@ export class CartService {
     this.updateCount();
   }
 
-  add(product: Product): void {
+  add(product: Product): boolean {
+    if (product.stock_status !== 'in_stock' || product.stock_quantity < 1) return false;
     const items = [...this.items()];
     const item = items.find((entry) => entry.product.id === product.id);
-    if (item) item.quantity = Math.min(item.quantity + 1, product.stock_quantity); else items.push({ product, quantity: 1 });
+    if (item && item.quantity >= product.stock_quantity) return false;
+    if (item) item.quantity += 1; else items.push({ product, quantity: 1 });
     this.items.set(items);
     this.persist(items);
-    this.updateCount();
+    this.updateCount(); return true;
   }
 
   contains(productId: number): boolean { return this.items().some((item) => item.product.id === productId); }

@@ -7,6 +7,7 @@ import { Navigation } from './shared/components/navigation/navigation';
 import { SeoService } from './core/services/seo.service';
 import { AnalyticsService } from './core/services/analytics.service';
 import { StructuredDataService } from './core/services/structured-data.service';
+import { MetaTrackingService } from './core/services/meta-tracking.service';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -21,10 +22,12 @@ export class App implements OnInit {
     private seoService: SeoService,
     private analyticsService: AnalyticsService,
     private structuredDataService: StructuredDataService,
+    private metaTracking: MetaTrackingService,
     @Inject(PLATFORM_ID) private platformId: object,
   ) {}
 
   ngOnInit() {
+    this.metaTracking.initialize();
     // Inject structured data schemas
     this.structuredDataService.injectOrganizationSchema();
     this.structuredDataService.injectLocalBusinessSchema();
@@ -52,7 +55,8 @@ export class App implements OnInit {
 
           // Track page view with Analytics
           if (isPlatformBrowser(this.platformId)) {
-            this.analyticsService.trackPageView(this.router.url, routeData['title'] || 'Twinpeaks');
+          this.analyticsService.trackPageView(this.router.url, routeData['title'] || 'Twinpeaks');
+          this.metaTracking.trackPageView(`https://twinpeaksinvestment.com${this.router.url}`);
           }
         }
       });

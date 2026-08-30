@@ -10,6 +10,7 @@ import { ProductCard } from '../../../shared/components/product-card/product-car
 import { SeoService } from '../../../core/services/seo.service';
 import { OptimizedImagePipe } from '../../../shared/pipes/optimized-image.pipe';
 import { CartService } from '../../../core/services/cart';
+import { MetaTrackingService } from '../../../core/services/meta-tracking.service';
 
 interface SwiperInstance { destroy(deleteInstance?: boolean, cleanStyles?: boolean): void; }
 interface SwiperConstructor { new (element: HTMLElement, options: Record<string, unknown>): SwiperInstance; }
@@ -41,6 +42,7 @@ export class ProductDetail implements OnInit, AfterViewChecked, OnDestroy {
     private seoService: SeoService,
     private cdr: ChangeDetectorRef,
     private cartService: CartService,
+    private metaTracking: MetaTrackingService,
     @Inject(PLATFORM_ID) private platformId: object,
   ) {}
 
@@ -66,6 +68,7 @@ export class ProductDetail implements OnInit, AfterViewChecked, OnDestroy {
           this.selectedImage = undefined;
           this.isLoading = false;
           this.updateProductSeo(data);
+          this.metaTracking.trackViewContent(data);
           this.cdr.markForCheck();
           this.productService.getRelatedProducts(data.slug).subscribe({
             next: (products) => {
@@ -96,7 +99,7 @@ export class ProductDetail implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   addToCart(): void {
-    if (this.product?.stock_status === 'in_stock') this.cartService.add(this.product);
+    if (this.product?.stock_status === 'in_stock' && this.cartService.add(this.product)) this.metaTracking.trackAddToCart(this.product, 1);
   }
 
   get displayedImage(): ProductImage | undefined {
