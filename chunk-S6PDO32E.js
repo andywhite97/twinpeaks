@@ -1,0 +1,1 @@
+import{a as t}from"./chunk-KCBX4JS5.js";import{o as r,r as o}from"./chunk-W2O7KFPF.js";var e=class i{constructor(a){this.api=a}getCompanyProfile(){return this.api.get("company/")}static \u0275fac=function(p){return new(p||i)(o(t))};static \u0275prov=r({token:i,factory:i.\u0275fac,providedIn:"root"})};export{e as a};
