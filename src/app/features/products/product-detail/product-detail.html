@@ -52,7 +52,7 @@
             }
             <div class="d-flex flex-wrap gap-3">
               <button class="btn btn-dark" [class.btn-outline-dark]="isInCart" type="button" [disabled]="product.stock_status === 'out_of_stock'" (click)="toggleCart()">{{ product.stock_status === 'out_of_stock' ? 'Out of stock' : isInCart ? 'Remove from cart' : addedToCart ? 'Added to cart' : 'Add to cart' }}</button>
-              <a class="btn btn-dark" routerLink="/contact">Request a quote</a>
+              <button class="btn btn-dark" type="button" (click)="requestQuote()">Request a quote</button>
               <a class="btn btn-outline-dark" routerLink="/products">Back to catalog</a>
             </div>
           </div>

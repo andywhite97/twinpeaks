@@ -25,6 +25,9 @@
   color: #1e7a3a;
 }
 
+.quote-intro { color: #656c75; margin-bottom: .65rem; }
+.quote-product { background: #f7f4ef; border-left: 3px solid #bf8f45; color: #3f454c; font-size: .9rem; margin-bottom: 1.25rem; padding: .7rem .85rem; }
+
 button[disabled] {
   cursor: not-allowed;
   opacity: 0.75;

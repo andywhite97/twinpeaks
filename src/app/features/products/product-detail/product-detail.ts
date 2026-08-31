@@ -1,6 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProductService } from '../product';
 import { Product, ProductImage } from '../../../shared/models/product.model';
 import { PageHeader } from '../../../shared/components/page-header/page-header';
@@ -12,6 +12,7 @@ import { OptimizedImagePipe } from '../../../shared/pipes/optimized-image.pipe';
 import { CartService } from '../../../core/services/cart';
 import { MetaTrackingService } from '../../../core/services/meta-tracking.service';
 import { NotificationService } from '../../../core/services/notification.service';
+import { QuotationService } from '../../../core/services/quotation';
 
 interface SwiperInstance { destroy(deleteInstance?: boolean, cleanStyles?: boolean): void; }
 interface SwiperConstructor { new (element: HTMLElement, options: Record<string, unknown>): SwiperInstance; }
@@ -46,6 +47,8 @@ export class ProductDetail implements OnInit, AfterViewChecked, OnDestroy {
     private cartService: CartService,
     private metaTracking: MetaTrackingService,
     private notifications: NotificationService,
+    private quotationService: QuotationService,
+    private router: Router,
     @Inject(PLATFORM_ID) private platformId: object,
   ) {}
 
@@ -87,6 +90,12 @@ export class ProductDetail implements OnInit, AfterViewChecked, OnDestroy {
         },
       });
     });
+  }
+
+  requestQuote(): void {
+    if (!this.product) return;
+    this.quotationService.addProduct(this.product);
+    this.router.navigate(['/contact'], { queryParams: { quote: true } });
   }
 
   get galleryImages(): ProductImage[] {

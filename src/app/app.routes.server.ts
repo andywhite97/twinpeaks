@@ -50,6 +50,13 @@ export const serverRoutes: ServerRoute[] = [
     },
   },
 
+  // Public quotation tokens are private, unguessable customer links. Do not
+  // prerender or cache them as part of the public site build.
+  {
+    path: 'quotations/:token',
+    renderMode: RenderMode.Client,
+  },
+
   {
     path: '**',
     renderMode: RenderMode.Prerender,

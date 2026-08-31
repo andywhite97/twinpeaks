@@ -28,7 +28,7 @@
           <a class="nav-link" id="contacttab" routerLink="/contact" routerLinkActive="active" (click)="closeMenuAndNavigate()"><span
               class="nav-link-text">Contact</span></a>
         </li>
-        <li class="nav-item ms-lg-3 d-flex align-items-center justify-content-center"><a class="btn btn-sm btn-light" routerLink="/contact" (click)="closeMenuAndNavigate()">Request a quote</a></li>
+        <li class="nav-item ms-lg-3 d-flex align-items-center justify-content-center"><a class="btn btn-sm btn-light" routerLink="/contact" [queryParams]="{ quote: true }" (click)="closeMenuAndNavigate()">Request a quote</a></li>
       </ul>
     </div>
     <div class="navbar-actions">

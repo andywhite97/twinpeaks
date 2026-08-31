@@ -1,0 +1,16 @@
+<app-page-header title="Your quotation" breadcrumb="Quotation" backgroundImage="./img/headers/contact.jpg" />
+<section class="py-5 py-lg-6"><div class="container"><div class="row justify-content-center"><div class="col-lg-8">
+  @if (loading()) { <p>Loading your quotation…</p> }
+  @else if (error()) { <div class="alert alert-warning">{{ error() }}</div><a routerLink="/contact" class="btn btn-dark">Contact us</a> }
+  @else if (quotation(); as quote) {
+    <article class="card border-0 shadow-sm p-4 p-md-5">
+      <div class="d-flex justify-content-between gap-3 flex-wrap"><div><p class="text-uppercase small mb-1">Twinpeaks quotation</p><h1 class="h2 mb-1">{{ quote.quote_number }}</h1><p class="text-muted mb-0">Prepared for {{ quote.company_name || quote.name }}</p></div><span class="badge text-bg-dark align-self-start text-uppercase">{{ quote.status }}</span></div>
+      <p class="mt-4">{{ quote.message }}</p>
+      @if (quote.valid_until) { <p class="small text-muted">Valid until {{ quote.valid_until }}</p> }
+      @if (quote.items?.length) { <div class="table-responsive"><table class="table"><thead><tr><th>Item</th><th class="text-end">Qty</th><th class="text-end">Total</th></tr></thead><tbody>@for (item of quote.items; track item.title) { <tr><td><strong>{{ item.title }}</strong><br><span class="small text-muted">{{ item.description }}</span></td><td class="text-end">{{ item.quantity }}</td><td class="text-end">@if (item.line_total) { {{ quote.currency }} {{ item.line_total }} } @else { To be confirmed }</td></tr> }</tbody></table></div> }
+      @if (quote.total) { <div class="text-end"><p class="h4">Total: {{ quote.currency }} {{ quote.total }}</p></div> }
+      @if (quote.terms) { <div class="border-top mt-3 pt-3 small"><strong>Terms</strong><p>{{ quote.terms }}</p></div> }
+      <div class="d-flex flex-wrap gap-2 mt-3"><button class="btn btn-dark" type="button" [disabled]="processing() || quote.status !== 'sent' && quote.status !== 'viewed'" (click)="decide('accept')">Accept quotation</button><button class="btn btn-outline-dark" type="button" [disabled]="processing() || quote.status !== 'sent' && quote.status !== 'viewed'" (click)="decide('decline')">Decline</button><button class="btn btn-link" type="button" (click)="downloadPdf()">Download PDF</button></div>
+    </article>
+  }
+</div></div></div></section>

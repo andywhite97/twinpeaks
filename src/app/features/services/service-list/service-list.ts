@@ -1,10 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Service } from '../../../shared/models/services.model';
 import { Services } from '../../services';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { PageHeader } from '../../../shared/components/page-header/page-header';
 import { Loader } from '../../../shared/components/loader/loader';
 import { timeout } from 'rxjs/operators';
+import { QuotationService } from '../../../core/services/quotation';
 
 @Component({
   selector: 'app-service-list',
@@ -29,7 +30,9 @@ export class ServiceList implements OnInit {
 
   constructor(
     private serviceService: Services,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private quotationService: QuotationService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -47,6 +50,11 @@ export class ServiceList implements OnInit {
           this.cdr.markForCheck();
         },
       });
+  }
+
+  requestQuote(service: Service): void {
+    this.quotationService.addService(service);
+    this.router.navigate(['/contact'], { queryParams: { quote: true } });
   }
 
   getServiceIcon(service: Service, index: number): string {

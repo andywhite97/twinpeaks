@@ -12,6 +12,7 @@ export const routes: Routes = [
   { path: 'about', loadComponent: () => import('./features/leadership/leadership-list/leadership-list').then((m) => m.LeadershipList), data: { title: 'About Us | Twinpeaks', description: 'Learn about Twinpeaks, our mission, vision, and experienced team dedicated to creative excellence and innovative technology solutions.', keywords: 'about us, our team, company mission, creative agency, company values' } },
   { path: 'leadership', redirectTo: 'about' },
   { path: 'contact', loadComponent: () => import('./features/contact/contact').then((m) => m.Contact), data: { title: 'Contact Us | Twinpeaks', description: 'Get in touch with our creative team. Contact us for branding, web development, design, or custom software inquiries.', keywords: 'contact us, get in touch, creative agency, design inquiry' } },
+  { path: 'quotations/:token', loadComponent: () => import('./features/quotations/public-quotation/public-quotation').then((m) => m.PublicQuotation), data: { title: 'Your Twinpeaks quotation', robots: 'noindex, nofollow' } },
   { path: '404', loadComponent: () => import('./features/not-found/not-found').then((m) => m.NotFound), data: { title: '404 Page Not Found | Twinpeaks', description: 'The page you are looking for does not exist. Please return to our site to explore our services.' } },
   { path: '**', redirectTo: '/404' },
 ];

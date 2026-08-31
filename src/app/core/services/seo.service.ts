@@ -11,6 +11,7 @@ export interface SeoData {
   ogUrl?: string;
   ogType?: string;
   keywords?: string;
+  robots?: string;
 }
 
 @Injectable({
@@ -43,6 +44,8 @@ export class SeoService {
         content: seoData.keywords
       });
     }
+
+    this.metaService.updateTag({ name: 'robots', content: seoData.robots || 'index, follow' });
 
     // Update Open Graph tags
     this.metaService.updateTag({

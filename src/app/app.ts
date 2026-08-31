@@ -47,7 +47,8 @@ export class App implements OnInit {
           this.seoService.updateSeoTags({
             title: routeData['title'] || 'Twinpeaks Investment',
             description: routeData['description'] || 'Expert financial advisory and wealth management solutions.',
-            keywords: routeData['keywords']
+            keywords: routeData['keywords'],
+            robots: routeData['robots'],
           });
 
           // Update canonical URL
