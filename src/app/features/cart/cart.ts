@@ -9,6 +9,7 @@ import { CartService } from '../../core/services/cart';
 import { CheckoutPayment, CheckoutService } from '../../core/services/checkout';
 import { PageHeader } from '../../shared/components/page-header/page-header';
 import { MetaTrackingService } from '../../core/services/meta-tracking.service';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-cart', standalone: true, imports: [DecimalPipe, ReactiveFormsModule, RouterLink, PageHeader],
@@ -26,7 +27,7 @@ export class Cart implements OnInit, OnDestroy {
     notes: new FormControl('', { nonNullable: true, validators: [Validators.maxLength(1000)] }),
   });
 
-  constructor(public readonly cart: CartService, private checkout: CheckoutService, private metaTracking: MetaTrackingService) {}
+  constructor(public readonly cart: CartService, private checkout: CheckoutService, private metaTracking: MetaTrackingService, private notifications: NotificationService) {}
   ngOnInit() { if (this.cart.items().length) this.metaTracking.trackInitiateCheckout(this.cart.items()); }
   ngOnDestroy() { this.statusSubscription?.unsubscribe(); }
 
@@ -35,13 +36,13 @@ export class Cart implements OnInit, OnDestroy {
     this.error.set(''); this.isSubmitting.set(true);
     const metaEventId = this.metaTracking.eventId();
     this.checkout.startMomoPayment({ ...this.checkoutForm.getRawValue(), meta_event_id: metaEventId, event_source_url: window.location.href, items: this.cart.items().map((item) => ({ product_id: item.product.id, quantity: item.quantity })) }).subscribe({
-      next: (payment) => { this.payment.set(payment); this.isSubmitting.set(false); this.pollPayment(payment.payment_reference); },
-      error: (response) => { this.error.set(response?.error?.detail ?? 'Unable to start the MTN MoMo payment. Please try again.'); this.isSubmitting.set(false); },
+      next: (payment) => { this.payment.set(payment); this.notifications.info('Payment request sent. Approve it on your phone.'); this.isSubmitting.set(false); this.pollPayment(payment.payment_reference); },
+      error: (response) => { const message = response?.error?.detail ?? 'Unable to start the MTN MoMo payment. Please try again.'; this.error.set(message); this.notifications.error(message); this.isSubmitting.set(false); },
     });
   }
 
   setQuantity(productId: number, value: string) { this.cart.setQuantity(productId, Number(value)); }
-  remove(product: Parameters<CartService['remove']>[0]) { this.cart.remove(product); }
+  remove(product: Parameters<CartService['remove']>[0]) { this.cart.remove(product); this.notifications.info(`${product.name} removed from your cart.`); }
 
   private pollPayment(reference: string) {
     this.statusSubscription?.unsubscribe();
@@ -49,8 +50,8 @@ export class Cart implements OnInit, OnDestroy {
       switchMap(() => this.checkout.paymentStatus(reference)),
       takeWhile((payment) => payment.payment_status === 'pending', true),
     ).subscribe({
-      next: (payment) => { this.payment.set(payment); if (payment.order_status === 'paid') { this.metaTracking.trackPurchase(payment, this.cart.items()); this.cart.clear(); } },
-      error: () => this.error.set('We could not refresh your payment status. You may retry in a moment.'),
+      next: (payment) => { this.payment.set(payment); if (payment.order_status === 'paid') { this.metaTracking.trackPurchase(payment, this.cart.items()); this.cart.clear(); this.notifications.success('Payment received. Your order is confirmed.'); } else if (payment.order_status === 'payment_failed') { this.notifications.error('Payment was not completed. Please try again.'); } },
+      error: () => { const message = 'We could not refresh your payment status. You may retry in a moment.'; this.error.set(message); this.notifications.error(message); },
     });
   }
 }

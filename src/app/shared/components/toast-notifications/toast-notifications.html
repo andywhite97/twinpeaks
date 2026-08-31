@@ -1,0 +1,9 @@
+<section class="toast-notifications" aria-live="polite" aria-relevant="additions" aria-label="Notifications">
+  @for (notification of notifications.notifications(); track notification.id) {
+    <article class="toast-notification" [class.toast-notification--success]="notification.type === 'success'" [class.toast-notification--error]="notification.type === 'error'" [class.toast-notification--info]="notification.type === 'info'" [attr.role]="notification.type === 'error' ? 'alert' : 'status'">
+      <span class="toast-notification__icon" aria-hidden="true">{{ notification.type === 'success' ? '✓' : notification.type === 'error' ? '!' : 'i' }}</span>
+      <p class="toast-notification__message">{{ notification.message }}</p>
+      <button class="toast-notification__dismiss" type="button" (click)="notifications.dismiss(notification.id)" [attr.aria-label]="'Dismiss notification'">×</button>
+    </article>
+  }
+</section>

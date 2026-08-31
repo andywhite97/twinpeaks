@@ -8,11 +8,12 @@ import { SeoService } from './core/services/seo.service';
 import { AnalyticsService } from './core/services/analytics.service';
 import { StructuredDataService } from './core/services/structured-data.service';
 import { MetaTrackingService } from './core/services/meta-tracking.service';
+import { ToastNotifications } from './shared/components/toast-notifications/toast-notifications';
 import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navigation, Footer],
+  imports: [RouterOutlet, Navigation, Footer, ToastNotifications],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

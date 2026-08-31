@@ -11,6 +11,7 @@ import { SeoService } from '../../../core/services/seo.service';
 import { OptimizedImagePipe } from '../../../shared/pipes/optimized-image.pipe';
 import { CartService } from '../../../core/services/cart';
 import { MetaTrackingService } from '../../../core/services/meta-tracking.service';
+import { NotificationService } from '../../../core/services/notification.service';
 
 interface SwiperInstance { destroy(deleteInstance?: boolean, cleanStyles?: boolean): void; }
 interface SwiperConstructor { new (element: HTMLElement, options: Record<string, unknown>): SwiperInstance; }
@@ -44,6 +45,7 @@ export class ProductDetail implements OnInit, AfterViewChecked, OnDestroy {
     private cdr: ChangeDetectorRef,
     private cartService: CartService,
     private metaTracking: MetaTrackingService,
+    private notifications: NotificationService,
     @Inject(PLATFORM_ID) private platformId: object,
   ) {}
 
@@ -107,13 +109,17 @@ export class ProductDetail implements OnInit, AfterViewChecked, OnDestroy {
     if (!this.product || this.product.stock_status === 'out_of_stock') return;
     if (this.isInCart) {
       this.cartService.remove(this.product);
+      this.notifications.info(`${this.product.name} removed from your cart.`);
       this.addedToCart = false;
       return;
     }
     if (this.cartService.add(this.product)) {
       this.metaTracking.trackAddToCart(this.product, 1);
+      this.notifications.success(`${this.product.name} added to your cart.`);
       this.addedToCart = true;
       window.setTimeout(() => this.addedToCart = false, 1800);
+    } else {
+      this.notifications.error('This item cannot be added to your cart right now.');
     }
   }
 
