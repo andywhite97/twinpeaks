@@ -26,6 +26,11 @@
 .product-mobile-cta__price { font-size: .95rem; font-weight: 700; white-space: nowrap; }
 .product-mobile-cta .btn { flex: 1; }
 
+.product-share { position: relative; }
+.product-share__menu { background: #1d2024; border-radius: .4rem; box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, .18); display: grid; min-width: 10.5rem; overflow: hidden; position: absolute; top: calc(100% + .5rem); z-index: 20; }
+.product-share__menu :is(a, button) { background: transparent; border: 0; color: #fff; cursor: pointer; font: inherit; padding: .65rem .85rem; text-align: left; text-decoration: none; }
+.product-share__menu :is(a, button):hover, .product-share__menu :is(a, button):focus { background: var(--bs-info, #0dcaf0); color: #111; outline: 0; }
+
 @media (max-width: 991.98px) { .related-products { padding-bottom: 5rem; } }
 
 @media (max-width: 575.98px) {

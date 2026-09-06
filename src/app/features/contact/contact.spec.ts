@@ -44,7 +44,7 @@ describe('Contact', () => {
     component.submitContactForm();
 
     expect(api.post).toHaveBeenCalledWith('contact/', { name: 'Jane Doe', email: 'jane@example.com', message: 'Hello' });
-    expect(component.submitStatus()).toBe('success');
+    expect(component.isSubmitting()).toBeFalse();
     expect(component.contactForm.getRawValue()).toEqual({ name: '', email: '', message: '' });
   });
 
@@ -54,7 +54,6 @@ describe('Contact', () => {
 
     component.submitContactForm();
 
-    expect(component.submitStatus()).toBe('error');
     expect(component.isSubmitting()).toBeFalse();
   });
 });

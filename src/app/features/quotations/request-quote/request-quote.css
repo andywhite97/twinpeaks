@@ -1,0 +1,12 @@
+.border-bottom:last-child { border-bottom: 0 !important; }
+.quote-picker-menu { background: #1d2024; border: 1px solid #3b4047; max-height: 20rem; overflow-y: auto; scrollbar-color: var(--bs-info, #0dcaf0) #25292e; scrollbar-width: thin; }
+.quote-picker-menu .dropdown-header { color: var(--bs-info, #0dcaf0); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.quote-picker-menu .dropdown-item { align-items: center; color: #fff; display: flex; justify-content: space-between; white-space: normal; }
+.quote-picker-menu .dropdown-item:hover, .quote-picker-menu .dropdown-item:focus { background: var(--bs-info, #0dcaf0); color: #111; }
+.quote-picker-menu .dropdown-item-text { color: #d8dce0 !important; }
+.quote-picker-menu .dropdown-divider { border-color: #4b5158; }
+.quote-picker-menu small { color: #e5e7e9; margin-left: 1rem; }
+.quote-picker-menu::-webkit-scrollbar { width: .65rem; }
+.quote-picker-menu::-webkit-scrollbar-track { background: #25292e; border-radius: 1rem; }
+.quote-picker-menu::-webkit-scrollbar-thumb { background: var(--bs-info, #0dcaf0); border: 2px solid #25292e; border-radius: 1rem; }
+.quote-picker-menu::-webkit-scrollbar-thumb:hover { background: var(--bs-info, #0dcaf0); filter: brightness(1.15); }

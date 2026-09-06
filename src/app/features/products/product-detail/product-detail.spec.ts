@@ -1,5 +1,5 @@
 import { ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
 
 import { CartService } from '../../../core/services/cart';
@@ -9,6 +9,7 @@ import { SeoService } from '../../../core/services/seo.service';
 import { Product } from '../../../shared/models/product.model';
 import { ProductService } from '../product';
 import { ProductDetail } from './product-detail';
+import { QuotationService } from '../../../core/services/quotation';
 
 const product: Product = {
   id: 7, name: 'TwinPeaks Pro Package', slug: 'twinpeaks-pro-package', description: '',
@@ -27,6 +28,8 @@ describe('ProductDetail Meta tracking', () => {
       jasmine.createSpyObj<CartService>('CartService', ['contains', 'add', 'remove']),
       meta,
       jasmine.createSpyObj<NotificationService>('NotificationService', ['success', 'error', 'info']),
+      jasmine.createSpyObj<QuotationService>('QuotationService', ['addProduct']),
+      jasmine.createSpyObj<Router>('Router', ['navigate']),
       'browser' as unknown as object,
     );
 
@@ -49,6 +52,8 @@ describe('ProductDetail Meta tracking', () => {
       cart,
       meta,
       jasmine.createSpyObj<NotificationService>('NotificationService', ['success', 'error', 'info']),
+      jasmine.createSpyObj<QuotationService>('QuotationService', ['addProduct']),
+      jasmine.createSpyObj<Router>('Router', ['navigate']),
       'browser' as unknown as object,
     );
     component.product = product;

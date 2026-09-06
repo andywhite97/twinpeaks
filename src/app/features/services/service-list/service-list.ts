@@ -54,7 +54,7 @@ export class ServiceList implements OnInit {
 
   requestQuote(service: Service): void {
     this.quotationService.addService(service);
-    this.router.navigate(['/contact'], { queryParams: { quote: true } });
+    this.router.navigate(['/request-quote']);
   }
 
   getServiceIcon(service: Service, index: number): string {

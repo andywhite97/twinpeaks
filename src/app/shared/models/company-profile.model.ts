@@ -1,6 +1,7 @@
 export interface CompanyProfile {
   id: number;
   name: string;
+  logo?: string | null;
   tagline: string;
   overview: string;
   vision: string;

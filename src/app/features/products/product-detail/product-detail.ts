@@ -31,6 +31,7 @@ export class ProductDetail implements OnInit, AfterViewChecked, OnDestroy {
   hasError = false;
   selectedImage?: ProductImage;
   addedToCart = false;
+  shareMenuOpen = false;
   relatedProducts: Product[] = [];
   private relatedSwiper?: SwiperInstance;
   private relatedSwiperTimer?: number;
@@ -95,7 +96,40 @@ export class ProductDetail implements OnInit, AfterViewChecked, OnDestroy {
   requestQuote(): void {
     if (!this.product) return;
     this.quotationService.addProduct(this.product);
-    this.router.navigate(['/contact'], { queryParams: { quote: true } });
+    this.router.navigate(['/request-quote']);
+  }
+
+  get shareUrl(): string {
+    return this.product ? `https://twinpeaksinvestment.com/products/${encodeURIComponent(this.product.slug)}` : 'https://twinpeaksinvestment.com/products';
+  }
+
+  get shareText(): string { return this.product ? `Take a look at ${this.product.name} from Twinpeaks.` : 'Take a look at Twinpeaks products.'; }
+  get whatsappShareUrl(): string { return `https://wa.me/?text=${encodeURIComponent(`${this.shareText} ${this.shareUrl}`)}`; }
+  get facebookShareUrl(): string { return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(this.shareUrl)}`; }
+  get xShareUrl(): string { return `https://twitter.com/intent/tweet?text=${encodeURIComponent(this.shareText)}&url=${encodeURIComponent(this.shareUrl)}`; }
+  get linkedInShareUrl(): string { return `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(this.shareUrl)}`; }
+
+  toggleShareMenu(): void { this.shareMenuOpen = !this.shareMenuOpen; }
+
+  async shareProduct(): Promise<void> {
+    if (!this.product || !isPlatformBrowser(this.platformId)) return;
+    if (navigator.share) {
+      try { await navigator.share({ title: this.product.name, text: this.shareText, url: this.shareUrl }); }
+      catch { /* The customer closed the native share sheet. */ }
+      return;
+    }
+    this.toggleShareMenu();
+  }
+
+  async copyShareLink(): Promise<void> {
+    if (!isPlatformBrowser(this.platformId)) return;
+    try {
+      await navigator.clipboard.writeText(this.shareUrl);
+      this.notifications.success('Product link copied.');
+      this.shareMenuOpen = false;
+    } catch {
+      this.notifications.error('We could not copy the product link.');
+    }
   }
 
   get galleryImages(): ProductImage[] {

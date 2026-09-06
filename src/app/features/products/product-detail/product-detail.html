@@ -53,6 +53,18 @@
             <div class="d-flex flex-wrap gap-3">
               <button class="btn btn-dark" [class.btn-outline-dark]="isInCart" type="button" [disabled]="product.stock_status === 'out_of_stock'" (click)="toggleCart()">{{ product.stock_status === 'out_of_stock' ? 'Out of stock' : isInCart ? 'Remove from cart' : addedToCart ? 'Added to cart' : 'Add to cart' }}</button>
               <button class="btn btn-dark" type="button" (click)="requestQuote()">Request a quote</button>
+              <div class="product-share">
+                <button class="btn btn-outline-dark" type="button" (click)="shareProduct()" [attr.aria-expanded]="shareMenuOpen">Share</button>
+                @if (shareMenuOpen) {
+                  <div class="product-share__menu" role="menu" aria-label="Share this product">
+                    <a [href]="whatsappShareUrl" target="_blank" rel="noopener noreferrer" role="menuitem">WhatsApp</a>
+                    <a [href]="facebookShareUrl" target="_blank" rel="noopener noreferrer" role="menuitem">Facebook</a>
+                    <a [href]="xShareUrl" target="_blank" rel="noopener noreferrer" role="menuitem">X</a>
+                    <a [href]="linkedInShareUrl" target="_blank" rel="noopener noreferrer" role="menuitem">LinkedIn</a>
+                    <button type="button" role="menuitem" (click)="copyShareLink()">Copy link</button>
+                  </div>
+                }
+              </div>
               <a class="btn btn-outline-dark" routerLink="/products">Back to catalog</a>
             </div>
           </div>
