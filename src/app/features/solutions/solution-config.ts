@@ -1,9 +1,9 @@
-import { ServiceDto, ProjectDto } from '../../core/api/contracts';
+import { SolutionDto, ProjectDto } from '../../core/api/contracts';
 import { SOLUTIONS } from '../home/solution-categories';
 import { SolutionPresentation } from '../../shared/ui/cards';
 
 export interface SolutionConfig extends SolutionPresentation {
-  serviceTitles: readonly string[];
+  solutionTitles: readonly string[];
   projectCategories: readonly string[];
   capabilities: readonly string[];
   applications: readonly string[];
@@ -18,10 +18,10 @@ const scope: Record<string, Pick<SolutionConfig, 'capabilities' | 'applications'
   'web-app-development': { capabilities: ['Website and application requirements', 'User journeys and interface design', 'Integration requirements', 'Maintenance and support planning'], applications: ['Business websites', 'Customer-facing digital services', 'Internal business workflows'], projectCategories: ['Web & App Development', 'Web & App'] },
   'smart-security-solutions': { capabilities: ['Access control requirements', 'Security system integration', 'Entry and visitor workflows', 'Installation and support planning'], applications: ['Controlled entrances', 'Shared business spaces', 'Connected security environments'], projectCategories: ['Smart Security Solutions', 'Security'] },
 };
-export const SOLUTION_CONFIGS: readonly SolutionConfig[] = SOLUTIONS.map(solution => ({ ...solution, ...scope[solution.slug]!, serviceTitles: [solution.title], faqs: [] }));
+export const SOLUTION_CONFIGS: readonly SolutionConfig[] = SOLUTIONS.map(solution => ({ ...solution, ...scope[solution.slug]!, solutionTitles: [solution.title], faqs: [] }));
 export const normalizeTitle = (value: string | null | undefined) => (value ?? '').toLowerCase().replace(/&/g, ' and ').replace(/\s+/g, ' ').trim();
-export function mappedService(solution: SolutionConfig, services: readonly ServiceDto[]): ServiceDto | null {
-  const titles = solution.serviceTitles.map(normalizeTitle);
+export function mappedSolutionRecord(solution: SolutionConfig, services: readonly SolutionDto[]): SolutionDto | null {
+  const titles = solution.solutionTitles.map(normalizeTitle);
   const matches = services.filter(service => titles.includes(normalizeTitle(service.title)));
   return matches.length === 1 ? matches[0]! : null; // Missing or ambiguous records are not quotation identifiers.
 }

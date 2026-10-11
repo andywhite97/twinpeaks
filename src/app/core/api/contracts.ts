@@ -4,7 +4,7 @@ export interface CompanyProfile {
   facebook: string | null; twitter: string | null; instagram: string | null; linkedin: string | null;
   email: string; phone: string; whatsapp: string; address: string; business_hours: string; copyright_text: string;
 }
-export interface ServiceDto { id: number; title: string; description: string; icon: string | null; }
+export interface SolutionDto { id: number; title: string; description: string; icon: string | null; image?: string | null; }
 export interface ProjectImageDto { id: number; image: string; caption: string; display_order: number; }
 export interface ProjectDto {
   id: number; title: string; slug: string; short_description: string; long_description: string; location: string;
@@ -16,11 +16,10 @@ export interface HomepageSettingsDto {
   trust_badges: string[]; cta_heading: string; cta_subheading: string; cta_background_image: string | null;
   cta_primary_button_text: string; cta_primary_button_url: string; cta_secondary_button_text: string; cta_secondary_button_url: string;
 }
-export interface HomepageSolutionDto { id: number; title: string; description: string; icon: string; button_text: string; button_url: string; }
-/** Marketing subset of the aggregate response; commerce/testimonials/statistics are intentionally not rendered. */
+/** Marketing homepage response; retired commerce and promotional collections are omitted. */
 export interface HomepageDto {
   hero: Partial<HomepageSettingsDto>; settings: Partial<HomepageSettingsDto>;
-  solutions: HomepageSolutionDto[]; projects: ProjectDto[];
+  solutions: SolutionDto[]; projects: ProjectDto[];
 }
 export interface ContactRequest { name: string; email: string; message: string; }
 export interface ContactResponse extends ContactRequest { id: number; created_at: string; }
@@ -34,7 +33,7 @@ export interface PublicQuotationDto {
   terms?: string; valid_until?: string | null; created_at: string; sent_at: string | null; viewed_at: string | null;
   accepted_at: string | null; declined_at: string | null; decline_reason: string; items?: PublicQuotationItem[];
 }
-export type QuotationRequestItem = { quantity: number } & ({ service_id: number } | { product_id: number } | { description: string });
+export type QuotationRequestItem = { quantity: number } & ({ solution_id: number } | { description: string });
 export interface QuotationRequest {
   name: string; email: string; phone_number: string; company_name?: string; address?: string; message?: string; items: QuotationRequestItem[];
 }

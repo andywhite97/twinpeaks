@@ -46,7 +46,7 @@ const api = http.createServer(async (req, res) => {
   }
   if (req.url === '/api/company/') return res.end(JSON.stringify({ id: 1, name: 'TwinPeaks Investment', email: '', phone: '', whatsapp: '', address: '', business_hours: '', copyright_text: '' }));
   if (req.url === '/api/homepage/') return res.end(JSON.stringify({ hero: {}, settings: {}, solutions: [], projects: [] }));
-  if (req.url === '/api/services/') {
+  if (req.url === '/api/solutions/') {
     if (serviceMode === 'error') { res.statusCode = 503; return res.end('{}'); }
     return res.end(phase2 && serviceMode === 'ready' ? JSON.stringify([{ id: 501, title: 'Surveillance & Alarm Systems', description: 'Development QA fixture — published service description from a synthetic API record.', icon: '' }]) : '[]');
   }

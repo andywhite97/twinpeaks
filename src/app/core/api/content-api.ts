@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { ApiClient } from './api-client';
-import { CompanyProfile, ContactRequest, ContactResponse, HomepageDto, ProjectDto, ServiceDto } from './contracts';
+import { CompanyProfile, ContactRequest, ContactResponse, HomepageDto, ProjectDto, SolutionDto } from './contracts';
 
 @Injectable({ providedIn: 'root' })
 export class CompanyApi {
@@ -9,9 +9,9 @@ export class CompanyApi {
   getCompany() { return this.api.get<CompanyProfile | null>('company/'); }
 }
 @Injectable({ providedIn: 'root' })
-export class ServicesApi {
+export class SolutionsApi {
   private api = inject(ApiClient);
-  getServices() { return this.api.get<ServiceDto[] | null>('services/').pipe(map(data => Array.isArray(data) ? data : [])); }
+  getSolutions() { return this.api.get<SolutionDto[] | null>('solutions/').pipe(map(data => Array.isArray(data) ? data : [])); }
 }
 @Injectable({ providedIn: 'root' })
 export class ProjectsApi {

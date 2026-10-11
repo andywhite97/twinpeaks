@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { CompanyApi, ContactApi, HomepageApi, ProjectsApi, ServicesApi } from './content-api';
+import { CompanyApi, ContactApi, HomepageApi, ProjectsApi, SolutionsApi } from './content-api';
 import { QuotationApi } from './quotation-api';
 import { environment } from '../../../environments/environment';
 
@@ -15,9 +15,9 @@ describe('Verified Django API contracts', () => {
     TestBed.inject(CompanyApi).getCompany().subscribe(value => expect(value).toBeNull());
     http.expectOne(url('company/')).flush(null);
   });
-  it('normalizes missing service lists', () => {
-    TestBed.inject(ServicesApi).getServices().subscribe(value => expect(value).toEqual([]));
-    http.expectOne(url('services/')).flush(null);
+  it('normalizes missing solution lists', () => {
+    TestBed.inject(SolutionsApi).getSolutions().subscribe(value => expect(value).toEqual([]));
+    http.expectOne(url('solutions/')).flush(null);
   });
   it('requests only featured projects', () => {
     TestBed.inject(ProjectsApi).getFeaturedProjects().subscribe(value => expect(value).toEqual([]));

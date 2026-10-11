@@ -1,8 +1,8 @@
 <app-hero-section />
 <section class="why-section container" aria-label="Why TwinPeaks"><div class="benefits-grid">@for (feature of benefits; track feature.title) { <app-feature-card [feature]="feature" /> }</div></section>
 <section class="section container" aria-label="Our solutions"><app-section-heading eyebrow="Our solutions" title="Complete technology. Connected possibilities." description="Six focused solution areas. One connected approach to technology, security and digital services." />
-  <div class="solutions-grid">@for (solution of solutions; track solution.slug) { <app-solution-card [solution]="solution" [summary]="serviceSummary(solution.title)" /> }</div>
-  @if (servicesState() === 'error') { <div class="compact-state"><app-error-state title="Service updates unavailable" message="You can still explore the six solution areas above. Retry to load published service descriptions." (retry)="loadServices()" /></div> }
+  <div class="solutions-grid">@for (solution of solutions; track solution.slug) { <app-solution-card [solution]="solution" [summary]="solutionSummary(solution.title)" [image]="solutionImage(solution.title)" /> }</div>
+  @if (solutionsState() === 'error') { <div class="compact-state"><app-error-state title="Solution updates unavailable" message="You can still explore the six solution areas above. Retry to load published solution descriptions." (retry)="loadSolutions()" /></div> }
 </section>
 <section class="projects-section section" aria-label="Featured projects"><div class="container"><app-section-heading eyebrow="Featured projects" title="Real solutions. Real impact." description="Explore published work from our project portfolio." />
   @if (projectsState() === 'loading') { <app-loading-state message="Loading published projects…" /> }

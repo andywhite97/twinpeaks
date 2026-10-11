@@ -7,9 +7,9 @@ import json, time
 out = Path(__file__).resolve().parent.parent / 'test-results'
 records = []
 for origin, paths in [
-    ('http://127.0.0.1:8000', ['/api/company/', '/api/services/', '/api/projects/', '/api/leaders/', '/api/homepage/', '/sitemap.xml']),
-    ('https://twinpeaksinvestment.com', ['/', '/robots.txt', '/sitemap.xml', '/services', '/products']),
-    ('https://backend.twinpeaksinvestment.com', ['/api/company/', '/api/services/', '/api/projects/', '/api/leaders/', '/api/homepage/', '/sitemap.xml']),
+    ('http://127.0.0.1:8000', ['/api/company/', '/api/solutions/', '/api/projects/', '/api/homepage/', '/sitemap.xml']),
+    ('https://twinpeaksinvestment.com', ['/', '/robots.txt', '/sitemap.xml', '/solutions', '/projects']),
+    ('https://backend.twinpeaksinvestment.com', ['/api/company/', '/api/solutions/', '/api/projects/', '/api/homepage/', '/sitemap.xml']),
 ]:
     for path in paths:
         item = {'url': origin + path, 'method': 'GET'}

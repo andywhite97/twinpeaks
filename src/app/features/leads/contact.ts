@@ -24,7 +24,7 @@ export class Contact {
     if (this.form.invalid) { this.focus.move('[aria-invalid="true"]'); return; }
     const value = this.form.getRawValue(); const service = SOLUTIONS.find(item => item.slug === value.service);
     if (value.service !== 'general' && !service) { this.form.controls.service.setErrors({ server: true }); return; }
-    const request = { name: value.name.trim(), email: value.email.trim(), message: [`Phone: ${phoneDigits(value.phone)}`, value.company.trim() ? `Company: ${value.company.trim()}` : '', `Service of interest: ${service?.title ?? 'General enquiry'}`, this.context.text(), '', value.message.trim(), '', 'Contact permission: customer agreed to be contacted about this enquiry.'].filter(Boolean).join('\n') };
+    const request = { name: value.name.trim(), email: value.email.trim(), message: [`Phone: ${phoneDigits(value.phone)}`, value.company.trim() ? `Company: ${value.company.trim()}` : '', `Solution of interest: ${service?.title ?? 'General enquiry'}`, this.context.text(), '', value.message.trim(), '', 'Contact permission: customer agreed to be contacted about this enquiry.'].filter(Boolean).join('\n') };
     this.submission.send(() => this.api.sendEnquiry(request), response => !!response && Number.isInteger(response.id) && response.id > 0 && typeof response.created_at === 'string' && !Number.isNaN(Date.parse(response.created_at)), () => this.form.reset(), fields => { for (const field of fields) { if (Object.hasOwn(this.form.controls, field)) this.form.controls[field as keyof typeof this.form.controls].setErrors({ server: true }); } this.focus.move('[aria-invalid="true"]'); });
   }
 }

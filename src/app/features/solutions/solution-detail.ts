@@ -9,16 +9,16 @@ import { conceptUrl, solutionEditorial } from '../../shared/solution-editorial';
 import { ErrorState, LoadingState } from '../../shared/ui/states';
 import { RelatedProjects } from '../projects/related-projects';
 import { NotFound } from '../not-found/not-found';
-import { ServiceCatalog } from './service-catalog';
-import { mappedService } from './solution-config';
+import { SolutionCatalog } from './solution-catalog';
+import { mappedSolutionRecord } from './solution-config';
 
 @Component({ selector: 'app-solution-detail', imports: [RouterLink, PageHeader, SectionHeading, ProcessSteps, Icon, ErrorState, LoadingState, RelatedProjects, NotFound], templateUrl: './solution-detail.html', changeDetection: ChangeDetectionStrategy.OnPush })
 export class SolutionDetail {
   private route = inject(ActivatedRoute); readonly data = toSignal(this.route.data, { initialValue: this.route.snapshot.data });
   readonly solution = computed(() => (this.data()['content'] as PageContent).solution);
-  readonly catalog = inject(ServiceCatalog);
+  readonly catalog = inject(SolutionCatalog);
   readonly imageUrl = conceptUrl;
   readonly editorial = computed(() => solutionEditorial(this.solution()?.slug ?? ''));
-  readonly service = computed(() => { const solution = this.solution(); return solution ? mappedService(solution, this.catalog.records()) : null; });
+  readonly record = computed(() => { const solution = this.solution(); return solution ? mappedSolutionRecord(solution, this.catalog.records()) : null; });
   constructor() { this.catalog.ensureLoaded(); }
 }

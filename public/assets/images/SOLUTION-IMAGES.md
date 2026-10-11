@@ -1,0 +1,3 @@
+Six distinct solution concept photographs were generated with the built-in image_gen tool on 2026-10-11. Each solution uses its own slug followed by -concept-v1.webp. The -small variant is 560 x 350; the full website image is 1120 x 700. Images use consistent slate, white and blue art direction. They are illustrative concepts, not client installations or catalog product photographs. Existing Concept visual captions remain in the UI.
+
+Original PNGs and exact generation prompts are preserved in the workspace output/solution-images directory. The originals are outside the public site bundle. WebP exports are optimized at quality 84 and cropped to the website's 16:10 image ratio. Both frontend copies use the same imagery.
