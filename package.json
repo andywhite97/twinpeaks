@@ -5,6 +5,7 @@
   "scripts": {
     "start": "ng serve --host 127.0.0.1 --port 4201",
     "build": "ng build --configuration production && node scripts/precompress.cjs",
+    "build:pages": "ng build --configuration production,pages && node scripts/prepare-pages.cjs",
     "build:development": "ng build --configuration development",
     "build:qa": "ng build --configuration qa",
     "serve:ssr": "node dist/front-v2/server/server.mjs",

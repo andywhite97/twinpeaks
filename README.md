@@ -1,5 +1,9 @@
 # TwinPeaks frontend v2 — Phases 1–2
 
+GitHub Pages: every push to `front-v2` runs `.github/workflows/deploy-pages.yml`, builds with `npm run build:pages`, updates the `gh-pages` branch and deploys the same artifact at https://twinpeaksinvestment.com. `main` is not a deployment trigger. The existing custom domain is preserved. GitHub Pages must use **GitHub Actions** as its publishing source, with `front-v2` allowed in the `github-pages` environment.
+
+The Pages configuration runs Angular entirely in the browser against the production API. It has no Node SSR, server redirects or custom response headers. Direct route links load the Angular shell through `404.html` with GitHub's HTTP 404 status; in-app navigation works normally. Public search previews lose SSR metadata, and private quotation cache headers cannot be enforced on Pages. The default `npm run build` still produces the SSR deployment. V2 currently omits the legacy products/cart routes; publishing v2 replaces the previous Pages site.
+
 Independent Angular 20 application. Implemented: homepage, Solutions overview/detail, Projects overview/detail, shared UI/API/theme foundation and existing private quotation viewing/PDF/decisions. Other planned routes remain explicit development previews. See [Phase 2 report](docs/PHASE2_IMPLEMENTATION.md).
 
 ```powershell

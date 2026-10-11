@@ -16,6 +16,14 @@
             "assets": [{ "glob": "**/*", "input": "public", "ignore": ["assets/images/technology-concept.png", "**/*.md"] }], "styles": ["src/styles.scss"]
           },
           "configurations": {
+            "pages": {
+              "browser": "src/main.pages.ts",
+              "server": false,
+              "ssr": false,
+              "outputMode": "static",
+              "outputPath": "dist/gh-pages",
+              "baseHref": "/"
+            },
             "production": {
               "sourceMap": false,
               "outputHashing": "all",
