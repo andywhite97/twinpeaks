@@ -50,7 +50,7 @@ describe('Homepage content integrity and recovery', () => {
     const card = fixture.nativeElement.querySelector('app-solution-card');
     expect(card.querySelector('img').getAttribute('src')).toBe('/assets/images/surveillance-alarm-systems-concept-v1.webp');
     expect(card.querySelector('img').getAttribute('srcset')).toContain('-small.webp 560w');
-    expect(card.querySelector('.image-caption').textContent.trim()).toBe('Concept visual');
+    expect(card.querySelector('.image-caption')).toBeNull();
   });
   it('does not select an image from ambiguous service titles', () => {
     const fixture = TestBed.createComponent(Home); fixture.detectChanges();
