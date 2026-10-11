@@ -1,5 +1,0 @@
-/* Product card presentation is shared by the catalog and featured section. */
-
-@media (max-width: 575.98px) {
-  .featured-products__grid { --bs-gutter-x: .75rem; --bs-gutter-y: .75rem; }
-}

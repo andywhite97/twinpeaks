@@ -1,0 +1,18 @@
+{
+  "tool": "built-in image_gen",
+  "purpose": "Concept photography for local visual review; not customer evidence",
+  "prompts": [
+    [
+      "security-concept",
+      "Use case: product-mockup. Asset type: conceptual editorial website photography for technology/security solution cards and hero. Photorealistic premium still life of an unbranded white bullet CCTV camera in foreground and a compact modern access-control keypad/card reader beside a simple office door in background. Restrained blue and slate corporate palette, soft daylight, realistic materials, clean architectural setting, equipment sharply composed with space around edges for responsive cropping. Wide landscape composition. No people, no readable text, no logos, no mountains, no watermarks. This is a generic technology concept, not an actual company/client installation. Calm high-end commercial photograph."
+    ],
+    [
+      "workplace-concept",
+      "Use case: product-mockup. Asset type: conceptual editorial website technology photography. Premium realistic workstation still life: an unbranded point-of-sale touchscreen on left with abstract blank blue UI, compact receipt printer, and open silver business laptop on right, on a tidy charcoal desk. Bright modern office background softly out of focus, natural daylight, restrained royal blue accents, white and slate materials, balanced wide landscape composition, devices not cut off at edges. No people, no readable text, no logos, no watermark, no mountains. Generic conceptual equipment, not customer work or a company office."
+    ],
+    [
+      "network-digital-concept",
+      "Use case: product-mockup. Asset type: conceptual editorial technology website photography. Premium close commercial photograph of a clean networking rack and neatly organized blue patch cables on the left, laptop on right displaying an abstract non-readable dark software interface with blue rectangular panels. Cool neutral studio light and restrained blue accents, realistic enterprise equipment, sleek charcoal and brushed metal materials. Wide landscape with both main subjects clearly visible and space at edges for responsive crops. No people, no readable text, no logos, no watermark, no prominent glowing neon. Generic conceptual technology, not an actual installation or customer project."
+    ]
+  ]
+}

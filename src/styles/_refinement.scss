@@ -1,0 +1,108 @@
+@mixin styles {
+  .section { padding-block: 4.25rem; }
+  .hero-section { grid-template-columns: 1fr 1.05fr; gap: 3rem; padding-block: 4rem 2.75rem; }
+  .hero-copy h1 { font-size: clamp(2.5rem, 4.1vw, 3.7rem); }
+  .hero-description { font-size: 1rem; max-width: 500px; }
+  .hero-visual { box-shadow: var(--hover-shadow); border-radius: 1.1rem; }
+  .hero-visual > img { height: 425px; }
+  .hero-actions .button { min-width: 180px; }
+  .hero-section, .page-header { background-image: radial-gradient(ellipse at 90% 10%, var(--hero-glow), transparent 62%); }
+  .benefits-grid { padding: 1.4rem .5rem; box-shadow: var(--shadow); background: var(--surface-raised); }
+  .feature-icon { background: var(--soft-accent); border-radius: .7rem; padding: .65rem; font-size: .95rem; }
+  .feature-card { align-items: center; gap: .8rem; padding-inline: 1.05rem; }
+  .feature-card p { font-size: .8rem; }
+  .section-heading { gap: 2.25rem; margin-bottom: 1.8rem; }
+  .section-heading h2 { font-size: clamp(1.7rem, 2.6vw, 2.35rem); }
+  .section-description { font-size: .92rem; line-height: 1.75; }
+  .page-header { padding-block: 3rem; }
+  .page-header-layout { display: grid; gap: 2.75rem; align-items: center; }
+  .page-header--visual .page-header-layout { grid-template-columns: 1fr 1fr; }
+  .page-header h1 { font-size: clamp(2rem, 3.4vw, 3.1rem); font-weight: 700; }
+  .page-header nav { overflow-wrap: anywhere; }
+  .page-header-copy > p:not(.eyebrow) { line-height: 1.8; }
+  .page-header-visual { position: relative; margin: 0; overflow: hidden; border-radius: var(--radius-lg); box-shadow: var(--hover-shadow); border: 1px solid var(--border); }
+  .page-header-visual img { height: 320px; object-fit: cover; }
+  .image-caption { position: absolute; bottom: .75rem; right: .75rem; padding: .3rem .65rem; border-radius: .35rem; background: var(--image-label-bg); color: var(--image-label-text); font-size: .65rem; line-height: 1.5; }
+  .solutions-grid, .projects-grid { gap: 1.35rem; }
+  .media-solution { padding: 0; display: flex; flex-direction: column; overflow: hidden; background: var(--surface-raised); transition: box-shadow var(--transition), border-color var(--transition), transform var(--transition); }
+  .solution-media { position: relative; width: 100%; background: var(--surface-quiet); }
+  .solution-media app-published-image img { height: 180px; aspect-ratio: auto; }
+  .solution-media .published-image-fallback { min-height: 150px; padding: 1rem; }
+  .solution-media .published-image-fallback app-icon { font-size: 1.5rem; }
+  .solution-media .solution-icon { position: absolute; left: 1.3rem; bottom: -1.1rem; margin: 0; padding: .7rem; border: 1px solid var(--border); background: var(--surface-raised); box-shadow: var(--shadow); }
+  .solution-card-body { display: flex; flex-direction: column; flex: 1; width: 100%; padding: 2.1rem 1.4rem 1.4rem; }
+  .solution-card-body h3 { font-size: 1.08rem; margin-bottom: .65rem; }
+  .solution-card-body > p { font-size: .875rem; line-height: 1.75; margin-bottom: 1rem; white-space: pre-line; overflow-wrap: anywhere; }
+  .solution-card-body > p { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .solution-card-body .text-link { margin-top: auto; padding-top: .65rem; }
+  .detailed-solution .solution-media img { height: 195px; }
+  .detailed-solution .capability-list { font-size: .82rem; gap: .55rem; }
+  .media-solution:hover, .media-solution:focus-within, .project-card:hover, .project-card:focus-within { border-color: var(--accent); box-shadow: var(--hover-shadow); transform: translateY(-3px); }
+  .project-card { display: flex; flex-direction: column; background: var(--surface-raised); transition: box-shadow var(--transition), border-color var(--transition), transform var(--transition); }
+  .project-card > img { height: auto; aspect-ratio: 16 / 10; object-fit: cover; }
+  .project-card-content { flex: 1; padding: 1.35rem; }
+  .project-card-content .text-link { margin-top: auto; padding-top: .4rem; }
+  .project-card-content > p:not(.eyebrow) { font-size: .875rem; line-height: 1.7; }
+  .project-image-placeholder { min-height: 190px; background: linear-gradient(140deg, var(--surface-quiet), var(--soft-accent)); }
+  .project-image-placeholder app-icon { font-size: 1.4rem; }
+  .projects-section { background: linear-gradient(145deg, var(--section-tint), var(--background)); }
+  .state-panel { border-radius: var(--radius-lg); padding: 2.75rem 1.5rem; background: var(--surface-raised); border: 1px solid var(--border); box-shadow: var(--shadow); }
+  .state-panel > app-icon { color: var(--accent); font-size: 1.6rem; padding: .7rem; background: var(--soft-accent); border-radius: .8rem; box-sizing: content-box; margin-bottom: .8rem; }
+  .solution-overview { gap: 3rem; grid-template-columns: 1.3fr .8fr; }
+  .solution-intent-panel { padding: 1.75rem; background: var(--surface-raised); border: 1px solid var(--border); border-top: 3px solid var(--accent); border-radius: var(--radius-md); box-shadow: var(--shadow); }
+  .solution-intent-panel h3 { font-size: 1.3rem; margin-block: .7rem 1.2rem; }
+  .solution-intent-panel > p:last-child { font-size: .85rem; line-height: 1.75; }
+  .application-card { background: var(--surface-raised); padding: 1.4rem; }
+  .application-card h3 { font-size: .98rem; }
+  .process-grid li { background: var(--surface-raised); box-shadow: var(--shadow); position: relative; }
+  .process-grid li::before { position: absolute; inset: 0 auto auto 0; width: 38%; height: 3px; content: ''; background: var(--accent); border-radius: var(--radius-sm); }
+  .cta-section { position: relative; padding: 2.5rem 3rem; gap: 2.5rem; overflow: hidden; border-radius: var(--radius-lg); box-shadow: var(--hover-shadow); background-image: radial-gradient(ellipse at 0 100%, rgb(0 180 216 / 22%), transparent 65%); }
+  .cta-section h2 { font-size: clamp(1.5rem, 2.7vw, 2rem); max-width: 710px; }
+  .cta-section p:not(.eyebrow) { font-size: .9rem; line-height: 1.8; }
+  .cta-section .button { white-space: nowrap; }
+  .button-primary { box-shadow: 0 4px 12px rgb(11 61 145 / 12%); }
+  .button-secondary:hover, .filter-button:hover { background: var(--soft-accent); }
+  .filter-button[aria-pressed='true']:hover { background: var(--accent); }
+  .icon-button:hover, .theme-toggle:hover { background: var(--soft-accent); border-color: var(--accent); }
+  .gallery-controls .icon-button { background: var(--surface-raised); }
+  .project-gallery figure, .project-facts { box-shadow: var(--shadow); }
+  .project-facts { border-top: 3px solid var(--accent); }
+  .site-header, .site-footer { background: var(--surface-raised); }
+  .site-header { box-shadow: 0 3px 20px rgb(7 21 45 / 4%); }
+  textarea:focus { border-color: var(--accent); }
+  @media (max-width: 1099px) { .feature-card { align-items: start; } }
+  @media (max-width: 900px) {
+    .hero-section, .page-header--visual .page-header-layout, .solution-overview { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-section { padding-top: 2.5rem; }
+    .page-header-visual img { height: 290px; }
+    .hero-visual > img { height: 330px; }
+    .cta-section { padding: 2rem; }
+  }
+  @media (max-width: 599px) {
+    .section { padding-block: 2.75rem; }
+    .hero-section { gap: 1.8rem; padding-bottom: 2rem; }
+    .hero-copy h1 { font-size: clamp(2.1rem, 9vw, 2.7rem); }
+    .hero-description { font-size: .93rem; line-height: 1.75; }
+    .hero-visual > img { height: 245px; }
+    .hero-actions { gap: .7rem; }
+    .hero-actions .button { min-width: 0; }
+    .visual-caption { flex-wrap: wrap; font-size: .68rem; }
+    .concept-label { font-size: .62rem; }
+    .benefits-grid { gap: 1.2rem 0; }
+    .feature-card { flex-direction: column; padding-inline: .85rem; }
+    .feature-card p { font-size: .8rem; }
+    .section-heading { gap: 1rem; }
+    .page-header { padding-block: 2rem; }
+    .page-header nav { margin-bottom: 1rem; }
+    .page-header-visual img { height: 220px; }
+    .page-header h1 { font-size: 2.05rem; }
+    .page-actions .button { white-space: normal; }
+    .solution-media img, .detailed-solution .solution-media img { height: 180px; }
+    .solution-card-body { padding-inline: 1.25rem; }
+    .solution-intent-panel { padding: 1.35rem; }
+    .cta-section { padding: 1.6rem; margin-bottom: 2.75rem; }
+    .cta-section .button { white-space: normal; }
+    .state-panel { padding: 2rem 1.2rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .media-solution:hover, .media-solution:focus-within, .project-card:hover, .project-card:focus-within { transform: none; } }
+}

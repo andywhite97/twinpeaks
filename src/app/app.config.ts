@@ -1,16 +1,11 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
-import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
-
-import { routes } from './app.routes';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { authInterceptor } from './core/interceptors/auth';
+import { ApplicationConfig, provideZonelessChangeDetection, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideZonelessChangeDetection(),
-    provideRouter(routes, withPreloading(PreloadAllModules)),
-    provideHttpClient(withInterceptors([authInterceptor])), provideClientHydration(withEventReplay())
-  ]
+  providers: [provideZonelessChangeDetection(), provideBrowserGlobalErrorListeners(),
+    provideHttpClient(withFetch()), provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' })),
+    provideClientHydration(withEventReplay())],
 };

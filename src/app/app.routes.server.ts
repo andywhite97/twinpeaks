@@ -1,64 +1,12 @@
-import { inject } from '@angular/core';
 import { RenderMode, ServerRoute } from '@angular/ssr';
-import { firstValueFrom } from 'rxjs';
-
-import { ProductService } from './features/products/product';
-import { ProjectService } from './features/projects/project';
 
 export const serverRoutes: ServerRoute[] = [
-  {
-    path: 'products/:slug',
-    renderMode: RenderMode.Prerender,
-    async getPrerenderParams() {
-      const productService = inject(ProductService);
-
-      const firstPage = await firstValueFrom(
-        productService.getProducts(1, 24)
-      );
-
-      const pageCount = Math.ceil(firstPage.count / 24);
-
-      const remainingPages = await Promise.all(
-        Array.from(
-          { length: Math.max(pageCount - 1, 0) },
-          (_, index) =>
-            firstValueFrom(
-              productService.getProducts(index + 2, 24)
-            )
-        )
-      );
-
-      return [firstPage, ...remainingPages]
-        .flatMap((page) => page.results)
-        .map((product) => ({ slug: product.slug }));
-    },
-  },
-
-  {
-    path: 'projects/:slug',
-    renderMode: RenderMode.Prerender,
-    async getPrerenderParams() {
-      const projectService = inject(ProjectService);
-
-      const projects = await firstValueFrom(
-        projectService.getProjects()
-      );
-
-      return projects.map((project) => ({
-        slug: project.slug,
-      }));
-    },
-  },
-
-  // Public quotation tokens are private, unguessable customer links. Do not
-  // prerender or cache them as part of the public site build.
-  {
-    path: 'quotations/:token',
-    renderMode: RenderMode.Client,
-  },
-
-  {
-    path: '**',
-    renderMode: RenderMode.Prerender,
-  },
+  { path: 'contact', renderMode: RenderMode.Server, headers: { 'Cache-Control': 'private, no-store, max-age=0' } },
+  { path: 'request-quote', renderMode: RenderMode.Server, headers: { 'Cache-Control': 'private, no-store, max-age=0' } },
+  { path: '404', renderMode: RenderMode.Server, status: 404 },
+  { path: 'quotations/:token', renderMode: RenderMode.Client, headers: {
+    'Cache-Control': 'private, no-store, max-age=0', 'Referrer-Policy': 'no-referrer',
+    'X-Robots-Tag': 'noindex, nofollow, noarchive',
+  } },
+  { path: '**', renderMode: RenderMode.Server },
 ];

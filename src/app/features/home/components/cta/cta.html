@@ -1,8 +1,0 @@
-<section class="py-6 text-center bg-1100 position-relative">
-  <div class="bg-holder overlay overlay-0" [style.background-image]="settings?.cta_background_image ? 'url(' + settings?.cta_background_image + ')' : null"></div>
-  <div class="container position-relative">
-    <h2 class="font-base text-white mb-3">{{ settings?.cta_heading || 'Excited to start your next project?' }}</h2>
-    @if (settings?.cta_subheading) { <p class="text-300 mb-4">{{ settings?.cta_subheading }}</p> }
-    <div class="d-flex flex-wrap justify-content-center gap-3"><a class="btn btn-sm btn-light hvr-sweep-top" [routerLink]="settings?.cta_primary_button_url || '/contact'">{{ settings?.cta_primary_button_text || 'Request a quote' }}</a>@if (settings?.cta_secondary_button_text) { <a class="btn btn-sm btn-outline-light hvr-sweep-top" [routerLink]="settings?.cta_secondary_button_url || '/services'">{{ settings?.cta_secondary_button_text }}</a> }</div>
-  </div>
-</section>

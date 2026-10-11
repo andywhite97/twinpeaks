@@ -1,0 +1,10 @@
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { CompanyStore } from '../../core/state/company-store';
+import { phoneHref } from '../media';
+import { whatsappHref } from './lead-helpers';
+
+@Component({ selector: 'app-company-contact', imports: [RouterLink], changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `<aside class="company-contact panel"><p class="eyebrow">Let's connect</p><h2>Our Details</h2><p>Choose the way that works for you.</p>@if (company.status() === 'loading') { <p role="status">Loading contact details…</p> }@else if (company.status() === 'error' || !company.profile()) { <p role="status">Contact details are temporarily unavailable.</p><button class="button button-secondary" type="button" (click)="company.load()">Retry contact details</button> }@else { @if (company.profile(); as profile) { <dl class="contact-details">@if (phone(profile.phone); as link) { <div><dt>Telephone</dt><dd><a class="text-link" [href]="link">{{ profile.phone }}</a></dd></div> }@if (profile.email) { <div><dt>Email</dt><dd><a class="text-link" [href]="'mailto:' + profile.email">{{ profile.email }}</a></dd></div> }@if (profile.address) { <div><dt>Location</dt><dd>{{ profile.address }}</dd></div> }@if (profile.business_hours) { <div><dt>Office hours</dt><dd>{{ profile.business_hours }}</dd></div> }</dl><div class="contact-actions">@if (phone(profile.phone); as link) { <a class="button button-secondary" [href]="link">Call TwinPeaks</a> }@if (profile.email) { <a class="button button-secondary" [href]="'mailto:' + profile.email">Email TwinPeaks</a> }@if (whatsapp(profile.whatsapp); as link) { <a class="button button-secondary" [href]="link" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">WhatsApp TwinPeaks</a> }</div> } }<a class="button button-primary" routerLink="/request-quote">Request a Quote</a></aside>`,
+})
+export class CompanyContact { readonly company = inject(CompanyStore); readonly phone = phoneHref; readonly whatsapp = whatsappHref; }

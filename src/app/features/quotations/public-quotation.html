@@ -1,0 +1,20 @@
+<app-page-header title="Your quotation" eyebrow="Private customer document" description="Review the quotation prepared for you by TwinPeaks Investment." />
+<section class="container quote-document" aria-label="Quotation document">
+  @if (loading()) { <app-loading-state message="Loading your quotation…" /> }
+  @else if (error()) { <app-error-state title="Quotation unavailable" message="Check your original link or try again. Existing customer links remain supported." (retry)="retry()" /> }
+  @else if (quotation(); as quote) {
+    <article class="quote-card"><header class="quote-summary"><div><p class="eyebrow">TwinPeaks Investment</p><h2>{{ quote.quote_number }}</h2><p>Prepared for {{ quote.company_name || quote.name }}</p></div><span class="quote-status">{{ quote.status.replaceAll('_', ' ') }}</span></header>
+      @if (quote.message) { <p>{{ quote.message }}</p> }
+      @if (quote.valid_until) { <p>Valid until {{ quote.valid_until }}</p> }
+      @if (quote.items?.length) { <div class="table-scroll"><table><caption class="visually-hidden">Quotation items and pricing</caption><thead><tr><th scope="col">Item</th><th scope="col">Quantity</th><th scope="col">Total</th></tr></thead><tbody>@for (item of quote.items; track $index) { <tr><td>{{ item.title }}<small>{{ item.description }}</small></td><td>{{ item.quantity }}</td><td>{{ quote.currency }} {{ item.line_total }}</td></tr> }</tbody></table></div> }
+      @if (quote.total !== undefined) { <div class="quote-total"><p><span>Subtotal</span><span>{{ quote.currency }} {{ quote.subtotal }}</span></p>@if (quote.discount_amount && quote.discount_amount !== '0.00') { <p><span>Discount</span><span>{{ quote.currency }} {{ quote.discount_amount }}</span></p> }@if (quote.tax_amount && quote.tax_amount !== '0.00') { <p><span>Tax</span><span>{{ quote.currency }} {{ quote.tax_amount }}</span></p> }<p><span>Total</span><span>{{ quote.currency }} {{ quote.total }}</span></p></div> }
+      @if (quote.terms) { <h3>Terms</h3><p>{{ quote.terms }}</p> }
+      @if (canRespond()) { <form class="decision-form" [formGroup]="decisionForm"><label for="decline-reason">Reason if declining (optional)</label><textarea id="decline-reason" formControlName="reason" rows="2" maxlength="500" aria-describedby="reason-help"></textarea><p id="reason-help">Up to 500 characters. This field is used only if you decline.</p><div class="quote-actions"><button class="button button-primary" type="button" [disabled]="processing()" (click)="decide('accept')">Accept quotation</button><button class="button button-secondary" type="button" [disabled]="processing()" (click)="decide('decline')">Decline quotation</button></div></form> }
+      @if (processing()) { <p role="status">Saving your response…</p> }
+      @if (canDownload()) { <div class="quote-actions"><a class="button button-secondary" [href]="pdfUrl()" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Download PDF</a></div> }
+      @if (decisionMessage()) { <p class="decision-message" role="status">{{ decisionMessage() }}</p> }
+      @if (needsReload()) { <button class="button button-secondary" type="button" (click)="retry()">Reload quotation status</button> }
+      @if (!canRespond() && !processing() && !decisionMessage()) { <p class="decision-message">This quotation can be accepted or declined only while it is issued and awaiting your response.</p> }
+    </article>
+  }
+</section>

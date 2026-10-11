@@ -1,0 +1,27 @@
+<app-page-header title="Contact Us" eyebrow="Let's connect · Practical solutions" description="Get in touch to discuss technology, security or digital solutions for your business." image="/assets/images/workplace-concept.webp" imageAlt="Concept illustration of a collaborative technology workspace" />
+<section class="section container lead-layout">
+  <div class="panel form-panel">
+    @if (submission.state() === 'success') { <app-confirmation title="Your enquiry has been received."><a class="button button-secondary" routerLink="/solutions">Explore Solutions</a></app-confirmation> }
+    @else {
+      <p class="eyebrow">Send us a message</p><h2>Get in Touch</h2><p>Tell us what you need. Fields marked * are required.</p>
+      @if (context.projectTitle()) { <p class="context-note">Project reference: {{ context.projectTitle() }}</p> }
+      @if (context.value.assessment) { <p class="context-note">Site assessment enquiry · subject to confirmation.</p> }
+      @if (context.unavailable()) { <p role="status">The project reference could not be verified. You can still send a general enquiry.</p> }
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate [attr.aria-busy]="submission.state() === 'pending'">
+        <fieldset [disabled]="submission.state() === 'pending'"><legend class="visually-hidden">Your enquiry</legend><div class="form-grid">
+          <app-form-field fieldId="contact-name" label="Full name" [required]="true" [error]="error('name')"><input id="contact-name" formControlName="name" autocomplete="name" required maxlength="120" [attr.aria-invalid]="!!error('name')" aria-describedby="contact-name-error" /></app-form-field>
+          <app-form-field fieldId="contact-email" label="Email address" [required]="true" [error]="error('email')"><input id="contact-email" type="email" formControlName="email" autocomplete="email" required maxlength="254" [attr.aria-invalid]="!!error('email')" aria-describedby="contact-email-error" /></app-form-field>
+          <app-form-field fieldId="contact-phone" label="Phone number" [required]="true" [error]="error('phone')"><input id="contact-phone" type="tel" formControlName="phone" autocomplete="tel" required maxlength="30" [attr.aria-invalid]="!!error('phone')" aria-describedby="contact-phone-error" /></app-form-field>
+          <app-form-field fieldId="contact-company" label="Company / organization (optional)" [error]="error('company')"><input id="contact-company" formControlName="company" autocomplete="organization" maxlength="150" [attr.aria-invalid]="!!error('company')" aria-describedby="contact-company-error" /></app-form-field>
+          <app-form-field class="span-full" fieldId="contact-service" label="Service of interest" [error]="error('service')"><select id="contact-service" formControlName="service" aria-describedby="contact-service-error" [attr.aria-invalid]="!!error('service')"><option value="general">General enquiry</option>@for (solution of solutions; track solution.slug) { <option [value]="solution.slug">{{ solution.title }}</option> }</select></app-form-field>
+          <app-form-field class="span-full" fieldId="contact-message" label="Message" [required]="true" hint="10–4,000 characters. Avoid passwords, payment information and private document links." [error]="error('message')"><textarea id="contact-message" formControlName="message" rows="6" required maxlength="4000" [attr.aria-invalid]="!!error('message')" aria-describedby="contact-message-hint contact-message-error"></textarea></app-form-field>
+        </div><label class="consent"><input type="checkbox" formControlName="consent" required [attr.aria-invalid]="!!error('consent')" aria-describedby="contact-consent-error" />I agree to be contacted by TwinPeaks about this enquiry.</label><p id="contact-consent-error" class="field-error" aria-live="polite">{{ error('consent') }}</p></fieldset>
+        <p class="field-hint">Only include information needed for your enquiry. <a class="text-link" routerLink="/privacy">Privacy information (awaiting approved copy)</a>.</p>
+        @if (attempted() && form.invalid) { <p role="alert" class="field-error">Please review the highlighted fields.</p> }
+        <app-submission-feedback [message]="submission.message()" />
+        @if (submission.ambiguous()) { <label class="consent"><input type="checkbox" [checked]="submission.retryAcknowledged()" (change)="submission.retryAcknowledged.set($any($event.target).checked)" />I have checked the outcome and understand that resending may create a duplicate.</label> }
+        <button class="button button-primary form-submit" type="submit" [disabled]="submission.blocked() || context.pending()">{{ submission.state() === 'pending' ? 'Sending…' : 'Send Message' }}</button>
+      </form>
+    }
+  </div><app-company-contact />
+</section>

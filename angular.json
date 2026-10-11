@@ -2,111 +2,52 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
+  "cli": { "analytics": false },
   "projects": {
-    "front": {
-      "projectType": "application",
-      "schematics": {},
-      "root": "",
-      "sourceRoot": "src",
-      "prefix": "app",
+    "front-v2": {
+      "projectType": "application", "root": "", "sourceRoot": "src", "prefix": "app",
+      "schematics": { "@schematics/angular:component": { "style": "scss" } },
       "architect": {
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "browser": "src/main.ts",
-            "tsConfig": "tsconfig.app.json",
-            "outputPath": "dist",
-            "baseHref": "/",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              },
-              {
-                "glob": "CNAME",
-                "input": "public",
-                "output": "/"
-              }
-            ],
-            "styles": [
-              "src/styles.css",
-              "public/vendors/swiper/swiper-bundle.min.css",
-              "public/css/theme.min.css"
-            ],
-            "server": "src/main.server.ts",
-            "outputMode": "static"
+            "browser": "src/main.ts", "server": "src/main.server.ts", "ssr": { "entry": "src/server.ts" },
+            "outputMode": "server", "outputPath": "dist/front-v2", "tsConfig": "tsconfig.app.json",
+            "assets": [{ "glob": "**/*", "input": "public", "ignore": ["assets/images/technology-concept.png", "**/*.md"] }], "styles": ["src/styles.scss"]
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.development.ts",
-                  "with": "src/environments/environment.ts"
-                }
-              ],
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
-                }
-              ],
-              "outputHashing": "all"
+              "sourceMap": false,
+              "outputHashing": "all",
+              "budgets": [{ "type": "initial", "maximumWarning": "500kB", "maximumError": "750kB" },
+                { "type": "anyComponentStyle", "maximumWarning": "10kB", "maximumError": "16kB" }]
+            },
+            "qa": {
+              "fileReplacements": [{ "replace": "src/environments/environment.ts", "with": "src/environments/environment.qa.ts" }],
+              "optimization": false, "extractLicenses": false, "sourceMap": true
             },
             "development": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
+              "fileReplacements": [{ "replace": "src/environments/environment.ts", "with": "src/environments/environment.development.ts" }],
+              "optimization": false, "extractLicenses": false, "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular/build:dev-server",
-          "configurations": {
-            "production": {
-              "buildTarget": "front:build:production"
-            },
-            "development": {
-              "buildTarget": "front:build:development"
-            }
-          },
+          "configurations": { "development": { "buildTarget": "front-v2:build:development" },
+            "production": { "buildTarget": "front-v2:build:production" } },
           "defaultConfiguration": "development"
-        },
-        "extract-i18n": {
-          "builder": "@angular/build:extract-i18n"
         },
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              },
-              {
-                "glob": "CNAME",
-                "input": "public",
-                "output": "/"
-              }
-            ],
-            "styles": [
-              "src/styles.css",
-              "public/vendors/swiper/swiper-bundle.min.css",
-              "public/css/theme.min.css"
-            ]
+            "main": "src/test.ts", "tsConfig": "tsconfig.spec.json",
+            "fileReplacements": [{ "replace": "src/environments/environment.ts", "with": "src/environments/environment.development.ts" }],
+            "assets": [{ "glob": "**/*", "input": "public" }], "styles": ["src/styles.scss"]
           }
         }
       }
     }
-  },
-  "cli": {
-    "analytics": "0b2fddb6-b19f-4593-9035-390d43e49ae3"
   }
 }

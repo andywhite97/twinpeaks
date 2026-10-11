@@ -1,20 +1,16 @@
-@if (isLoading()) {
-  <div class="container py-5">
-    <div class="placeholder-glow">
-      <div class="placeholder col-12 mb-3" style="height: 420px;"></div>
-      <div class="placeholder col-6 mb-3" style="height: 40px;"></div>
-      <div class="placeholder col-12 mb-2" style="height: 20px;"></div>
-      <div class="placeholder col-10" style="height: 20px;"></div>
-    </div>
-  </div>
-} @else {
-  <app-hero-section [hero]="homepageData()?.hero || null"></app-hero-section>
-  <app-solutions-section [solutions]="homepageData()?.solutions || []"></app-solutions-section>
-  <app-featured-categories-section [categories]="homepageData()?.featured_categories || []"></app-featured-categories-section>
-  <app-featured-products-section [products]="homepageData()?.featured_products || []"></app-featured-products-section>
-  <app-statistics-section [statistics]="homepageData()?.statistics || []"></app-statistics-section>
-  <app-projects-section [projects]="homepageData()?.projects || []"></app-projects-section>
-  <app-brands-section [brands]="homepageData()?.brands || []"></app-brands-section>
-  <app-testimonials-section [testimonials]="homepageData()?.testimonials || []"></app-testimonials-section>
-  <app-cta-section [settings]="homepageData()?.settings || null"></app-cta-section>
-}
+<app-hero-section />
+<section class="why-section container" aria-label="Why TwinPeaks"><div class="benefits-grid">@for (feature of benefits; track feature.title) { <app-feature-card [feature]="feature" /> }</div></section>
+<section class="section container" aria-label="Our solutions"><app-section-heading eyebrow="Our solutions" title="Complete technology. Connected possibilities." description="Six focused solution areas. One connected approach to technology, security and digital services." />
+  <div class="solutions-grid">@for (solution of solutions; track solution.slug) { <app-solution-card [solution]="solution" [summary]="serviceSummary(solution.title)" /> }</div>
+  @if (servicesState() === 'error') { <div class="compact-state"><app-error-state title="Service updates unavailable" message="You can still explore the six solution areas above. Retry to load published service descriptions." (retry)="loadServices()" /></div> }
+</section>
+<section class="projects-section section" aria-label="Featured projects"><div class="container"><app-section-heading eyebrow="Featured projects" title="Real solutions. Real impact." description="Explore published work from our project portfolio." />
+  @if (projectsState() === 'loading') { <app-loading-state message="Loading published projects…" /> }
+  @else if (projectsState() === 'error') { <app-error-state title="Projects are temporarily unavailable" message="We couldn’t load the published portfolio. Please try again." (retry)="loadProjects()" /> }
+  @else if (!projects().length) { <app-empty-state title="No featured projects published yet" message="Published projects will appear here when they are available." /> }
+  @else { <div class="projects-grid">@for (project of projects(); track project.id) { <app-project-card [project]="project" /> }</div> }
+  <div class="section-action"><app-secondary-button to="/projects">Explore Projects</app-secondary-button></div>
+</div></section>
+<section class="section container" aria-label="How we work"><app-section-heading eyebrow="How we work" title="Simple. Structured. Connected." description="From the first conversation to ongoing support, every step starts with understanding your needs." /><app-process-steps /></section>
+@if (homepageState() === 'error') { <section class="container compact-state"><app-error-state title="Homepage updates unavailable" message="Some published content could not load. The solution areas and enquiry links remain available." (retry)="loadHomepage()" /></section> }
+<app-cta-section [description]="homepage()?.settings?.cta_subheading || 'Tell us what you need. Let’s find the right technology for your business.'" />

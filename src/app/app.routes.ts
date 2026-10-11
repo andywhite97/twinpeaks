@@ -1,19 +1,27 @@
 import { Routes } from '@angular/router';
+import { notFoundResolver, projectResolver, solutionResolver } from './core/seo/page-resolvers';
 
+const preview = (heading: string) => ({ heading, title: `${heading} | TwinPeaks Investment`, noindex: true });
+const shell = () => import('./features/page-shell/page-shell').then(module => module.PageShell);
 export const routes: Routes = [
-  { path: '', loadComponent: () => import('./features/home/home').then((m) => m.Home), data: { title: 'Twinpeaks | Creative & Technology Solutions', description: 'Twinpeaks delivers creative branding, digital solutions, web development, and custom software. Empowering businesses with innovative technology across Africa.', keywords: 'creative agency, web design, branding, digital solutions, software development, graphic design' } },
-  { path: 'products', loadComponent: () => import('./features/products/product-list/product-list').then((m) => m.ProductList), data: { title: 'Products & Solutions | Twinpeaks', description: 'Explore our range of creative and technology products: branding kits, design templates, custom software, and digital platform solutions.', keywords: 'design products, software solutions, digital tools, technology products' } },
-  { path: 'products/:slug', loadComponent: () => import('./features/products/product-detail/product-detail').then((m) => m.ProductDetail), data: { title: 'Product Details | Twinpeaks', description: 'View details for a Twinpeaks product, including description, pricing, and related information.', keywords: 'product details, Twinpeaks product' } },
-  { path: 'cart', loadComponent: () => import('./features/cart/cart').then((m) => m.Cart), data: { title: 'Cart & Checkout | Twinpeaks', description: 'Review your cart and pay securely with MTN MoMo.' } },
-  { path: 'services', loadComponent: () => import('./features/services/service-list/service-list').then((m) => m.ServiceList), data: { title: 'Services | Twinpeaks', description: 'Our services include branding & graphic design, website development, custom software, digital marketing, printing, and smart technology solutions.', keywords: 'branding, graphic design, web development, software development, digital marketing, creative services' } },
-  { path: 'projects', loadComponent: () => import('./features/projects/project-list/project-list').then((m) => m.ProjectList), data: { title: 'Portfolio & Case Studies | Twinpeaks', description: 'Discover our portfolio of successful projects showcasing creative design, web development, branding, and technology solutions.', keywords: 'portfolio, case studies, project gallery, design work, web projects' } },
-  { path: 'projects/:slug', loadComponent: () => import('./features/projects/project-detail/project-detail').then((m) => m.ProjectDetail) },
-  { path: 'gallery', redirectTo: 'projects', pathMatch: 'full' },
-  { path: 'about', loadComponent: () => import('./features/leadership/leadership-list/leadership-list').then((m) => m.LeadershipList), data: { title: 'About Us | Twinpeaks', description: 'Learn about Twinpeaks, our mission, vision, and experienced team dedicated to creative excellence and innovative technology solutions.', keywords: 'about us, our team, company mission, creative agency, company values' } },
-  { path: 'leadership', redirectTo: 'about' },
-  { path: 'contact', loadComponent: () => import('./features/contact/contact').then((m) => m.Contact), data: { title: 'Contact Us | Twinpeaks', description: 'Get in touch with our creative team. Contact us for branding, web development, design, or custom software inquiries.', keywords: 'contact us, get in touch, creative agency, design inquiry' } },
-  { path: 'request-quote', loadComponent: () => import('./features/quotations/request-quote/request-quote').then((m) => m.RequestQuote), data: { title: 'Request a Quote | Twinpeaks', description: 'Request a tailored quotation from Twinpeaks.' } },
-  { path: 'quotations/:token', loadComponent: () => import('./features/quotations/public-quotation/public-quotation').then((m) => m.PublicQuotation), data: { title: 'Your Twinpeaks quotation', robots: 'noindex, nofollow' } },
-  { path: '404', loadComponent: () => import('./features/not-found/not-found').then((m) => m.NotFound), data: { title: '404 Page Not Found | Twinpeaks', description: 'The page you are looking for does not exist. Please return to our site to explore our services.' } },
-  { path: '**', redirectTo: '/404' },
+  { path: '', pathMatch: 'full', loadComponent: () => import('./features/home/home').then(module => module.Home), data: {
+    title: 'TwinPeaks Investment | Technology, Security & Digital Solutions',
+    description: 'Technology, security and digital solutions for businesses and communities in Eswatini. Built on Vision, Driven by Progress.',
+  } },
+  { path: 'solutions', loadComponent: () => import('./features/solutions/solutions').then(m => m.Solutions), data: { title: 'Technology & Security Solutions | TwinPeaks Investment', description: 'Explore six technology, security and digital solution areas for Eswatini.', breadcrumbs: [{ name: 'Home', path: '/' }, { name: 'Solutions', path: '/solutions' }] } },
+  { path: 'solutions/:slug', loadComponent: () => import('./features/solutions/solution-detail').then(m => m.SolutionDetail), resolve: { content: solutionResolver } },
+  { path: 'services', pathMatch: 'full', redirectTo: 'solutions' },
+  { path: 'gallery', pathMatch: 'full', redirectTo: 'projects' },
+  { path: 'leadership', pathMatch: 'full', redirectTo: 'about' },
+  { path: 'projects', loadComponent: () => import('./features/projects/projects').then(m => m.Projects), data: { title: 'Published Projects | TwinPeaks Investment', description: 'Explore published TwinPeaks technology, security and digital projects.', breadcrumbs: [{ name: 'Home', path: '/' }, { name: 'Projects', path: '/projects' }] } },
+  { path: 'projects/:slug', loadComponent: () => import('./features/projects/project-detail').then(m => m.ProjectDetail), resolve: { content: projectResolver }, runGuardsAndResolvers: 'always' },
+  { path: 'about', loadComponent: () => import('./features/about/about').then(m => m.About), data: { title: 'About TwinPeaks | TwinPeaks Investment', description: 'An Eswatini-based technology, security and digital solutions company. Built on Vision, Driven by Progress.', breadcrumbs: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }] } },
+  { path: 'contact', loadComponent: () => import('./features/leads/contact').then(m => m.Contact), data: { title: 'Contact Us | TwinPeaks Investment', description: 'Contact TwinPeaks to discuss technology, security and digital solutions in Eswatini.', breadcrumbs: [{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact' }] } },
+  { path: 'request-quote', loadComponent: () => import('./features/leads/request-quote').then(m => m.RequestQuote), data: { title: 'Request a Quote | TwinPeaks Investment', description: 'Share your requirements and request a technology, security or digital solution quotation from TwinPeaks.', breadcrumbs: [{ name: 'Home', path: '/' }, { name: 'Request a Quote', path: '/request-quote' }] } },
+  { path: 'quotations/:token', loadComponent: () => import('./features/quotations/public-quotation').then(module => module.PublicQuotation),
+    data: { title: 'Your Private Quotation | TwinPeaks Investment', description: 'Review your private TwinPeaks quotation.', noindex: true } },
+  { path: 'privacy', loadComponent: shell, data: preview('Privacy') },
+  { path: 'terms', loadComponent: shell, data: preview('Terms') },
+  { path: '404', loadComponent: () => import('./features/not-found/not-found').then(module => module.NotFound), data: preview('Page Not Found') },
+  { path: '**', loadComponent: () => import('./features/not-found/not-found').then(m => m.NotFound), resolve: { content: notFoundResolver } },
 ];

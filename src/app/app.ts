@@ -1,66 +1,34 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { Router, NavigationEnd } from '@angular/router';
-import { RouterOutlet } from '@angular/router';
-import { Footer } from './shared/components/footer/footer';
-import { Navigation } from './shared/components/navigation/navigation';
-import { SeoService } from './core/services/seo.service';
-import { AnalyticsService } from './core/services/analytics.service';
-import { StructuredDataService } from './core/services/structured-data.service';
-import { MetaTrackingService } from './core/services/meta-tracking.service';
-import { ToastNotifications } from './shared/components/toast-notifications/toast-notifications';
-import { filter } from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { NavigationStart, NavigationEnd, NavigationCancel, NavigationError, Router, RouterOutlet } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CompanyStore } from './core/state/company-store';
+import { SeoService } from './core/seo/seo.service';
+import { ThemeService } from './core/theme/theme.service';
+import { SiteHeader } from './shared/layout/site-header';
+import { SiteFooter } from './shared/layout/site-footer';
+import { ToastNotification } from './shared/ui/toast-notification';
+import { PageContent } from './core/seo/page-resolvers';
+import { mediaUrl } from './shared/media';
 
-@Component({
-  selector: 'app-root',
-  imports: [RouterOutlet, Navigation, Footer, ToastNotifications],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+@Component({ selector: 'app-root', imports: [RouterOutlet, SiteHeader, SiteFooter, ToastNotification],
+  template: `<a class="skip-link" href="#main-content">Skip to content</a><app-site-header />@if (navigating()) { <div class="route-loading" role="status">Loading page…</div> }<main id="main-content" tabindex="-1"><router-outlet /></main><app-site-footer /><app-toast-notification />`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class App implements OnInit {
-  constructor(
-    private router: Router,
-    private seoService: SeoService,
-    private analyticsService: AnalyticsService,
-    private structuredDataService: StructuredDataService,
-    private metaTracking: MetaTrackingService,
-    @Inject(PLATFORM_ID) private platformId: object,
-  ) {}
-
-  ngOnInit() {
-    this.metaTracking.initialize();
-    // Inject structured data schemas
-    this.structuredDataService.injectOrganizationSchema();
-    this.structuredDataService.injectLocalBusinessSchema();
-
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        // Scroll to top on navigation
-        if (isPlatformBrowser(this.platformId)) {
-          window.scrollTo(0, 0);
-        }
-
-        // Update SEO tags from route data
-        const routeData = this.router.routerState.root.firstChild?.snapshot.data;
-        if (routeData) {
-          this.seoService.updateSeoTags({
-            title: routeData['title'] || 'Twinpeaks Investment',
-            description: routeData['description'] || 'Expert financial advisory and wealth management solutions.',
-            keywords: routeData['keywords'],
-            robots: routeData['robots'],
-          });
-
-          // Update canonical URL
-          const currentUrl = `https://twinpeaksinvestment.com${this.router.url}`;
-          this.seoService.updateCanonicalUrl(currentUrl);
-
-          // Track page view with Analytics
-          if (isPlatformBrowser(this.platformId)) {
-          this.analyticsService.trackPageView(this.router.url, routeData['title'] || 'Twinpeaks');
-          this.metaTracking.trackPageView(`https://twinpeaksinvestment.com${this.router.url}`);
-          }
-        }
-      });
+export class App {
+  readonly navigating = signal(false);
+  private theme = inject(ThemeService);
+  constructor() {
+    inject(CompanyStore).load();
+    const router = inject(Router); const seo = inject(SeoService);
+    router.events.pipe(takeUntilDestroyed(inject(DestroyRef))).subscribe(event => {
+      if (event instanceof NavigationStart) this.navigating.set(true);
+      if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) this.navigating.set(false);
+      if (!(event instanceof NavigationEnd)) return;
+      const data = router.routerState.root.firstChild?.snapshot.data ?? {};
+      const content = data['content'] as PageContent | undefined;
+      seo.update(router.url, content?.title ?? data['title'] ?? 'TwinPeaks Investment',
+        content?.description ?? data['description'] ?? 'Technology, security and digital solutions in Eswatini.', content?.noindex ?? data['noindex'] ?? false,
+        content?.breadcrumbs ?? data['breadcrumbs'] ?? [], mediaUrl(content?.project?.image));
+    });
   }
 }
