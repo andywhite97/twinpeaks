@@ -4,6 +4,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { CompanyApi, ContactApi, HomepageApi, ProjectsApi, SolutionsApi } from './content-api';
 import { QuotationApi } from './quotation-api';
 import { environment } from '../../../environments/environment';
+import { LoadingStore } from '../state/loading-store';
 
 describe('Verified Django API contracts', () => {
   let http: HttpTestingController;
@@ -57,5 +58,27 @@ describe('Verified Django API contracts', () => {
   it('propagates failures to the caller', () => {
     let failed = false; TestBed.inject(ProjectsApi).getFeaturedProjects().subscribe({ error: () => failed = true });
     http.expectOne(url('projects/?featured=true')).flush({}, { status: 503, statusText: 'Unavailable' }); expect(failed).toBeTrue();
+  });
+  it('keeps the loader active until every concurrent request completes or is cancelled', () => {
+    const loading = TestBed.inject(LoadingStore);
+    const projects = TestBed.inject(ProjectsApi);
+    const unread = projects.getProjects();
+    expect(loading.busy()).toBeFalse();
+    const subscription = unread.subscribe();
+    const projectRequest = http.expectOne(url('projects/'));
+    TestBed.inject(SolutionsApi).getSolutions().subscribe();
+    const solutions = http.expectOne(url('solutions/'));
+    solutions.flush([]);
+    expect(loading.busy()).toBeTrue();
+    subscription.unsubscribe();
+    expect(projectRequest.cancelled).toBeTrue();
+    expect(loading.busy()).toBeFalse();
+  });
+  it('releases the loader when a submission fails', () => {
+    const loading = TestBed.inject(LoadingStore);
+    TestBed.inject(ContactApi).sendEnquiry({ name: 'Test', email: 'test@example.invalid', message: 'Test' }).subscribe({ error: () => {} });
+    expect(loading.busy()).toBeTrue();
+    http.expectOne(url('contact/')).flush({}, { status: 503, statusText: 'Unavailable' });
+    expect(loading.busy()).toBeFalse();
   });
 });

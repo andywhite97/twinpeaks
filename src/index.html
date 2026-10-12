@@ -17,7 +17,13 @@
       document.documentElement.style.colorScheme = theme;
     })();
   </script>
-  <style>html{background:#F6F9FD;color-scheme:light}html[data-theme=dark]{background:#071525;color-scheme:dark}</style>
+  <style>
+    html{background:#F6F9FD;color-scheme:light}html[data-theme=dark]{background:#071525;color-scheme:dark}
+    .bootstrap-loader{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#F4F8FC;color:#07152D;font:16px Arial,sans-serif;z-index:1000}
+    html[data-theme=dark] .bootstrap-loader{background:#071524;color:#F5F9FF}
+    .bootstrap-loader img{width:min(280px,65vw);height:auto}.bootstrap-loader .bootstrap-static{display:none;width:160px;margin:40px}
+    @media(prefers-reduced-motion:reduce){.bootstrap-loader .bootstrap-animation{display:none}.bootstrap-loader .bootstrap-static{display:block}}
+  </style>
   <title>TwinPeaks Investment | Technology, Security & Digital Solutions</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,5 +32,5 @@
   <link rel="icon" type="image/png" href="/assets/brand/icon_only.png">
   <link rel="preload" href="/assets/fonts/Poppins-SemiBold.ttf" as="font" type="font/ttf" crossorigin>
 </head>
-<body><app-root></app-root></body>
+<body><app-root><div class="bootstrap-loader" role="status" aria-live="polite"><img id="bootstrap-loader-animation" class="bootstrap-animation" alt="" width="420" height="420"><img class="bootstrap-static" src="/assets/brand/icon_only.png" alt="" width="160" height="160"><span>Loading TwinPeaks…</span></div></app-root><script>(function(){var image=document.getElementById('bootstrap-loader-animation');if(image){image.src='/assets/loader/twinpeaks_loader_smooth_'+(document.documentElement.dataset.theme==='dark'?'dark':'light')+'.gif';}})();</script><noscript><style>.bootstrap-loader{display:none}</style><p>Please enable JavaScript to view the TwinPeaks website.</p></noscript></body>
 </html>
