@@ -1,59 +1,53 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
+import { publicPageUrl, TrackingPrivacyService } from './tracking-privacy.service';
 
-declare let gtag: Function;
+declare global { interface Window { dataLayer?: unknown[]; gtag?: (...args: unknown[]) => void; } }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnalyticsService {
+  private initialized = false;
+  constructor(private privacy: TrackingPrivacyService) {}
+
+  private initialize(): void {
+    if (this.initialized || !this.privacy.canTrack()) return;
+    this.initialized = true;
+    window.dataLayer ??= [];
+    window.gtag ??= (...args: unknown[]) => { window.dataLayer!.push(args); };
+    window.gtag('js', new Date());
+    window.gtag('config', environment.gaId, {
+      send_page_view: false, page_location: publicPageUrl(window.location.href), page_referrer: '',
+      allow_google_signals: false, allow_ad_personalization_signals: false,
+    });
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(environment.gaId)}`;
+    script.dataset['twinpeaksAnalytics'] = 'true';
+    document.head.appendChild(script);
+  }
   
-  /**
-   * Initialize Google Analytics
-   * Add this script to index.html head:
-   * <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID"></script>
-   * <script>
-   *   window.dataLayer = window.dataLayer || [];
-   *   function gtag(){dataLayer.push(arguments);}
-   *   gtag('js', new Date());
-   *   gtag('config', 'YOUR_GA_ID');
-   * </script>
-   */
+  // Keep the vendor script out of index.html: private documents must never load it.
 
   trackPageView(path: string, title: string): void {
-    try {
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'page_view', {
-          page_path: path,
-          page_title: title
-        });
-      }
-    } catch (error) {
-      console.log('Analytics not initialized');
-    }
+    if (!this.privacy.canTrack({ path, title })) return;
+    this.trackEvent('page_view', { page_path: new URL(publicPageUrl(path)).pathname, page_title: title });
   }
 
   trackEvent(eventName: string, eventData: any = {}): void {
+    if (!this.privacy.canTrack({ eventName, eventData })) return;
     try {
-      if (typeof gtag !== 'undefined') {
-        gtag('event', eventName, eventData);
-      }
+      this.initialize();
+      window.gtag?.('event', eventName, { ...eventData,
+        page_location: publicPageUrl(window.location.href), page_referrer: '' });
     } catch (error) {
       console.log('Analytics not initialized');
     }
   }
 
   trackConversion(conversionId: string, label: string): void {
-    try {
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'conversion', {
-          'allow_custom_scripts': true,
-          'conversion_id': conversionId,
-          'conversion_label': label
-        });
-      }
-    } catch (error) {
-      console.log('Conversion tracking not initialized');
-    }
+    this.trackEvent('conversion', { conversion_id: conversionId, conversion_label: label });
   }
 
   trackFormSubmission(formName: string): void {

@@ -10,6 +10,7 @@ import { StructuredDataService } from './core/services/structured-data.service';
 import { MetaTrackingService } from './core/services/meta-tracking.service';
 import { ToastNotifications } from './shared/components/toast-notifications/toast-notifications';
 import { filter } from 'rxjs/operators';
+import { containsPrivateQuotation } from './core/services/tracking-privacy.service';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,6 @@ export class App implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.metaTracking.initialize();
     // Inject structured data schemas
     this.structuredDataService.injectOrganizationSchema();
     this.structuredDataService.injectLocalBusinessSchema();
@@ -52,11 +52,13 @@ export class App implements OnInit {
           });
 
           // Update canonical URL
-          const currentUrl = `https://twinpeaksinvestment.com${this.router.url}`;
+          const privatePage = containsPrivateQuotation(this.router.url);
+          const currentUrl = privatePage ? 'https://twinpeaksinvestment.com/quotations'
+            : `https://twinpeaksinvestment.com${this.router.url.split(/[?#]/)[0]}`;
           this.seoService.updateCanonicalUrl(currentUrl);
 
           // Track page view with Analytics
-          if (isPlatformBrowser(this.platformId)) {
+          if (isPlatformBrowser(this.platformId) && !privatePage) {
           this.analyticsService.trackPageView(this.router.url, routeData['title'] || 'Twinpeaks');
           this.metaTracking.trackPageView(`https://twinpeaksinvestment.com${this.router.url}`);
           }

@@ -1,0 +1,7 @@
+# Hosts supporting _headers (e.g. Cloudflare Pages/Netlify).
+# GitHub Pages does not honor this file: configure an edge proxy before relying on it.
+/*
+  Referrer-Policy: no-referrer
+/quotations/*
+  Cache-Control: private, no-store, max-age=0
+  X-Robots-Tag: noindex, nofollow, noarchive

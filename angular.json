@@ -38,12 +38,6 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.development.ts",
-                  "with": "src/environments/environment.ts"
-                }
-              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -59,6 +53,7 @@
               "outputHashing": "all"
             },
             "development": {
+              "fileReplacements": [{ "replace": "src/environments/environment.ts", "with": "src/environments/environment.development.ts" }],
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
@@ -84,6 +79,8 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
+            "main": "src/test.ts",
+            "fileReplacements": [{ "replace": "src/environments/environment.ts", "with": "src/environments/environment.development.ts" }],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               {

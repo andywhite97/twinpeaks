@@ -59,7 +59,7 @@ export class PublicQuotation implements OnInit {
     return status === 'sent' || status === 'viewed';
   }
 
-  downloadPdf(): void { window.open(this.api.url(`quotations/public/${this.token}/pdf/`), '_blank', 'noopener'); }
+  downloadPdf(): void { window.open(this.api.url(`quotations/public/${this.token}/pdf/`), '_blank', 'noopener,noreferrer'); }
 
   private load(): void {
     this.api.get<PublicQuotationData>(`quotations/public/${this.token}/`).subscribe({

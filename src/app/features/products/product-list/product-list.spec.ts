@@ -18,6 +18,8 @@ describe('ProductList', () => {
           provide: ProductService,
           useValue: {
             getProducts: () => of({ count: 0, next: null, previous: null, results: [] }),
+            getCategories: () => of([]),
+            getBrands: () => of([]),
           },
         },
       ],

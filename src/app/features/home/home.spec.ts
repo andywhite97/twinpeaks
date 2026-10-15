@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { of } from 'rxjs';
+import { HomepageService } from '../../core/services/homepage';
 
 import { Home } from './home';
 
@@ -8,7 +11,11 @@ describe('Home', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Home]
+      imports: [Home],
+      providers: [provideRouter([]), { provide: HomepageService, useValue: {
+        getHomepageData: () => of({ hero: {}, solutions: [], statistics: [], featured_products: [],
+          featured_categories: [], projects: [], brands: [], testimonials: [], settings: {} }),
+      } }],
     })
     .compileComponents();
 

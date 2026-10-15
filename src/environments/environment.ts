@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  analyticsEnabled: true,
   apiUrl: 'https://backend.twinpeaksinvestment.com/api',
   metaPixelId: '4551355081771302',
   metaDebug: false,

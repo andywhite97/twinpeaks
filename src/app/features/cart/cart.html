@@ -3,10 +3,16 @@
   @if (payment(); as result) {
     <section class="checkout-status card border-0 shadow-sm p-4 mx-auto">
       @if (result.order_status === 'paid') { <h1 class="h3 text-success">Payment received</h1><p>Your order has been confirmed. Thank you.</p> }
-      @else if (result.order_status === 'payment_failed') { <h1 class="h3 text-danger">Payment was not completed</h1><p>Please start a new payment request and approve it on your phone.</p> }
+      @else if (result.order_status === 'payment_failed') { <h1 class="h3 text-danger">Payment was not completed</h1><p>The payment attempt failed. You can try a new attempt, or contact our team with this order reference if your account was debited.</p> }
+      @else if (result.order_status === 'payment_review') { <h1 class="h3">Payment needs review</h1><p>Submission or stock allocation needs confirmation. Contact our team with this order reference. Do not make another payment.</p> }
       @else { <h1 class="h3">Approve payment on your phone</h1><p>An MTN MoMo prompt was sent. This page checks for confirmation automatically.</p> }
       <p class="text-muted mb-0">Order {{ result.order_id }} · {{ result.amount }} {{ result.currency }}</p>
+      @if (result.payment_status === 'pending') { <button class="btn btn-outline-dark mt-3" type="button" (click)="refreshPayment()">Check payment status</button> }
+      @if (result.order_status === 'paid' || result.payment_status === 'failed') { <button class="btn btn-outline-dark mt-3" type="button" (click)="finishPayment()">{{ result.payment_status === 'failed' ? 'Start a new payment attempt' : 'Continue shopping' }}</button> }
+      @if (error()) { <p class="text-danger mt-3">{{ error() }}</p> }
     </section>
+  } @else if (canRecoverReference) {
+    <section class="checkout-status card p-4"><h1 class="h3">Recovering payment status</h1><p>Check the existing payment reference before starting another payment.</p>@if (error()) { <p class="text-danger">{{ error() }}</p> }<button class="btn btn-outline-dark" type="button" (click)="refreshPayment()">Check payment status</button></section>
   } @else if (!cart.items().length) {
     <section class="text-center py-5"><h1 class="h3">Your cart is empty</h1><a class="btn btn-dark mt-3" routerLink="/products">Browse products</a></section>
   } @else {

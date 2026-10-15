@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
+  analyticsEnabled: false,
   apiUrl: 'http://127.0.0.1:8000/api',
   metaPixelId: '4551355081771302',
   metaDebug: true,

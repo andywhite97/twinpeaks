@@ -4,6 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { CartItem } from './cart';
 import { MetaTrackingService } from './meta-tracking.service';
 import { Product } from '../../shared/models/product.model';
+import { containsPrivateQuotation, TrackingPrivacyService } from './tracking-privacy.service';
 
 const product: Product = {
   id: 7, name: 'TwinPeaks Pro Package', slug: 'twinpeaks-pro-package', description: '',
@@ -14,15 +15,34 @@ const product: Product = {
 describe('MetaTrackingService', () => {
   let service: MetaTrackingService;
   let fbq: jasmine.Spy;
+  let privateDocument: boolean;
 
   beforeEach(() => {
     fbq = jasmine.createSpy('fbq');
+    privateDocument = false;
     window.fbq = fbq;
-    TestBed.configureTestingModule({ providers: [{ provide: PLATFORM_ID, useValue: 'browser' }] });
+    spyOn(document.head, 'appendChild').and.callFake(node => node);
+    TestBed.configureTestingModule({ providers: [{ provide: PLATFORM_ID, useValue: 'browser' },
+      { provide: TrackingPrivacyService, useValue: { canTrack: (data: unknown) => !privateDocument && !containsPrivateQuotation(data) } }] });
     service = TestBed.inject(MetaTrackingService);
   });
 
-  afterEach(() => { delete window.fbq; delete window._fbq; });
+  afterEach(() => { delete window.fbq; delete window._fbq; document.querySelectorAll('script[data-twinpeaks-meta-pixel]').forEach(script => script.remove()); });
+
+  it('does not initialize or track any events on quotation documents', () => {
+    privateDocument = true;
+    service.initialize();
+    service.trackPageView('https://twinpeaksinvestment.com/quotations/existing-token');
+    service.trackViewContent(product);
+    service.trackAddToCart(product, 1);
+    expect(fbq).not.toHaveBeenCalled();
+    expect(document.querySelector('script[data-twinpeaks-meta-pixel]')).toBeNull();
+  });
+
+  it('rejects encoded private URLs even on a public page', () => {
+    service.trackPageView('https://twinpeaksinvestment.com/contact?next=%2Fquotations%2Fsecret');
+    expect(fbq).not.toHaveBeenCalled();
+  });
 
   it('sends ViewContent through the standard fbq track API with the catalog slug', () => {
     service.trackViewContent(product);

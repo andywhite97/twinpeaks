@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
+import { quotationDocumentBoundary } from './core/guards/quotation-document-boundary';
 
-export const routes: Routes = [
+const pageRoutes: Routes = [
   { path: '', loadComponent: () => import('./features/home/home').then((m) => m.Home), data: { title: 'Twinpeaks | Creative & Technology Solutions', description: 'Twinpeaks delivers creative branding, digital solutions, web development, and custom software. Empowering businesses with innovative technology across Africa.', keywords: 'creative agency, web design, branding, digital solutions, software development, graphic design' } },
   { path: 'products', loadComponent: () => import('./features/products/product-list/product-list').then((m) => m.ProductList), data: { title: 'Products & Solutions | Twinpeaks', description: 'Explore our range of creative and technology products: branding kits, design templates, custom software, and digital platform solutions.', keywords: 'design products, software solutions, digital tools, technology products' } },
   { path: 'products/:slug', loadComponent: () => import('./features/products/product-detail/product-detail').then((m) => m.ProductDetail), data: { title: 'Product Details | Twinpeaks', description: 'View details for a Twinpeaks product, including description, pricing, and related information.', keywords: 'product details, Twinpeaks product' } },
@@ -17,3 +18,7 @@ export const routes: Routes = [
   { path: '404', loadComponent: () => import('./features/not-found/not-found').then((m) => m.NotFound), data: { title: '404 Page Not Found | Twinpeaks', description: 'The page you are looking for does not exist. Please return to our site to explore our services.' } },
   { path: '**', redirectTo: '/404' },
 ];
+
+export const routes: Routes = pageRoutes.map(route => route.redirectTo === undefined
+  ? { ...route, canActivate: [quotationDocumentBoundary] }
+  : route);

@@ -1,6 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
+import { TrackingPrivacyService } from './tracking-privacy.service';
 import { CartItem } from './cart';
 import { CheckoutPayment } from './checkout';
 import { Product } from '../../shared/models/product.model';
@@ -16,7 +17,7 @@ export class MetaTrackingService {
   private scriptRequested = false;
   private readonly pixelId = environment.metaPixelId;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: object, private privacy: TrackingPrivacyService) {}
 
   initialize(): void {
     if (!this.enabled) return;
@@ -30,6 +31,7 @@ export class MetaTrackingService {
   }
 
   trackPageView(url: string): void {
+    if (!this.privacy.canTrack(url)) return;
     if (url === this.lastPageUrl) return;
     this.lastPageUrl = url;
     this.track('PageView', {}, this.eventId());
@@ -94,7 +96,7 @@ export class MetaTrackingService {
   }
 
   private track(event: MetaStandardEvent, data: Record<string, unknown>, eventId: string): void {
-    if (!this.enabled) {
+    if (!this.enabled || !this.privacy.canTrack(data)) {
       this.debug(`${event} skipped: tracking is disabled`);
       return;
     }
@@ -137,7 +139,7 @@ export class MetaTrackingService {
   }
 
   private sellingPrice(product: Product): number { return Number(product.sale_price ?? product.price ?? 0); }
-  private get enabled(): boolean { return isPlatformBrowser(this.platformId) && Boolean(this.pixelId); }
+  private get enabled(): boolean { return isPlatformBrowser(this.platformId) && Boolean(this.pixelId) && this.privacy.canTrack(); }
   private debug(message: string, details?: Record<string, unknown>): void {
     if (environment.metaDebug) console.debug(`[Meta Pixel] ${message}`, details ?? '');
   }
