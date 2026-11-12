@@ -1,9 +1,14 @@
 import { Routes } from '@angular/router';
+import { blogResolver } from './features/blog/blog-api';
 import { notFoundResolver, projectResolver, solutionResolver } from './core/seo/page-resolvers';
 
 const preview = (heading: string) => ({ heading, title: `${heading} | TwinPeaks Investment`, noindex: true });
 const shell = () => import('./features/page-shell/page-shell').then(module => module.PageShell);
 export const routes: Routes = [
+  { path: 'blog', loadComponent: () => import('./features/blog/blog').then(m => m.Blog), data: { title: 'The TwinPeaks Journal | Technology & Security Insights', description: 'Practical insights on security, technology and digital solutions for businesses in Eswatini.' } },
+  { path: 'blog/:slug', loadComponent: () => import('./features/blog/article').then(m => m.Article), resolve: { content: blogResolver }, runGuardsAndResolvers: 'always' },
+  { path: 'newsletter/confirm', loadComponent: () => import('./features/blog/subscription-action').then(m => m.SubscriptionAction), data: { title: 'Confirm subscription | TwinPeaks', noindex: true, action: 'confirm' } },
+  { path: 'newsletter/unsubscribe', loadComponent: () => import('./features/blog/subscription-action').then(m => m.SubscriptionAction), data: { title: 'Unsubscribe | TwinPeaks', noindex: true, action: 'unsubscribe' } },
   { path: '', pathMatch: 'full', loadComponent: () => import('./features/home/home').then(module => module.Home), data: {
     title: 'TwinPeaks Investment | Technology, Security & Digital Solutions',
     description: 'Technology, security and digital solutions for businesses and communities in Eswatini. Built on Vision, Driven by Progress.',

@@ -1,0 +1,20 @@
+<div class="container journal">
+  <header class="journal-heading"><p class="eyebrow">THE TWINPEAKS JOURNAL</p><h1>Ideas for what<br class="desktop-break"> comes next.</h1><div class="cyan-rule"></div><p>Practical insights on security, technology and digital solutions for businesses in Eswatini.</p></header>
+  @if (state() === 'loading') { <div class="journal-state" role="status">Loading the journal…</div> }
+  @else if (state() === 'error') { <div class="journal-state" role="alert"><h2>The journal is temporarily unavailable.</h2><p>Please try again in a moment.</p><button class="button button-secondary" (click)="load()">Retry</button></div> }
+  @else {
+    @if (featured(); as post) {
+      <section class="journal-lead" aria-label="Featured and latest articles"><a class="feature-story" [routerLink]="['/blog', post.slug]">
+        @if (media(post.cover_image); as image) { <img [src]="image" [alt]="post.cover_alt" fetchpriority="high" (error)="imageError($event)"> }
+        <div class="feature-copy"><span class="story-category">{{ post.category?.name || 'Insights' }}</span><h2>{{ post.title }}</h2><p>{{ post.excerpt }}</p><span class="feature-read">Read the article →</span></div>
+      </a>@if (latest().length) { <aside class="latest-stories"><h2>Latest insights</h2>@for (item of latest(); track item.id; let index = $index) { <a class="latest-story" [routerLink]="['/blog', item.slug]"><span class="story-number">0{{ index + 1 }}</span>@if (media(item.cover_image); as image) { <img [src]="image" [alt]="item.cover_alt" (error)="imageError($event)"> }<div><h3>{{ item.title }}</h3><p>{{ item.category?.name || 'Insights' }} · {{ item.reading_minutes }} min read</p></div></a> }</aside> }</section>
+    }
+    <section class="journal-library" aria-labelledby="journal-library-title"><div class="library-heading"><h2 id="journal-library-title">Explore the journal</h2><p>{{ data()?.count || 0 }} articles</p></div>
+      <nav class="journal-filters" aria-label="Filter articles by category"><button class="filter-button" [attr.aria-pressed]="category() === ''" (click)="filter('')">All articles</button>@for (item of categories(); track item.id) { <button class="filter-button" [attr.aria-pressed]="category() === item.slug" (click)="filter(item.slug)">{{ item.name }}</button> }</nav>
+      @if (!data()?.results?.length) { <div class="journal-state"><h3>{{ category() ? 'No articles in this category yet.' : 'Fresh perspectives are on their way.' }}</h3><p>Subscribe below to hear when new insights are available.</p></div> }
+      <div class="journal-grid">@for (post of cards(); track post.id) { <article class="journal-card"><a [routerLink]="['/blog', post.slug]" class="card-image" [attr.aria-label]="post.title">@if (media(post.cover_image); as image) { <img [src]="image" [alt]="post.cover_alt" loading="lazy" (error)="imageError($event)"> } @else { <span>THE TWINPEAKS JOURNAL</span> }</a><div class="card-copy"><p class="eyebrow">{{ post.category?.name || 'Insights' }}</p><h3><a [routerLink]="['/blog', post.slug]">{{ post.title }}</a></h3><p>{{ post.excerpt }}</p><p class="story-meta">{{ post.published_at | date:'d MMM yyyy' }} · {{ post.reading_minutes }} min read</p><a class="text-link" [routerLink]="['/blog', post.slug]">Read article <span aria-hidden="true">→</span></a></div></article> }</div>
+      @if (data()?.next || data()?.previous) { <nav class="journal-pagination" aria-label="Article pages"><button class="button button-secondary" [disabled]="!data()?.previous" (click)="paginate(-1)">Previous</button><span aria-live="polite">Page {{ page() }}</span><button class="button button-secondary" [disabled]="!data()?.next" (click)="paginate(1)">Next</button></nav> }
+    </section>
+  }
+  <app-newsletter-signup />
+</div>
