@@ -1,1 +1,0 @@
-import{nb as n}from"./chunk-LU4BR4YW.js";function i(r){if(!r?.trim())return"";if(r.startsWith("/assets/"))return r;try{let t=new URL(r,n.apiUrl);return["http:","https:"].includes(t.protocol)&&!t.username&&!t.password?t.toString():""}catch{return""}}function s(r){let t=r?.replace(/[\s()-]/g,"")??"";return/^\+?\d{8,15}$/.test(t)?`tel:${t}`:null}export{i as a,s as b};

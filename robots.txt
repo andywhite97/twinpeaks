@@ -1,4 +1,4 @@
 User-agent: *
+Allow: /
 Disallow: /quotations/
-Disallow: /privacy
-Disallow: /terms
+Sitemap: https://twinpeaksinvestment.com/sitemap.xml
