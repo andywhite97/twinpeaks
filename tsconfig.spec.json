@@ -1,5 +1,17 @@
 {
   "extends": "./tsconfig.json",
-  "compilerOptions": { "outDir": "./out-tsc/spec", "types": ["jasmine"] },
-  "include": ["src/**/*.ts"], "exclude": ["src/server.ts"]
+  "compilerOptions": {
+    "outDir": "./out-tsc/spec",
+    "types": [
+      "jasmine"
+    ]
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/server.ts",
+    "src/app/app.config.prerender.ts",
+    "src/app/generated/**"
+  ]
 }

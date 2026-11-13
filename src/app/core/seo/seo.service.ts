@@ -11,6 +11,8 @@ export class SeoService {
   update(path: string, title: string, description: string, noindex = false, breadcrumbs: readonly { name: string; path: string }[] = [], image = ''): void {
     const privateQuote = /^\/quotations\//i.test(path);
     const canonical = environment.siteUrl + (privateQuote ? '/quotations' : path.split(/[?#]/)[0]);
+    this.document.getElementById('page-article-schema')?.remove();
+    this.meta.removeTag('property="article:published_time"');
     this.title.setTitle(title);
     this.meta.updateTag({ name: 'description', content: description });
     this.meta.updateTag({ name: 'robots', content: noindex || privateQuote ? 'noindex, nofollow' : 'index, follow' });
@@ -18,8 +20,16 @@ export class SeoService {
     this.meta.updateTag({ property: 'og:description', content: description });
     this.meta.updateTag({ property: 'og:url', content: canonical });
     this.meta.updateTag({ property: 'og:type', content: 'website' });
+    this.meta.updateTag({ property: 'og:site_name', content: 'TwinPeaks Investment' });
+    this.meta.updateTag({ name: 'twitter:card', content: image ? 'summary_large_image' : 'summary' });
+    this.meta.updateTag({ name: 'twitter:title', content: title });
+    this.meta.updateTag({ name: 'twitter:description', content: description });
+    this.meta.removeTag('name="twitter:image"');
     this.meta.removeTag('property="og:image"');
-    if (image && !privateQuote) this.meta.updateTag({ property: 'og:image', content: image });
+    if (image && !privateQuote) {
+      this.meta.updateTag({ property: 'og:image', content: image });
+      this.meta.updateTag({ name: 'twitter:image', content: image });
+    }
     this.document.getElementById('page-breadcrumb-schema')?.remove();
     if (breadcrumbs.length && !privateQuote) {
       const schema = this.document.createElement('script'); schema.id = 'page-breadcrumb-schema'; schema.type = 'application/ld+json';
@@ -29,5 +39,21 @@ export class SeoService {
     let link = this.document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!link) { link = this.document.createElement('link'); link.rel = 'canonical'; this.document.head.appendChild(link); }
     link.href = canonical;
+  }
+
+  article(post: { title: string; excerpt: string; author_name: string; published_at: string }, image: string): void {
+    const url = this.document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.href;
+    this.meta.updateTag({ property: 'og:type', content: 'article' });
+    this.meta.updateTag({ property: 'article:published_time', content: post.published_at });
+    const schema = this.document.createElement('script');
+    schema.id = 'page-article-schema'; schema.type = 'application/ld+json';
+    schema.textContent = JSON.stringify({ '@context': 'https://schema.org', '@type': 'BlogPosting',
+      headline: post.title, description: post.excerpt, datePublished: post.published_at,
+      mainEntityOfPage: url, url, ...(image ? { image: [image] } : {}),
+      author: { '@type': post.author_name === 'TwinPeaks Team' ? 'Organization' : 'Person', name: post.author_name },
+      publisher: { '@type': 'Organization', name: 'TwinPeaks Investment', url: environment.siteUrl },
+    }).replace(/</g, '\\u003c');
+    this.document.getElementById(schema.id)?.remove();
+    this.document.head.appendChild(schema);
   }
 }

@@ -4,3 +4,5 @@ dist/
 .angular/
 out-tsc/
 test-results/
+
+src/app/generated/

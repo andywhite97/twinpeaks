@@ -2,6 +2,19 @@ import { TestBed } from '@angular/core/testing';
 import { DOCUMENT } from '@angular/common';
 import { SeoService } from './seo.service';
 describe('Private quotation metadata', () => {
+  it('renders article metadata safely and clears it on navigation', () => {
+    const seo = TestBed.inject(SeoService); const document = TestBed.inject(DOCUMENT);
+    seo.update('/blog/example', 'Example', 'Description', false, [], 'https://example.invalid/cover.jpg');
+    seo.article({ title: 'Example </script>', excerpt: 'Description', author_name: 'TwinPeaks Team', published_at: '2026-11-13T10:00:00Z' }, 'https://example.invalid/cover.jpg');
+    const script = document.getElementById('page-article-schema')!;
+    expect(JSON.parse(script.textContent!)['@type']).toBe('BlogPosting');
+    expect(script.textContent).not.toContain('</script>');
+    expect(document.querySelector('meta[property="og:type"]')?.getAttribute('content')).toBe('article');
+    seo.update('/about', 'About', 'Company');
+    expect(document.getElementById('page-article-schema')).toBeNull();
+    expect(document.querySelector('meta[name="twitter:image"]')).toBeNull();
+    expect(document.querySelector('meta[property="article:published_time"]')).toBeNull();
+  });
   it('adds route-specific breadcrumbs and removes them on private navigation', () => {
     const seo = TestBed.inject(SeoService); const document = TestBed.inject(DOCUMENT);
     seo.update('/projects/verified', 'Verified', 'Description', false, [{ name: 'Home', path: '/' }, { name: 'Verified </script>', path: '/projects/verified' }]);

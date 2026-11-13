@@ -5,7 +5,7 @@
   "scripts": {
     "start": "ng serve --host 127.0.0.1 --port 4201",
     "build": "ng build --configuration production && node scripts/precompress.cjs",
-    "build:pages": "ng build --configuration production,pages && node scripts/prepare-pages.cjs",
+    "build:pages": "node scripts/seo-snapshot.cjs && ng build --configuration production,pages && node scripts/prepare-pages.cjs",
     "build:development": "ng build --configuration development",
     "build:qa": "ng build --configuration qa",
     "serve:ssr": "node dist/front-v2/server/server.mjs",
@@ -13,14 +13,29 @@
     "test:e2e": "node tests/browser-checks.cjs"
   },
   "dependencies": {
-    "@angular/common": "20.3.33", "@angular/compiler": "20.3.33", "@angular/core": "20.3.33",
-    "@angular/forms": "20.3.33", "@angular/platform-browser": "20.3.33", "@angular/platform-server": "20.3.33",
-    "@angular/router": "20.3.33", "@angular/ssr": "20.3.39", "rxjs": "~7.8.0", "tslib": "^2.3.0"
+    "@angular/common": "20.3.33",
+    "@angular/compiler": "20.3.33",
+    "@angular/core": "20.3.33",
+    "@angular/forms": "20.3.33",
+    "@angular/platform-browser": "20.3.33",
+    "@angular/platform-server": "20.3.33",
+    "@angular/router": "20.3.33",
+    "@angular/ssr": "20.3.39",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@angular/build": "20.3.39", "@angular/cli": "20.3.39", "@angular/compiler-cli": "20.3.33",
-    "@types/jasmine": "~5.1.0", "@types/node": "^20.17.19", "jasmine-core": "~5.7.0",
-    "karma": "~6.4.0", "karma-coverage": "~2.2.0", "karma-chrome-launcher": "~3.2.0", "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0", "typescript": "~5.8.2"
+    "@angular/build": "20.3.39",
+    "@angular/cli": "20.3.39",
+    "@angular/compiler-cli": "20.3.33",
+    "@types/jasmine": "~5.1.0",
+    "@types/node": "^20.17.19",
+    "jasmine-core": "~5.7.0",
+    "karma": "~6.4.0",
+    "karma-coverage": "~2.2.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.8.2"
   }
 }

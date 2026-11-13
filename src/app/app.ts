@@ -12,6 +12,7 @@ import { PageContent } from './core/seo/page-resolvers';
 import { mediaUrl } from './shared/media';
 import { LoadingStore } from './core/state/loading-store';
 import { FullScreenLoader } from './shared/ui/full-screen-loader';
+import { BlogPost } from './features/blog/blog-api';
 
 @Component({ selector: 'app-root', imports: [RouterOutlet, SiteHeader, SiteFooter, ToastNotification, FullScreenLoader],
   template: `<a class="skip-link" href="#main-content">Skip to content</a><app-site-header /><main id="main-content" tabindex="-1" [attr.aria-busy]="busy()"><router-outlet /></main><app-site-footer /><app-toast-notification />@if (loaderVisible()) { <app-full-screen-loader /> }`,
@@ -39,10 +40,11 @@ export class App {
       if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) this.navigating.set(false);
       if (!(event instanceof NavigationEnd)) return;
       const data = router.routerState.root.firstChild?.snapshot.data ?? {};
-      const content = data['content'] as PageContent | undefined;
+      const content = data['content'] as (PageContent & { post?: BlogPost }) | undefined;
       seo.update(router.url, content?.title ?? data['title'] ?? 'TwinPeaks Investment',
         content?.description ?? data['description'] ?? 'Technology, security and digital solutions in Eswatini.', content?.noindex ?? data['noindex'] ?? false,
-        content?.breadcrumbs ?? data['breadcrumbs'] ?? [], mediaUrl(content?.project?.image));
+        content?.breadcrumbs ?? data['breadcrumbs'] ?? [], mediaUrl(content?.post?.cover_image ?? content?.project?.image));
+      if (content?.post) seo.article(content.post, mediaUrl(content.post.cover_image));
     });
   }
 }
