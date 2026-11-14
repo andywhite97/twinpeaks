@@ -1,0 +1,37 @@
+name: Refresh scheduled blog launch
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/blog-rollout.yml']
+  schedule:
+    # 09:07 Eswatini time, after the 09:00 publication timestamp.
+    - cron: '7 7 17,20,24,27 11 *'
+    - cron: '7 7 1,4,8 12 *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Rebuild published pages during the approved 2026 rollout
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TRIGGER: ${{ github.event_name }}
+        run: |
+          if [ "$TRIGGER" != 'schedule' ]; then
+            gh workflow run 381529540 --ref front-v2
+            exit 0
+          fi
+          case "$(date -u +%F)" in
+            2026-11-17|2026-11-20|2026-11-24|2026-11-27|2026-12-01|2026-12-04|2026-12-08)
+              gh workflow run 381529540 --ref front-v2
+              ;;
+            *) echo 'Outside the approved launch dates; no deployment requested.' ;;
+          esac
+
